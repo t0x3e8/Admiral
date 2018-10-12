@@ -21,6 +21,10 @@ module.exports = {
         }
       },
       {
+        test: /\.css$/u,
+        loader: 'css-loader'
+      },
+      {
         test: /\.js$/u,
         loader: [
           'babel-loader',

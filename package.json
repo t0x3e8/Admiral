@@ -14,7 +14,8 @@
   "author": "t0x3e8@gmail.com",
   "license": "ISC",
   "dependencies": {
-    "vue": "^2.5.17"
+    "vue": "^2.5.17",
+    "vuetify": "^1.2.7"
   },
   "devDependencies": {
     "@babel/core": "^7.1.2",

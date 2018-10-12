@@ -1,22 +1,16 @@
 <template>
   <div id="app">
-    <p>Hello World from Vue!</p>
-    Your name? <input v-model="name" type="text"/>
-
-    <div v-if="name ">Hi, {{name}}</div>
+    <sign-up />
   </div>
 </template>
 
 <script>
+import SignUp from './Components/SignUp.vue';
 
 export default {
   name: 'app',
   components: {
-  },
-  data () {
-    return {
-      name: null
-    }
+    SignUp
   }
 };
 </script>
