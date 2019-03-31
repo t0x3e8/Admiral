@@ -46,9 +46,6 @@ export default {
         .catch(function (error) {
           that.playerName = `error ${error}`;
         });
-    },
-    clear() {
-      this.playerName = "";
     }
   }
 };

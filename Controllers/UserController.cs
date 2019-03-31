@@ -14,6 +14,12 @@ namespace code.Controllers {
   public class UserController : Controller
   {
     private readonly AppSettings appSettings;
+    public IClientService ClientService { get; set; }
+
+    public UserController(IClientService clientService)
+    {
+        this.ClientService = clientService;
+    }
 
     public UserController(IOptions<AppSettings> options)
     {
@@ -23,22 +29,10 @@ namespace code.Controllers {
     [AllowAnonymous]
     [HttpPost]
     public IActionResult CreateJWTToken([FromBody]TokenRequest request) {
-        var claims = new [] {
-            new Claim(ClaimTypes.Name, request.Username)
-        };
-
-        byte[] key = Encoding.UTF8.GetBytes(this.appSettings.Secret);
-        SymmetricSecurityKey symmetricSecurityKey = new SymmetricSecurityKey(key);
-        SigningCredentials credentials = new SigningCredentials(symmetricSecurityKey, SecurityAlgorithms.HmacSha256);
-        
-        JwtSecurityToken token = new JwtSecurityToken(
-          claims: claims,
-          expires: DateTime.Now.AddMinutes(30),
-          signingCredentials: credentials
-        );
+        var token = this.ClientService.GetJWT(request.Username, this.appSettings.Secret);
 
         return Ok(new {
-          token = new JwtSecurityTokenHandler().WriteToken(token)
+            token = new JwtSecurityTokenHandler().WriteToken(token)
         });
     }
   }
