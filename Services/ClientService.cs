@@ -6,6 +6,10 @@ using Microsoft.IdentityModel.Tokens;
 
 public class ClientService : IClientService
 {
+    public ClientService()
+    {
+        
+    }
     public JwtSecurityToken GetJWT(string username, string secretKey)
     {
         var claims = new [] {

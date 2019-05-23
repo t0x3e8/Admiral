@@ -16,13 +16,9 @@ namespace code.Controllers {
     private readonly AppSettings appSettings;
     public IClientService ClientService { get; set; }
 
-    public UserController(IClientService clientService)
+    public UserController(IClientService clientService, IOptions<AppSettings> options)
     {
         this.ClientService = clientService;
-    }
-
-    public UserController(IOptions<AppSettings> options)
-    {
         this.appSettings = options.Value;
     }
 
