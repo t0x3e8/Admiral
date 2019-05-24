@@ -1,5 +1,5 @@
 import Vue from 'vue'
-import App from './App.vue'
+import App from './Components/App.vue'
 import Vuetify from 'vuetify'
 
 Vue.use(Vuetify)
