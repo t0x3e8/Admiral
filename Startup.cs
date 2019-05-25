@@ -61,7 +61,14 @@ namespace code
             {
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
+                    template: "{controller=Home}/{action=Index}/{id?}"
+                );
+
+                // The below code fixes the page refresh Url in SPA
+                routes.MapSpaFallbackRoute(
+                    name: "spa-fallback",
+                    defaults: new { Controller = "Home", Action = "Index" }
+                );
             });
         }
     }
