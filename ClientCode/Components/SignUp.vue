@@ -13,6 +13,7 @@
 
 <script>
 import axios from "axios";
+import auth from "../auth.js"
 
 export default {
   components: {},
@@ -38,10 +39,12 @@ export default {
       var that = this;
       axios
         .post("/user/CreateJWTToken", {
-          username: this.playerName
+          username: that.playerName
         })
         .then(function(response) {
-          that.playerName = `TODO: your names has been submitted to the server ${response}`;
+          auth.storeToken(response);
+          that.playerName = "";
+          that.$router.replace(that.$route.query.redirect || '/about')
         })
         .catch(function (error) {
           that.playerName = `error ${error}`;
