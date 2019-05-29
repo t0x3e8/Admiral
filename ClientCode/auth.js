@@ -1,13 +1,18 @@
 export default {
+
     storeToken(token) {
-        localStorage.token = token
+        localStorage.setItem('auth', JSON.stringify(token));
     },
 
     deleteToken() {
-        Reflect.deleteProperty(localStorage, 'token');
+        Reflect.deleteProperty(localStorage, 'auth');
     },
 
     getToken () {
-        return localStorage.token
+        return JSON.parse(localStorage.getItem('auth'))
+    },
+
+    isAuthorized() {
+        return Boolean(localStorage.auth);
     }
 }

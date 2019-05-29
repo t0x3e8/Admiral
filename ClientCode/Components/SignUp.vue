@@ -13,7 +13,7 @@
 
 <script>
 import axios from "axios";
-import auth from "../auth.js"
+import auth from "../auth.js";
 
 export default {
   components: {},
@@ -42,7 +42,10 @@ export default {
           username: that.playerName
         })
         .then(function(response) {
-          auth.storeToken(response);
+          auth.storeToken({
+            playerName: that.playerName,
+            token : response.data.token
+          });
           that.playerName = "";
           that.$router.replace(that.$route.query.redirect || '/about')
         })
