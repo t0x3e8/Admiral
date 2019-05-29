@@ -6,17 +6,27 @@
       :counter="10"
       label="Your nickname"
       required
-    ></v-text-field>
-    <v-btn :disabled="!valid" @click="join">Join game</v-btn>
+    >
+    </v-text-field>
+    <v-btn :disabled="!valid" color="success" @click="join">Join game</v-btn>
   </v-form>
 </template>
 
 <script>
 import axios from "axios";
 import auth from "../auth.js";
+import Vuetify, {
+  VForm,
+  VTextField,
+  VBtn
+} from 'vuetify/lib';
 
 export default {
-  components: {},
+  components: {
+    VForm,
+    VTextField,
+    VBtn
+  },
   data() {
     return {
       playerName: "",

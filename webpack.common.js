@@ -21,6 +21,14 @@ module.exports = {
         }
       },
       {
+        test: /\.styl$/u,
+        loader: [
+          'style-loader',
+          'css-loader',
+          'stylus-loader'
+        ]
+      },
+      {
         test: /\.css$/u,
         loader: 'css-loader'
       },

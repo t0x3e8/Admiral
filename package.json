@@ -15,23 +15,26 @@
   "license": "ISC",
   "dependencies": {
     "axios": "^0.18.0",
-    "vue": "^2.5.17",
+    "vue": "^2.5.18",
     "vue-router": "^3.0.6",
-    "vuetify": "^1.2.7"
+    "vuetify": "^1.5.14"
   },
   "devDependencies": {
-    "@babel/core": "^7.1.2",
-    "babel-loader": "^8.0.4",
-    "css-loader": "^1.0.0",
-    "eslint": "^5.6.1",
-    "eslint-loader": "^2.1.1",
-    "eslint-plugin-vue": "^5.0.0-beta.3",
+    "@babel/core": "^7.4.5",
+    "babel-loader": "^8.0.6",
+    "css-loader": "^1.0.1",
+    "eslint": "^5.16.0",
+    "eslint-loader": "^2.1.2",
+    "eslint-plugin-vue": "^5.2.2",
     "file-loader": "^2.0.0",
     "sass-loader": "^7.1.0",
-    "vue-loader": "^15.4.2",
-    "vue-template-compiler": "^2.5.17",
-    "webpack": "^4.20.2",
-    "webpack-cli": "^3.1.2",
-    "webpack-merge": "^4.1.4"
+    "style-loader": "^0.23.1",
+    "stylus": "^0.54.5",
+    "stylus-loader": "^3.0.2",
+    "vue-loader": "^15.7.0",
+    "vue-template-compiler": "^2.6.10",
+    "webpack": "^4.32.2",
+    "webpack-cli": "^3.3.2",
+    "webpack-merge": "^4.2.1"
   }
 }
