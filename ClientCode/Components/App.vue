@@ -1,8 +1,8 @@
 <template>
   <v-app>
     <v-content>
-      <v-container justify-s="true">
-        <v-layout v-if="isAuthorized">
+      <v-container v-if="isAuthorized">
+        <v-layout>
           <v-flex xs2>
             <router-link to="/about">Go to About</router-link>
           </v-flex>
@@ -13,21 +13,34 @@
         <v-layout row>
           <router-view></router-view>
         </v-layout>
-        <v-layout row>
-          <v-flex xs12>
-            <sign-up v-if="!isAuthorized"/>
+      </v-container>
+      <v-container fill-height bg grid-list-md text-xs-center v-if="!isAuthorized">
+        <v-layout row wrap align-center>
+          <v-flex offset-md3 md6>
+            <v-card>
+              <v-card-text><sign-up /></v-card-text>
+            </v-card>
           </v-flex>
         </v-layout>
       </v-container>
-    </v-content>    
-  <v-footer app></v-footer>
+    </v-content>
+    <v-footer app></v-footer>
   </v-app>
 </template>
 
 <script>
 import SignUp from "./SignUp.vue";
 import auth from "../auth.js";
-import Vuetify, { VApp, VContainer, VLayout, VFlex, VContent, VFooter } from "vuetify/lib";
+import Vuetify, {
+  VApp,
+  VContainer,
+  VLayout,
+  VFlex,
+  VContent,
+  VFooter,
+  VCard,
+  VCardText
+} from "vuetify/lib";
 
 export default {
   name: "app",
@@ -38,7 +51,8 @@ export default {
     VLayout,
     VFlex,
     VContent,
-    VFooter
+    VFooter,
+    VCardText
   },
   data() {
     return {
