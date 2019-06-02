@@ -80,13 +80,20 @@ export default {
 };
 </script>
 
-<style scoped>
-.mycoloir {
-  background-color: blue;
+<style>
+.v-text-field {
+  font-size: 4em;
+  line-height: 1em;
 }
 
-.v-input input {
-  max-height: 1em;
-  font-size:4em;
+.v-text-field input {
+  max-height: 1.2em;
+}
+
+.v-text-field .v-label {
+  line-height: 1em;
+  height: 100%;
+  font-size: 0.6em;
+  
 }
 </style>

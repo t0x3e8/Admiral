@@ -1,5 +1,5 @@
 <template>
-  <v-app dark>
+  <v-app>
     <v-content>
       <v-container v-if="isAuthorized">
         <v-layout>
@@ -17,7 +17,7 @@
       <v-container fill-height bg grid-list-md text-xs-center v-if="!isAuthorized">
         <v-layout row wrap align-center>
           <v-flex offset-md3 md6>
-            <sign-up/>
+            <sign-up />
           </v-flex>
         </v-layout>
       </v-container>

@@ -14,13 +14,15 @@ const router = routerFactory.createRouter();
 // eslint-disable-next-line no-new
 new Vue({
   theme: {
-    primary: '#1976D2',
-    secondary: '#424242',
-    accent: '#82B1FF',
-    error: '#FF5252',
-    info: '#2196F3',
-    success: '#4CAF50',
-    warning: '#FFC107'
+    light: {
+    primary: '#03a9f4',
+    secondary: '#3f51b5',
+    accent: '#9c27b0',
+    error: '#ff5722',
+    warning: '#ffc107',
+    info: '#607d8b',
+    success: '#8bc34a'
+    }
   },
   el: '#app',
   router,
