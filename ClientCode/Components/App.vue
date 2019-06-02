@@ -1,5 +1,5 @@
 <template>
-  <v-app>
+  <v-app dark>
     <v-content>
       <v-container v-if="isAuthorized">
         <v-layout>
@@ -17,9 +17,7 @@
       <v-container fill-height bg grid-list-md text-xs-center v-if="!isAuthorized">
         <v-layout row wrap align-center>
           <v-flex offset-md3 md6>
-            <v-card>
-              <v-card-text><sign-up /></v-card-text>
-            </v-card>
+            <sign-up/>
           </v-flex>
         </v-layout>
       </v-container>
@@ -37,9 +35,7 @@ import Vuetify, {
   VLayout,
   VFlex,
   VContent,
-  VFooter,
-  VCard,
-  VCardText
+  VFooter
 } from "vuetify/lib";
 
 export default {
@@ -51,13 +47,19 @@ export default {
     VLayout,
     VFlex,
     VContent,
-    VFooter,
-    VCardText
+    VFooter
   },
   data() {
     return {
       isAuthorized: auth.isAuthorized()
     };
+  },
+  created() {
+    var that = this;
+
+    auth.onChange = (eventData) => {
+      that.isAuthorized = eventData;
+    }
   }
 };
 </script>

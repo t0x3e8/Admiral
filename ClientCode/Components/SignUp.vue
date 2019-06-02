@@ -1,15 +1,21 @@
 <template>
-  <v-form ref="form" v-model="valid" lazy-validation>
-    <v-text-field
-      v-model="playerName"
-      :rules="nameRules"
-      :counter="10"
-      label="Your nickname"
-      required
-    >
-    </v-text-field>
-    <v-btn :disabled="!valid" color="success" @click="join">Join game</v-btn>
-  </v-form>
+  <v-card>
+    <v-card-text>
+      <v-form ref="form" v-model="valid" lazy-validation>
+        <v-text-field
+          v-model="playerName"
+          :rules="nameRules"
+          label="Enter your name ..."
+          single-line
+          required
+        ></v-text-field>
+      </v-form>
+    </v-card-text>
+    <v-card-actions>
+      <v-spacer></v-spacer>
+      <v-btn :disabled="!valid" color="success" @click="join" fab>Join</v-btn>
+    </v-card-actions>
+  </v-card>
 </template>
 
 <script>
@@ -18,28 +24,35 @@ import auth from "../auth.js";
 import Vuetify, {
   VForm,
   VTextField,
-  VBtn
-} from 'vuetify/lib';
+  VBtn,
+  VCard,
+  VCardText,
+  VCardActions,
+  VSpacer
+} from "vuetify/lib";
 
 export default {
   components: {
     VForm,
     VTextField,
-    VBtn
+    VBtn,
+    VCard,
+    VCardText,
+    VCardActions,
+    VSpacer
   },
   data() {
     return {
       playerName: "",
       valid: false,
-      counter: 10,
+      counter: 24,
       nameRules: [
-        v => Boolean(v) || "Enter your nickname",
+        v => Boolean(v) || "",
         v =>
-          v.length <= this.counter ||
-          "Really? The nickname must not be that long.",
+          v.length <= this.counter || "Too long. Enter shorter name, please :)",
         v =>
           /^[a-z](?:_?[ a-z0-9]+)*$/iu.test(v) ||
-          "Really? Enter a human nickname."
+          "Really? No strange characters ..."
       ]
     };
   },
@@ -54,12 +67,12 @@ export default {
         .then(function(response) {
           auth.storeToken({
             playerName: that.playerName,
-            token : response.data.token
+            token: response.data.token
           });
           that.playerName = "";
-          that.$router.replace(that.$route.query.redirect || '/about')
+          that.$router.replace(that.$route.query.redirect || "/");
         })
-        .catch(function (error) {
+        .catch(function(error) {
           that.playerName = `error ${error}`;
         });
     }
@@ -67,5 +80,13 @@ export default {
 };
 </script>
 
-<style lang="sass">
+<style scoped>
+.mycoloir {
+  background-color: blue;
+}
+
+.v-input input {
+  max-height: 1em;
+  font-size:4em;
+}
 </style>

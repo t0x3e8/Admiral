@@ -1,5 +1,5 @@
-const path = require('path'),
- {VueLoaderPlugin} = require('vue-loader')
+const path = require('path')
+const VueLoaderPlugin = require('vue-loader/lib/plugin')
 
 module.exports = {
   entry: './ClientCode/main.js',
@@ -12,13 +12,7 @@ module.exports = {
     rules: [
       {
         test: /\.vue$/u,
-        loader: 'vue-loader',
-        options: {
-          loaders: {
-            'scss': 'vue-style-loader!css-loader!sass-loader',
-            'sass': 'vue-style-loader!css-loader!sass-loader?indentedSyntax'
-          }
-        }
+        loader: 'vue-loader'
       },
       {
         test: /\.styl$/u,
@@ -30,7 +24,11 @@ module.exports = {
       },
       {
         test: /\.css$/u,
-        loader: 'css-loader'
+        loader: [
+          'vue-style-loader',
+          'css-loader'
+        ],
+        exclude: /node_modules/u
       },
       {
         test: /\.js$/u,

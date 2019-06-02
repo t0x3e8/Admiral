@@ -1,3 +1,19 @@
 <template>
-  <div class='display-4'>This is about! </div>
+  <div class="example">{{ msg }}</div>
 </template>
+
+<script>
+export default {
+  data () {
+    return {
+      msg: 'Hello world!'
+    }
+  }
+}
+</script>
+
+<style scoped>
+.example {
+  color: red;
+}
+</style>
