@@ -1,23 +1,12 @@
 <template>
   <v-app>
     <v-content>
-      <v-container v-if="isAuthorized">
-        <v-layout>
-          <v-flex xs2>
-            <router-link to="/about">Go to About</router-link>
-          </v-flex>
-          <v-flex xs2>
-            <router-link to="/dashboard">Go to Dashboard</router-link>
-          </v-flex>
-        </v-layout>
-        <v-layout row>
-          <router-view></router-view>
-        </v-layout>
-      </v-container>
+      <game v-if="isAuthorized"/>
+
       <v-container fill-height bg grid-list-md text-xs-center v-if="!isAuthorized">
         <v-layout row wrap align-center>
           <v-flex offset-md3 md6>
-            <sign-up />
+            <sign-up/>
           </v-flex>
         </v-layout>
       </v-container>
@@ -28,6 +17,7 @@
 
 <script>
 import SignUp from "./SignUp.vue";
+import Game from "./Game.vue";
 import auth from "../auth.js";
 import Vuetify, {
   VApp,
@@ -42,6 +32,7 @@ export default {
   name: "app",
   components: {
     SignUp,
+    Game,
     VApp,
     VContainer,
     VLayout,
@@ -57,9 +48,9 @@ export default {
   created() {
     var that = this;
 
-    auth.onChange = (eventData) => {
+    auth.onChange = eventData => {
       that.isAuthorized = eventData;
-    }
+    };
   }
 };
 </script>

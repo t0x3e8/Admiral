@@ -1,5 +1,5 @@
 import VueRouter from 'vue-router';
-import Dashboard from './Components/Dashboard.vue';
+import Game from './Components/Game.vue';
 import About from './Components/About.vue';
 
 export default {
@@ -13,13 +13,12 @@ export default {
           component: About
         },
         {
-          path: '/dashboard',
-          component: Dashboard
+          path: '/game',
+          component: Game
         }
       ]
     });
 
-
-return router;
+    return router;
   }
 };
