@@ -31,6 +31,14 @@ module.exports = {
         exclude: /node_modules/u
       },
       {
+        test: /\.scss$/u,
+        loader: [
+          'style-loader',
+          'css-loader',
+          'sass-loader'
+        ]
+      },
+      {
         test: /\.js$/u,
         loader: [
           'babel-loader',

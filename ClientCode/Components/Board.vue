@@ -1,30 +1,10 @@
 <template>
   <v-container>
     <v-layout justify-center wrap row>
-      <v-flex v-for="i in 10" :key="`${i}`" xs1>
-        <v-card color="primary">
-          <div>"`${i}`"</div>
-        </v-card>
-      </v-flex>
-      <v-flex v-for="i in 10" :key="`${i}`" xs1>
-        <v-card color="secondary">
-          <div>"`${i}`"</div>
-        </v-card>
-      </v-flex>
-      <v-flex v-for="i in 10" :key="`${i}`" xs1>
-        <v-card color="primary">
-          <div>"`${i}`"</div>
-        </v-card>
-      </v-flex>
-      <v-flex v-for="i in 10" :key="`${i}`" xs1>
-        <v-card color="secondary">
-          <div>"`${i}`"</div>
-        </v-card>
-      </v-flex>
-      <v-flex v-for="i in 10" :key="`${i}`" xs1>
-        <v-card color="primary">
-          <div>"`${i}`"</div>
-        </v-card>
+      <v-flex>
+        <template v-for="row in 20">
+          <board-cell :key="row" />
+        </template>
       </v-flex>
     </v-layout>
   </v-container>
@@ -32,14 +12,17 @@
 
 <script>
 import Vuetify, { VContainer, VLayout, VFlex, VCard } from "vuetify/lib";
+import BoardCell from "./Cell.vue";
 
 export default {
   components: {
     VContainer,
     VLayout,
     VFlex,
-    VCard
-  }
+    VCard, 
+    BoardCell
+  },
+  
 };
 </script>
 
