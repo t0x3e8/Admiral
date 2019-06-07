@@ -1,4 +1,4 @@
-const CombatResult = {
+export const CombatResult = {
     DEFENDER_AND_ATTACKER_LOSE: 0,
     ATTACKER_WINS: 1,
     DEFENDER_WINS: -1
@@ -10,8 +10,3 @@ const CombatResult = {
     TURN: 3,
     ENDED: 4
   };
-
-export default {
-  CombatResult,
-  GameState
-};

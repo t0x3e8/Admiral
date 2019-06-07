@@ -3,6 +3,7 @@ obj/
 
 bin/Debug/
 
-.vscode/
+.nyc_output/
+
 node_modules/
 wwwroot/

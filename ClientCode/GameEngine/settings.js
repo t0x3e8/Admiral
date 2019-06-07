@@ -1,6 +1,7 @@
 /* eslint-disable array-element-newline */
 /* eslint-disable no-magic-numbers */
-const settings = {
+
+export default {
     board: {
         numberOfColumns: 12,
         numberOfRows: 18,
@@ -43,5 +44,3 @@ const settings = {
 
     ]
 }
-
-module.exports = settings;

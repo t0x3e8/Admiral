@@ -1,7 +1,7 @@
 /* eslint-disable max-statements */
 /* eslint-disable no-magic-numbers */
 import uuid from 'uuid/v1';
-import settings from './settings';
+import settings from './settings.js';
 import Field from './field.js';
 import {each, find} from 'underscore';
 import Combat from './combat.js';
@@ -16,7 +16,7 @@ class Board {
     const that = this,
       boardId = uuid();
 
-    that.fields = that.createBoardFields();
+    that.fields = Board.createBoardFields();
 
     /**
      * @returns {uuid} gets unique board id
@@ -32,9 +32,9 @@ class Board {
    */
   // eslint-disable-next-line max-statements
   static createBoardFields() {
-    const fieldsMap = settings.map,
-      {numberOfColumns} = settings,
-      {numberOfRows} = settings,
+    const {map} = settings.board,
+    {numberOfColumns} = settings.board,
+    {numberOfRows} = settings.board,
       fields = [];
     let colPosition = 0,
       rowPosition = 0,
@@ -44,7 +44,7 @@ class Board {
     for (colPosition = 0; colPosition < numberOfColumns; colPosition += 1) {
       row = [];
       for (rowPosition = 0; rowPosition < numberOfRows; rowPosition += 1) {
-        fieldType = fieldsMap[colPosition][rowPosition];
+        fieldType = map[colPosition][rowPosition];
         row[rowPosition] = new Field({
           type: fieldType,
           columnIndex: colPosition,
