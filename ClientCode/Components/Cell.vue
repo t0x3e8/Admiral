@@ -12,20 +12,22 @@ export default {
 
 
 <style lang="scss" scoped>
-.boardCell {
-  display: flex;
-  justify-content: center;
-  align-items: stretch;
-  border: 1px #222222 solid;
+// .boardCell {
+//   display: flex;
+//   justify-content: center;
+//   align-items: stretch;
+//   border: 1px #222222 solid;
+//   width: 20px;
+//   height: 20px;
 
-  //   &:before {
-  //     content: "";
-  //     display: table;
-  //     padding-top: 100%;
-  //   }
-  //   &.color-land {
-  //     background-color: #03b363;
-  //   }
+//     &:before {
+//       content: "";
+//       display: table;
+//       padding-top: 100%;
+//     }
+//     &.color-land {
+//       background-color: #03b363;
+    // }
   //   &.color-land-darken {
   //     background-color: darken(
   //       $color: (
@@ -46,5 +48,5 @@ export default {
   //   &.color-in-range {
   //     border: 1px white solid;
   //   }
-}
+// }
 </style>

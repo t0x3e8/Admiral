@@ -7,9 +7,9 @@
       <v-flex xs8>
         <board style="height: 100%" />
       </v-flex>
-      <v-flex xs2>
+      <!-- <v-flex xs2>
         <moves-list style="height: 100%" />
-      </v-flex>
+      </v-flex> -->
     </v-layout>
   </v-container>
 </template>

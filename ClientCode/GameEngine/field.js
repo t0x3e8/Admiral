@@ -6,22 +6,22 @@ import uuid from 'uuid/v1';
  * @returns {void}
  */
 class Field {
-    constructor(fieldData) {
-        const that = this,
-         fieldId = uuid();
+  constructor(fieldData) {
+    const that = this,
+      fieldId = uuid();
 
-         that.type = fieldData.type;
-        that.colIndex = fieldData.columnIndex;
-        that.rowIndex = fieldData.rowIndex;
-        that.pawn = null;
+    that.type = fieldData.type;
+    that.colIndex = fieldData.columnIndex;
+    that.rowIndex = fieldData.rowIndex;
+    that.pawn = null;
 
-        /**
-         * @returns {uuid} gets unique field id
-         */
-        that.getFieldId = function () {
-            return fieldId;
-        };
-    }
+    /**
+     * @returns {uuid} gets unique field id
+     */
+    that.getFieldId = function() {
+      return fieldId;
+    };
+  }
 }
 
-module.exports = Field;
+export default Field;

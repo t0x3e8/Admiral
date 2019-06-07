@@ -9,4 +9,12 @@ export const CombatResult = {
     WAITING: 2,
     TURN: 3,
     ENDED: 4
-  };
+  },
+  FieldType = {
+    PLAYER_ONE_PORT: 1,
+    PLAYER_TWO_PORT: 2,
+    PLAYER_ONE_ENTRANCE: 3,
+    PLAYER_TWO_ENTRANCE: 4,
+    NEUTRAL: 5,
+    SEA: 0
+  }
