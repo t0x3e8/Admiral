@@ -35,11 +35,11 @@ export default {
 
 <style lang="scss" scoped>
 .board-container {
-  background-color: rgb(186, 143, 94);
-  border-bottom-left-radius: 2%;
-  border-bottom-right-radius: 2%;
-  border-top-left-radius: 2%;
-  border-top-right-radius: 2%;
+  background-color: var(--v-primary-base);
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
   box-sizing: border-box;
   display: flex;
   line-height: 27.6px;
@@ -47,8 +47,6 @@ export default {
   padding-left: 20px;
   padding-right: 20px;
   padding-top: 20px;
-  width: 720px;
-  height: 720px;
 }
 
 .colFieldsSet {

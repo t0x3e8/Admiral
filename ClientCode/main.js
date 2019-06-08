@@ -7,7 +7,11 @@ import VueRouter from 'vue-router';
 import App from './Components/App.vue';
 
 Vue.use(VueRouter);
-Vue.use(Vuetify);
+Vue.use(Vuetify, {
+  options: {
+    customProperties: true
+  }
+});
 Vue.config.productionTip = false;
 const router = routerFactory.createRouter();
 
