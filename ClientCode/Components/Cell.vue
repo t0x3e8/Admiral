@@ -1,52 +1,58 @@
 <template>
-  <div class="boardCell"></div>
+  <v-responsive :aspect-ratio="1/1">
+    <v-card
+      class="boardCell"
+      :class="{ port1: isPort1, port2: isPort2, sea: isSea, neutral: isNeutral}"
+    ></v-card>
+  </v-responsive>
 </template>
 
 <script>
+import { VCard, VResponsive } from "vuetify/lib";
 export default {
-    props: [
-        'size'
-    ]
-}
+  components: {
+    VCard,
+    VResponsive
+  },
+  props: {
+    cellData: Object
+  },
+  data() {
+    return {
+      isPort1: this.cellData.type === 1 || this.cellData.type === 3,
+      isPort2: this.cellData.type === 2 || this.cellData.type === 4,
+      isSea: this.cellData.type === 0,
+      isNeutral: this.cellData.type === 5
+    };
+  }
+};
 </script>
 
-
 <style lang="scss" scoped>
-// .boardCell {
-//   display: flex;
-//   justify-content: center;
-//   align-items: stretch;
-//   border: 1px #222222 solid;
-//   width: 20px;
-//   height: 20px;
+$sea-color: #1e88e5;
+$port1-color: #43a047;
+$port2-color: #1b5e20;
+$neutral-color: #263238;
 
-//     &:before {
-//       content: "";
-//       display: table;
-//       padding-top: 100%;
-//     }
-//     &.color-land {
-//       background-color: #03b363;
-    // }
-  //   &.color-land-darken {
-  //     background-color: darken(
-  //       $color: (
-  //         #03b363
-  //       ),
-  //       $amount: 10
-  //     );
-  //   }
-  //   &.color-sea {
-  //     background-color: #006694;
-  //   }
-  //   &.color-island {
-  //     background-color: #ede064;
-  //   }
-  //   &.color-selection {
-  //     background-color: red;
-  //   }
-  //   &.color-in-range {
-  //     border: 1px white solid;
-  //   }
-// }
+.boardCell {
+  margin: 0.2em;
+  height: 100%;
+  width: 100%;
+}
+
+.port1 {
+  background-color: $port1-color;
+}
+
+.port2 {
+  background-color: $port2-color;
+}
+
+.neutral {
+  background-color: $neutral-color;
+}
+
+.sea {
+  background-color: $sea-color;
+}
 </style>

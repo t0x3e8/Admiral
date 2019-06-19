@@ -1,7 +1,9 @@
 <template>
-  <v-app>
+  <v-app dark>
     <v-content>
-      <game v-if="isAuthorized"/>
+      <v-container v-if="isAuthorized">
+        <game/>
+      </v-container>
 
       <v-container fill-height bg grid-list-md text-xs-center v-if="!isAuthorized">
         <v-layout row wrap align-center>
@@ -19,7 +21,7 @@
 import SignUp from "./SignUp.vue";
 import Game from "./Game.vue";
 import auth from "../auth.js";
-import Vuetify, {
+import {
   VApp,
   VContainer,
   VLayout,
@@ -56,4 +58,24 @@ export default {
 </script>
 
 <style>
+@font-face {
+  font-family: "Titillium Web";
+  font-style: normal;
+  font-weight: 400;
+  src: url(../Assets/Fonts/titillium-web-v7-latin-regular.woff2) format("woff2");
+}
+
+html {
+  font-size: 62.5%;
+}
+
+@media (min-height: 754px) and (orientation: landscape) {
+  html {
+    font-size: 100%;
+  }
+
+  .board {
+    width: 62vh;
+  }
+}
 </style>

@@ -21,7 +21,7 @@
 <script>
 import axios from "axios";
 import auth from "../auth.js";
-import Vuetify, {
+import {
   VForm,
   VTextField,
   VBtn,

@@ -1,18 +1,16 @@
 <template>
-  <v-container class="board-container">
-    <template v-for="colFields in fields">
-      <div class="colFieldsSet">
-        <template v-for="field in colFields">
-          <div class="cell-container"></div>
-        </template>
-      </div>
-    </template>
+  <v-container align-content-center class="board">
+    <v-layout v-for="(columns, rowIndex) in fields" :key="`1${rowIndex}`" row>
+      <v-flex v-for="(cell, colIndex) in columns" :key="`2${colIndex}`" xs1>
+        <cell v-bind:cellData=cell />
+      </v-flex>
+    </v-layout>
   </v-container>
 </template>
 
 <script>
-import Vuetify, { VContainer, VLayout, VFlex, VCard } from "vuetify/lib";
-import BoardCell from "./Cell.vue";
+import { VContainer, VLayout, VFlex } from "vuetify/lib";
+import Cell from "./Cell.vue";
 import Board from "../GameEngine/board.js";
 
 export default {
@@ -20,8 +18,7 @@ export default {
     VContainer,
     VLayout,
     VFlex,
-    VCard,
-    BoardCell
+    Cell
   },
   data() {
     let board = new Board();
@@ -34,44 +31,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.board-container {
-  background-color: var(--v-primary-base);
-  border-bottom-left-radius: 5px;
-  border-bottom-right-radius: 5px;
-  border-top-left-radius: 5px;
-  border-top-right-radius: 5px;
-  box-sizing: border-box;
-  display: flex;
-  line-height: 27.6px;
-  padding-bottom: 20px;
-  padding-left: 20px;
-  padding-right: 20px;
-  padding-top: 20px;
-}
-
-.colFieldsSet {
-  border: #00ff00 2px solid;
-  box-sizing: border-box;
-
-  display: flex;
-  flex-basis: 100%;
-  flex-direction: column;
-  flex-grow: 1;
-  -webkit-box-direction: normal;
-  -webkit-box-flex: 1;
-  -webkit-box-orient: vertical;
-}
-
-.cell-container {
-  box-sizing: border-box;
-  border: #0000ff 2px solid;
-  display: flex;
-  flex-basis: 100%;
-  flex-direction: row;
-  flex-grow: 1;
-  position: relative;
-  -webkit-box-direction: normal;
-}
+  .board {
+    box-shadow: rgba(0, 0, 0, 0.4) 0px 0px 1em 1em;
+    padding: 2em;
+  }
 </style>
 
 
