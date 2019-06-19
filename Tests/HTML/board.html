@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <title>Admiral</title>
+  <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900|Material+Icons" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/vuetify/dist/vuetify.min.css" rel="stylesheet" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui" />
+  <style>
+    @font-face {
+      font-family: 'Titillium Web';
+      font-style: normal;
+      font-weight: 400;
+      src: url(./titillium-web.woff2) format('woff2');
+    }
+
+    html {
+      font-size: 62.5%;
+    }
+    
+    @media (min-height: 754px) and (orientation: landscape) {
+      html {
+        font-size: 100%;
+      }
+
+      .board {
+        width: 67vh;
+      }
+    }
+
+    /* @media (min-height: 3000px) and (orientation: landscape) {
+      html {
+        font-size: 270%;
+      }
+
+      .board {
+        width: 45%;
+        max-width: unset;
+      }
+    } */
+
+
+
+    /* @media (min-width: 320px) and (orientation: portrait) {
+      html {
+        font-size: 66%;
+      }
+    }
+
+    @media (min-width: 320px) and (orientation: landscape) {
+      html {
+        font-size: 100%;
+      }
+
+      .board {
+        width: 40%;
+      }
+    } */
+
+    /* 
+
+    @media (min-height: 320px) and (orientation: landscape) {
+      html {
+        font-size: 59%;
+      }
+    }
+
+    @media (min-width: 360px) and (orientation: portrait) {
+      html {
+        font-size: 74%;
+      }
+    }
+
+    @media (min-height: 360px) and (orientation: landscape) {
+      html {
+        font-size: 67%;
+      }
+    }
+
+    @media (min-width: 375px) and (orientation: portrait) {
+      html {
+        font-size: 77%;
+      }
+    }
+
+    @media (min-height: 375px) and (orientation: landscape) {
+      html {
+        font-size: 70%;
+      }
+    }
+
+    @media (min-width: 412px) and (orientation: portrait) {
+      html {
+        font-size: 85%;
+      }
+    }
+
+    @media (min-height: 412px) and (orientation: landscape) {
+      html {
+        font-size: 78%;
+      }
+    }
+
+
+    @media (min-width: 500px) and (orientation: portrait) {
+      html {
+        font-size: 100%;
+      }
+    }
+
+    @media (min-height: 500px) and (orientation: landscape) {
+      html {
+        font-size: 95%;
+      }
+    }
+
+    @media (min-width: 600px) and (orientation: portrait) {
+      html {
+        font-size: 115%;
+      }
+    }
+
+    @media (min-height: 600px) and (orientation: landscape) {
+      html {
+        font-size: 110%;
+      }
+    }
+
+    @media (min-width: 700px) and (orientation: portrait) {
+      html {
+        font-size: 150%;
+      }
+    }
+
+    @media (min-height: 700px) and (orientation: landscape) {
+      html {
+        font-size: 140%;
+      }
+    }
+
+    @media (min-width: 768px) and (orientation: portrait) {
+      html {
+        font-size: 160%;
+      }
+    }
+
+    @media (min-height: 768px) and (orientation: landscape) {
+      html {
+        font-size: 150%;
+      }
+    }
+
+    /* @media (min-width: 834px) and (orientation: portrait) {
+  html {
+    font-size: 150%;
+  }
+}
+
+@media (min-height: 834px) and (orientation: landscape) {
+  html {
+    font-size: 160%;
+  }
+} */
+
+    /*
+    @media (min-height: 960px) and (orientation: landscape) {
+      html {
+        font-size: 170%;
+      }
+    }
+
+    @media (min-width: 1024px) and (orientation: portrait) {
+      html {
+        font-size: 200%;
+      }
+    }
+
+    @media (min-height: 1024px) and (orientation: landscape) {
+      html {
+        font-size: 190%;
+      }
+    }
+
+    @media (min-height: 1050px) and (orientation: landscape) {
+      html {
+        font-size: 180%;
+      }
+    }
+
+    @media (min-height: 1050px) and (orientation: landscape) {
+      html {
+        font-size: 180%;
+      }
+    }
+
+    @media (min-height: 1200px) and (orientation: landscape) {
+      html {
+        font-size: 200%;
+      }
+    }
+
+    @media (min-height: 1440px) and (orientation: landscape) {
+      html {
+        font-size: 250%;
+      }
+    }
+
+    @media (min-height: 2160px) and (orientation: landscape) {
+      html {
+        font-size: 350%;
+      }
+    } */
+  </style>
+</head>
+
+<body>
+  <div id="app">
+    <v-app dark>
+        Width: {{ window.width }},
+        Height: {{ window.height }}
+      <v-content>
+        <v-container align-content-center class="board">
+          <v-layout v-for="i in 18" :key="`1${i}`" row>
+            <v-flex v-for="j in 12" :key="`2${j}`" xs1>
+              <v-responsive :aspect-ratio="1/1">
+                <v-card v-bind:class="{isPort1:isPort1, isPort2: isPort2, isSea: isSea}" class="boardCell">
+                  <div >X</div>
+                </v-card>
+              </v-responsive>
+            </v-flex>
+            </v-flex>
+          </v-layout>
+        </v-container>
+      </v-content>
+    </v-app>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vuetify/dist/vuetify.js"></script>
+  <script>
+    new Vue({
+      el: "#app",      
+  data: {
+    window: {
+      width: window.innerWidth,
+      height: window.innerHeight
+    },
+    isSea: false,
+    isPort1 : true,
+    isPort2: false
+  },
+    });
+  </script>
+</body>
+<style>
+  .board {
+    box-shadow: rgba(0, 0, 0, 0.4) 0px 0px 1em 1em;
+    padding: 2em;
+  }
+
+  .boardCell {
+    margin: .2em;
+    height: 100%;
+    width: 100%;
+  }
+
+  .isPort1 {
+    background: green;
+  }
+
+  
+  .isPort2 {
+    background: pink;
+  }
+
+  
+  .isSea {
+    background: blue;
+  }
+</style>
+
+</html>
