@@ -3,18 +3,22 @@
     <v-card
       class="boardCell"
       :class="{ port1: isPort1, port2: isPort2, sea: isSea, neutral: isNeutral, isEntrance: isPortEntrance}"
-    ></v-card>
+    > 
+      <pawn v-if="cellData.pawn" v-bind:pawnData="cellData.pawn" />
+    </v-card>
   </v-responsive>
 </template>
 
 <script>
 import { VCard, VResponsive } from "vuetify/lib";
 import { CellType } from "../GameEngine/gameEnums.js";
+import Pawn from "./Pawn.vue";
 
 export default {
   components: {
     VCard,
-    VResponsive
+    VResponsive,
+    Pawn
   },
   props: {
     cellData: Object

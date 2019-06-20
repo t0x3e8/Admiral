@@ -3,6 +3,8 @@
 import uuid from 'uuid/v1';
 import settings from './settings.js';
 import Cell from './cell.js';
+import Pawn from './pawn.js';
+import {PawnType} from './gameEnums.js';
 
 /**
  * The Board object represents the structure of the board, including characteristics  of board eg.
@@ -52,6 +54,21 @@ class Board {
     }
 
     return cells;
+  }
+
+  addRandomPawn() {
+    const that = this,
+      pawn = new Pawn({
+        type: PawnType.SUBMARINE
+    }),
+
+     getRandom = max => {
+      const max1 = Math.floor(max);
+
+      return Math.floor(Math.random() * max1);
+     }
+
+    that.cells[getRandom(18)][getRandom(12)].assignPawn(pawn);
   }
 }
 

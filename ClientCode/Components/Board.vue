@@ -22,10 +22,13 @@ export default {
   },
   data() {
     let board = new Board();
-
+    board.addRandomPawn();
+    
     return {
       cells: board.cells
     };
+  },
+  methods: {
   }
 };
 </script>

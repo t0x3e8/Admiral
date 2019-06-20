@@ -11,6 +11,7 @@
     "type": "git",
     "url": "https://github.com/t0x3e8/Core-and-Vue-boilerplate.git"
   },
+  "eslintIgnore": ["wwwroot"],
   "author": "t0x3e8@gmail.com",
   "license": "ISC",
   "dependencies": {
