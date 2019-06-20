@@ -33,7 +33,7 @@ export default {
 <style lang="scss" scoped>
   .board {
     box-shadow: rgba(0, 0, 0, 0.4) 0px 0px 1em 1em;
-    padding: 2em;
+    padding: .5em;
   }
 </style>
 

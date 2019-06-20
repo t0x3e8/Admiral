@@ -38,17 +38,17 @@ class Board {
       fieldType = 0,
       row = [];
 
-    for (colPosition = 0; colPosition < numberOfColumns; colPosition += 1) {
+    for (rowPosition = 0; rowPosition < numberOfRows; rowPosition += 1) {
       row = [];
-      for (rowPosition = 0; rowPosition < numberOfRows; rowPosition += 1) {
-        fieldType = map[colPosition][rowPosition];
-        row[rowPosition] = new Field({
+      for (colPosition = 0; colPosition < numberOfColumns; colPosition += 1) {
+        fieldType = map[rowPosition][colPosition];
+        row[colPosition] = new Field({
           type: fieldType,
           columnIndex: colPosition,
           rowIndex: rowPosition
         });
       }
-      fields[colPosition] = row;
+      fields[rowPosition] = row;
     }
 
     return fields;
