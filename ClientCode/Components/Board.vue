@@ -1,6 +1,6 @@
 <template>
   <v-container align-content-center class="board">
-    <v-layout v-for="(columns, rowIndex) in fields" :key="`1${rowIndex}`" row>
+    <v-layout v-for="(columns, rowIndex) in cells" :key="`1${rowIndex}`" row>
       <v-flex v-for="(cell, colIndex) in columns" :key="`2${colIndex}`" xs1>
         <cell v-bind:cellData=cell />
       </v-flex>
@@ -24,7 +24,7 @@ export default {
     let board = new Board();
 
     return {
-      fields: board.fields
+      cells: board.cells
     };
   }
 };

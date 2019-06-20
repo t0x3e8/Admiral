@@ -2,13 +2,15 @@
   <v-responsive :aspect-ratio="1/1">
     <v-card
       class="boardCell"
-      :class="{ port1: isPort1, port2: isPort2, sea: isSea, neutral: isNeutral}"
+      :class="{ port1: isPort1, port2: isPort2, sea: isSea, neutral: isNeutral, isEntrance: isPortEntrance}"
     ></v-card>
   </v-responsive>
 </template>
 
 <script>
 import { VCard, VResponsive } from "vuetify/lib";
+import { CellType } from "../GameEngine/gameEnums.js";
+
 export default {
   components: {
     VCard,
@@ -19,10 +21,11 @@ export default {
   },
   data() {
     return {
-      isPort1: this.cellData.type === 1 || this.cellData.type === 3,
-      isPort2: this.cellData.type === 2 || this.cellData.type === 4,
-      isSea: this.cellData.type === 0,
-      isNeutral: this.cellData.type === 5
+      isPort1: this.cellData.type === CellType.PLAYER_ONE_PORT,
+      isPort2: this.cellData.type === CellType.PLAYER_TWO_PORT,
+      isSea: this.cellData.type === CellType.SEA,
+      isNeutral: this.cellData.type === CellType.NEUTRAL,
+      isPortEntrance: (this.cellData.type === CellType.PLAYER_ONE_ENTRANCE) || (this.cellData.type === CellType.PLAYER_TWO_ENTRANCE)
     };
   }
 };
@@ -31,6 +34,7 @@ export default {
 <style lang="scss" scoped>
 $sea-color: #1e88e5;
 $port1-color: #43a047;
+$port-entrance-color: #546E7A;
 $port2-color: #1b5e20;
 $neutral-color: #263238;
 
@@ -54,5 +58,8 @@ $neutral-color: #263238;
 
 .sea {
   background-color: $sea-color;
+}
+.isEntrance {
+  background-color: $port-entrance-color;
 }
 </style>

@@ -1,5 +1,5 @@
 <template>
-  <v-app dark>
+  <v-app light>
     <v-content>
       <v-container v-if="isAuthorized">
         <game/>

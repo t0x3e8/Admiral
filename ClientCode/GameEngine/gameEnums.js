@@ -10,7 +10,7 @@ export const CombatResult = {
     TURN: 3,
     ENDED: 4
   },
-  FieldType = {
+  CellType = {
     PLAYER_ONE_PORT: 1,
     PLAYER_TWO_PORT: 2,
     PLAYER_ONE_ENTRANCE: 3,
