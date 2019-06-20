@@ -28,18 +28,18 @@ export default {
     },
     pawns: [
         {
-            typeId: 100001,
-            name: 'TestShip1',
+            typeId: 50,
+            name: 'Cruiser',
             range: 1,
-            destroy: [100002],
-            destroyedBy: [100001]
+            destroys: [100002],
+            destroyed: [100001]
         },
         {
-            typeId: 100002,
-            name: 'TestShip2',
+            typeId: 51,
+            name: 'Submarine',
             range: 4,
-            destroy: [],
-            destroyedBy: [100002, 100001]
+            destroys: [],
+            destroyed: [100002, 100001]
         }
 
     ]

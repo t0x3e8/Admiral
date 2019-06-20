@@ -22,6 +22,13 @@ class Cell {
       return cellId;
     };
   }
+
+  assignPawn(pawn) {
+    const that = this;
+
+    that.pawn = pawn;
+    pawn.updatePosition(that.colIndex, that.rowIndex);
+  }
 }
 
 export default Cell;

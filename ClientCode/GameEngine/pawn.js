@@ -50,6 +50,8 @@ class Pawn {
     updatePosition(newCol, newRow) {
         const that = this;
 
+        that.oldCol = that.col;
+        that.oldRow = that.row;
         that.col = newCol;
         that.row = newRow;
         // eslint-disable-next-line padded-blocks
@@ -71,6 +73,5 @@ class Pawn {
         that.oldRow = that.row;
     }
 }
-
 
 export default Pawn;
