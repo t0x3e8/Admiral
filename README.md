@@ -8,7 +8,10 @@ People who used to play this game, will immediately recognize it by these remark
 The web application is based on the mix of technologies which ddivide the application to Client and Server parts.
 
 ## Client
-Technology stack: JavaScript, Vue, Vuetify, Axios, 
+Technology stack: JavaScript, Vue, Vuetify, Axios,  
+Testing setup: Mocha, Chai, Sinon, babel  
+[![Tests status](https://t0x3e8.visualstudio.com/AdmiralGame/_apis/build/status/t0x3e8.Admiral?branchName=master&jobName=Run_client_tests)](https://t0x3e8.visualstudio.com/AdmiralGame/_build/latest?definitionId=1&branchName=master)
+
 
 ## Server
 Technolody stack: Dotnet Core 2.2, MVC,
