@@ -1,21 +1,14 @@
-# Core-and-Vue-boilerplate
-This is a boilerplate for dotnet core MVC and Vue.js
+# Concept
+The game in Poland was called “Manewry Morskie” (Naval Maneuvers?). Anyway the idea is to beat your opponent with your navy fleet, or rather with your clever and cunning actions. The game introduces complexity of different variety of ships like for instance: submarines, destroyers, ship missile etc. On top of this some ships have different ranges. In addition each player has own starting setup which of course is unknown to his or her enemy.
 
-In the principle, it should contain only the bare minimum of dependencies. 
-- webpack bundles js, css, vue etc. into app.js file and place it under wwwroot,
-- webpack-merge allows to merge webpack.dev.js or webpack.prod.js configuration with webpack.common.js,
-- babel-loader translates JS files,
-- css-loader, file-loader, sass-loader, vue-loader, vue-template-compiler process style and vue files,
+People who used to play this game, will immediately recognize it by these remarkable pawns…
 
-This boilerplate uses Eslint as the linter for script files. It is not indispensable, but it allows to keep a high level of coding style.
-- eslint the main processor,
-- eslint-loader while webpacking the *.js files are lintered,
-- eslint-plugin-vue used with *.vue files, 
+# Architecture
 
-# Run Dev
-(in order to run tasks concurrently, the [Concurrently](https://www.npmjs.com/package/concurrently) must be installed 'npm install -g concurrently')
+The web application is based on the mix of technologies which ddivide the application to Client and Server parts.
 
-npm run dev
+## Client
+Technology stack: JavaScript, Vue, Vuetify, Axios, 
 
-# Run Prod
-npm run build
+## Server
+Technolody stack: Dotnet Core 2.2, MVC,
