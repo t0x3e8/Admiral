@@ -16,6 +16,19 @@ jobs:
       inputs:
         command: 'install'
 
+    - task: Npm@1
+      displayName: Mocha install
+      inputs:    
+        command: 'custom'
+        customCommand: 'install mocha'
+
+    - task: Npm@1
+      displayName: Mocha run tests
+      inputs:    
+        command: 'custom'
+        customCommand: 'mocha'
+
+
 #variables:
 #  buildConfiguration: 'Release'
 
