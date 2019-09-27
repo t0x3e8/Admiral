@@ -35,7 +35,7 @@ jobs:
     - task: DotNetCoreInstaller@0    
       displayName: Install dotnet version 2.2.x
       inputs:
-        version: '2.2.x'
+        version: '2.2.402'
     - task: DotNetCoreCLI@2
       displayName: Run "dotnet restore"
       inputs:
