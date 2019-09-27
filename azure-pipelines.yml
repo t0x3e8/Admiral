@@ -29,6 +29,7 @@ jobs:
         customCommand: 'test'
 
 - job: Build_application
+  dependsOn: Run_client_tests
   pool:
     vmImage: 'windows-latest'
   steps:
@@ -41,6 +42,20 @@ jobs:
       inputs:
         command: 'restore'
         feedsToUse: 'select'
+
+- job: Deploy_to_Azure
+  dependsOn: Build_application
+  pool:
+    vmImage: 'windows-latest'
+  steps:
+  - task: AzureRmWebAppDeployment@4
+    displayName: Deploying Application to Azure
+    inputs:
+      ConnectionType: 'AzureRM'
+      azureSubscription: 'Visual Studio Ultimate with MSDN(71084930-69bf-47b7-8aa2-9ca0ead57c34)'
+      appType: 'webApp'
+      WebAppName: 'admiralGame'
+      packageForLinux: '$(System.DefaultWorkingDirectory)/**/*.zip'
 
 
 
