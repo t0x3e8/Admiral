@@ -28,6 +28,22 @@ jobs:
         command: 'custom'
         customCommand: 'test'
 
+- job: Build_application
+  pool:
+    vmImage: 'windows-latest'
+  steps:
+    - task: DotNetCoreInstaller@0    
+      displayName: Install dotnet version 2.2
+      inputs:
+        version: '2.2'
+    - task: DotNetCoreCLI@2
+      displayName: Run "dotnet restore"
+      inputs:
+        command: 'restore'
+        feedsToUse: 'select'
+
+
+
 
 #variables:
 #  buildConfiguration: 'Release'
