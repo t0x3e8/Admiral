@@ -2,6 +2,8 @@
 # Build and test ASP.NET Core projects targeting .NET Core.
 # Add steps that run tests, create a NuGet package, deploy, and more:
 # https://docs.microsoft.com/azure/devops/pipelines/languages/dotnet-core
+variables:
+  BuildConfiguration: Release
 
 trigger:
 - master
@@ -46,7 +48,14 @@ jobs:
       displayName: Build
       inputs:
         command: build
-        arguments: '--configuration Release'
+        arguments: '--configuration $(BuildConfiguration)'
+    - task: DotNetCoreCLI@2
+      displayName: Publish
+      inputs:
+        command: publish
+        publishWebProjects: True
+        arguments: '--configuration $(BuildConfiguration) --output $(Build.ArtifactStagingDirectory)'
+        zipAfterPublish: True
 
 - job: Deploy_to_Azure
   dependsOn: Build_application
@@ -59,7 +68,7 @@ jobs:
       azureSubscription: 'Visual Studio Ultimate with MSDN(71084930-69bf-47b7-8aa2-9ca0ead57c34)'
       appType: 'webApp'
       appName: 'admiralGame'
-      package: $(System.ArtifactsDirectory)/**/*.zip  
+      package: $(Build.ArtifactStagingDirectory)/*.zip  
 
 
 
