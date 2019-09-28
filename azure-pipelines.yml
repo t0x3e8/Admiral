@@ -38,24 +38,28 @@ jobs:
       inputs:
         version: '2.2.402'
     - task: DotNetCoreCLI@2
-      displayName: Run "dotnet restore"
+      displayName: Restore dependencies
       inputs:
         command: 'restore'
         feedsToUse: 'select'
+    - task: DotNetCoreCLI@2
+      displayName: Build
+      inputs:
+        command: build
+        arguments: '--configuration Release'
 
 - job: Deploy_to_Azure
   dependsOn: Build_application
   pool:
     vmImage: 'windows-latest'
   steps:
-  - task: AzureRmWebAppDeployment@4
+  - task: AzureWebApp@1
     displayName: Deploying Application to Azure
     inputs:
-      ConnectionType: 'AzureRM'
       azureSubscription: 'Visual Studio Ultimate with MSDN(71084930-69bf-47b7-8aa2-9ca0ead57c34)'
       appType: 'webApp'
-      WebAppName: 'admiralGame'
-      packageForLinux: '$(System.DefaultWorkingDirectory)/**/*.zip'
+      appName: 'admiralGame'
+      package: $(System.ArtifactsDirectory)/**/*.zip  
 
 
 
