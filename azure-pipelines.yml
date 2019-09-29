@@ -49,6 +49,15 @@ jobs:
       inputs:
         command: build
         arguments: '--configuration $(BuildConfiguration)'
+    - task: Npm@1
+      displayName: Install npm
+      inputs:
+        command: 'install'
+    - task: Npm@1
+      displayName: Install npm dependecies
+      inputs:    
+        command: 'custom'
+        customCommand: 'install'
     - task: DotNetCoreCLI@2
       displayName: Publish to zip
       inputs:
