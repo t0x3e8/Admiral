@@ -1,5 +1,5 @@
 <template>
-    <div class="circle">{{pawnData.type}}</div>
+    <div class="pawn"></div>
 </template>
 
 <script>
@@ -15,11 +15,11 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.circle {
-    border-radius: 50%;
-    width: 70%;
-    height: 70%;
-    background: white;
-    border: 3px solid red;
+.pawn {
+  width: 100%;
+  height: 100%;
+  background-color: yellow;
+  border-radius: 50px;
+  border: 1px transparent solid;
 }
 </style>
