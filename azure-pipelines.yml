@@ -50,12 +50,17 @@ jobs:
         command: build
         arguments: '--configuration $(BuildConfiguration)'
     - task: DotNetCoreCLI@2
-      displayName: Publish
+      displayName: Publish to zip
       inputs:
         command: publish
         publishWebProjects: True
         arguments: '--configuration $(BuildConfiguration) --output $(Build.ArtifactStagingDirectory)'
         zipAfterPublish: True
+    - task: PublishBuildArtifacts@1
+      displayName: Publish to Artifact
+      inputs:
+        pathtoPublish: '$(Build.ArtifactStagingDirectory)' 
+        artifactName: 'admiralWebsite'
 
 - job: Deploy_to_Azure
   dependsOn: Build_application
@@ -69,13 +74,3 @@ jobs:
       appType: 'webApp'
       appName: 'admiralGame'
       package: $(Build.ArtifactStagingDirectory)/**/*.zip  
-
-
-
-
-#variables:
-#  buildConfiguration: 'Release'
-
-#steps:
-#- script: dotnet build --configuration $(buildConfiguration)
-#  displayName: 'dotnet build $(buildConfiguration)'
