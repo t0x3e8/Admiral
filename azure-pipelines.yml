@@ -58,6 +58,11 @@ jobs:
       inputs:    
         command: 'custom'
         customCommand: 'install'
+    - task: Npm@1
+      displayName: Run Build npm script with webpack
+      inputs:    
+        command: 'custom'
+        customCommand: 'npm run-script build'
     - task: DotNetCoreCLI@2
       displayName: Publish to zip
       inputs:
