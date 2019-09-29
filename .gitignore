@@ -7,3 +7,5 @@ bin/Debug/
 
 node_modules/
 wwwroot/
+publish/
+bin/

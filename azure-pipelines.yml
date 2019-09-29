@@ -56,11 +56,6 @@ jobs:
         publishWebProjects: True
         arguments: '--configuration $(BuildConfiguration) --output $(Build.ArtifactStagingDirectory)'
         zipAfterPublish: True
-    - task: PublishBuildArtifacts@1
-      displayName: Publish to Artifact
-      inputs:
-        pathtoPublish: '$(Build.ArtifactStagingDirectory)' 
-        artifactName: 'admiralWebsite'
 
 - job: Deploy_to_Azure
   dependsOn: Build_application
@@ -73,4 +68,4 @@ jobs:
       azureSubscription: 'Visual Studio Ultimate with MSDN(71084930-69bf-47b7-8aa2-9ca0ead57c34)'
       appType: 'webApp'
       appName: 'admiralGame'
-      package: $(Build.ArtifactStagingDirectory)/**/*.zip  
+      package: $(System.ArtifactsDirectory)/**/*.zip  
