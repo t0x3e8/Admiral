@@ -1,13 +1,14 @@
 <template>
   <v-card>
     <v-card-text>
-      <v-form ref="form" v-model="valid" lazy-validation>
+      <v-form ref="form" v-model="valid" lazy-validation onSubmit="return false">
         <v-text-field
           v-model="playerName"
           :rules="nameRules"
           label="Enter your name ..."
           single-line
           required
+          @keyup.enter.native="join"
         ></v-text-field>
       </v-form>
     </v-card-text>
