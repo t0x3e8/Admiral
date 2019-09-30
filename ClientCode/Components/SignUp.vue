@@ -50,10 +50,10 @@ export default {
       nameRules: [
         v => Boolean(v) || "",
         v =>
-          v.length <= this.counter || "Too long. Enter shorter name, please :)",
+          v.length <= this.counter || "It's too long. Enter shorter name, please :)",
         v =>
           /^[a-z](?:_?[ a-z0-9]+)*$/iu.test(v) ||
-          "Really? No strange characters ..."
+          "Really? No strange characters allowed ..."
       ]
     };
   },
