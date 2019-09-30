@@ -42,8 +42,12 @@ $port-entrance-color: #546E7A;
 $port2-color: #1b5e20;
 $neutral-color: #263238;
 
+.v-card {
+  border-radius: 0%;
+}
+
 .boardCell {
-  margin: 0.2em;
+  margin: 1px;
   height: 100%;
   width: 100%;
 }
