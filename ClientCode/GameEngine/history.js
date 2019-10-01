@@ -42,6 +42,7 @@ class History {
    */
   pushTurn(player1, player2) {
     const that = this;
+
     let record = null;
 
     if (player1 && player2) {

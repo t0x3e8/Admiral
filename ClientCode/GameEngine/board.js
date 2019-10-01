@@ -35,6 +35,7 @@ class Board {
       {numberOfColumns} = settings.board,
       {numberOfRows} = settings.board,
       cells = [];
+
     let colPosition = 0,
       rowPosition = 0,
       cellType = 0,

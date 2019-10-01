@@ -31,7 +31,7 @@ module.exports = {
         exclude: /node_modules/u
       },
       {
-        test: /\.scss$/u,
+        test: /\.s(c|a)ss$/u,
         loader: [
           'style-loader',
           'css-loader',

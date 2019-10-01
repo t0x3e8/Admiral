@@ -16,7 +16,8 @@ class Game {
   constructor() {
     const that = this,
       gameId = uuid();
-    let state = GameState.NotStarted,
+
+      let state = GameState.NotStarted,
       gameResult = 0;
 
     that.board = null;

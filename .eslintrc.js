@@ -9,7 +9,7 @@ module.exports = {
     },
     "extends": [
         "eslint:recommended",
-        "plugin:vue/essential"
+        "plugin:vue/recommended"
     ],
     "parserOptions": {
         "ecmaVersion": 2015,
