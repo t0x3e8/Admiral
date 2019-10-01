@@ -1,15 +1,19 @@
-<template>
-  <v-container align-content-center class="board">
+	<template>
+  <v-container align-content-center class="board">  
     <v-layout v-for="(columns, rowIndex) in cells" :key="`1${rowIndex}`" row>
       <v-flex v-for="(cell, colIndex) in columns" :key="`2${colIndex}`" xs1>
-        <cell v-bind:cellData=cell />
+        <cell v-bind:cellData="cell" />
       </v-flex>
     </v-layout>
   </v-container>
 </template>
 
 <script>
-import { VContainer, VLayout, VFlex } from "vuetify/lib";
+import {
+  VContainer,
+  VLayout,
+  VFlex
+} from "vuetify/lib";
 import Cell from "./Cell.vue";
 import Board from "../GameEngine/board.js";
 
@@ -23,21 +27,17 @@ export default {
   data() {
     let board = new Board();
     board.addRandomPawn();
-    
+
     return {
       cells: board.cells
     };
   },
-  methods: {
-  }
+  methods: {}
 };
 </script>
 
-<style lang="scss" scoped>
-  .board {
-    box-shadow: rgba(0, 0, 0, 0.4) 0px 0px 1em 1em;
-    padding: .5em;
-  }
+<style scoped>
+.board {
+  padding: 0.1em;
+}
 </style>
-
-

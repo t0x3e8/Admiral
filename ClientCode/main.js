@@ -5,7 +5,10 @@ import VueRouter from 'vue-router';
 import App from './Components/App.vue';
 
 const opts = {
-  theme: {disable: true}
+  theme: {disable: true},
+  icons: {
+    iconfont: 'mdi'
+  }
 },
   router = routerFactory.createRouter(),
   vuetify = new Vuetify(opts);
