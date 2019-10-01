@@ -60,6 +60,7 @@ class Player {
    */
   startTurn(turnCommitCallback) {
     const that = this;
+
     let isInvalid = false;
 
     that.state = PlayerState.Ready;
