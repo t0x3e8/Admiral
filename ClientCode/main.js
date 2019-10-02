@@ -4,12 +4,7 @@ import routerFactory from './router.js';
 import VueRouter from 'vue-router';
 import App from './Components/App.vue';
 
-const opts = {
-  theme: {disable: true},
-  icons: {
-    iconfont: 'mdi'
-  }
-},
+const opts = {},
   router = routerFactory.createRouter(),
   vuetify = new Vuetify(opts);
 
