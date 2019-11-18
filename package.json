@@ -1,7 +1,7 @@
 {
   "name": "battleship.mvc.vue",
   "version": "0.0.1",
-  "description": "Asp.net Core MVC 2.1 with Vue",
+  "description": "Asp.net Core MVC and Vue",
   "main": "index.js",
   "scripts": {
     "dev": "concurrently \"dotnet run\" \"webpack --config=webpack.dev.js --watch\"",
