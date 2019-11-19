@@ -1,10 +1,10 @@
 /* eslint-disable no-magic-numbers */
 
-import uuid from 'uuid/v1';
-import settings from './settings.js';
-import Cell from './cell.js';
-import Pawn from './pawn.js';
-import {PawnType} from './gameEnums.js';
+import uuid from 'uuid/v1'
+import settings from './settings.js'
+import Cell from './cell.js'
+import Pawn from './pawn.js'
+import Utils from './utils.js'
 
 /**
  * The Board object represents the structure of the board, including characteristics  of board eg.
@@ -14,63 +14,67 @@ import {PawnType} from './gameEnums.js';
 class Board {
   constructor() {
     const that = this,
-      boardId = uuid();
+      boardId = uuid()
 
-    that.cells = Board.createBoardCells();
+    that.cells = Board.initializeCells()
+    this.initializePawns()
 
     /**
      * @returns {uuid} gets unique board id
      */
-    that.getBoardId = function() {
-      return boardId;
-    };
+    that.getBoardId = function () {
+      return boardId
+    }
   }
 
   /**
-   * Create a board of array of cells, basedby reading settings.js
+   * Initialized the intance of Board with an array of cells. The map of the cells is based on settings.js
    * @returns {array} Returns 2-dimentional array of cells
    */
-  static createBoardCells() {
-    const {map} = settings.board,
-      {numberOfColumns} = settings.board,
-      {numberOfRows} = settings.board,
-      cells = [];
+  static initializeCells() {
+    const { map, numberOfColumns, numberOfRows } = settings.board,
+      cells = []
 
     let colPosition = 0,
       rowPosition = 0,
       cellType = 0,
-      row = [];
+      row = []
 
     for (rowPosition = 0; rowPosition < numberOfRows; rowPosition += 1) {
-      row = [];
+      row = []
       for (colPosition = 0; colPosition < numberOfColumns; colPosition += 1) {
-        cellType = map[rowPosition][colPosition];
+        cellType = map[rowPosition][colPosition]
         row[colPosition] = new Cell({
           type: cellType,
           columnIndex: colPosition,
           rowIndex: rowPosition
-        });
+        })
       }
-      cells[rowPosition] = row;
+      cells[rowPosition] = row
     }
 
     return cells;
   }
 
-  addRandomPawn() {
-    const that = this,
-      pawn = new Pawn({
-        type: PawnType.SUBMARINE
-    }),
+  /**
+   * Initialized the intance of Board with the random placement of pawns.
+   * @returns {void}
+   */
+  initializePawns() {
+    const pawnsMap = settings.pawns
+    let pawnCount = 0,
+      fleetSizeCount = 0
 
-     getRandom = max => {
-      const max1 = Math.floor(max);
+    for (pawnCount; pawnCount < pawnsMap.length; pawnCount += 1) {
+      for (fleetSizeCount = 0; fleetSizeCount < pawnsMap[pawnCount].fleetSize; fleetSizeCount += 1) {
+        const newPawn = new Pawn({
+          type: pawnsMap[pawnCount].typeId
+        })
 
-      return Math.floor(Math.random() * max1);
-     }
-
-    that.cells[getRandom(18)][getRandom(12)].assignPawn(pawn);
+        this.cells[Utils.getRandom(18)][Utils.getRandom(12)].assignPawn(newPawn);
+      }
+    }
   }
 }
 
-export default Board;
+export default Board
