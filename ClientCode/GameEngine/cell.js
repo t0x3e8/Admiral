@@ -18,7 +18,7 @@ class Cell {
     /**
      * @returns {uuid} gets unique cell id
      */
-    that.getCellId = function() {
+    that.getCellId = function () {
       return cellId;
     };
   }

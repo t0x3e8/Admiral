@@ -47,9 +47,11 @@ $neutral-color: #263238;
 }
 
 .boardCell {
-  margin: 1px;
+  padding: 1px;
   height: 100%;
   width: 100%;
+  display: grid;
+  box-sizing: border-box;
 }
 
 .port1 {

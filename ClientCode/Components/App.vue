@@ -1,5 +1,6 @@
 <template>
   <v-app light>
+    <banner />
     <v-content>
       <v-container v-if="isAuthorized">
         <game/>
@@ -20,6 +21,7 @@
 <script>
 import SignUp from "./SignUp.vue";
 import Game from "./Game.vue";
+import Banner from "./Banner.vue";
 import auth from "../auth.js";
 import {
   VApp,
@@ -27,7 +29,7 @@ import {
   VLayout,
   VFlex,
   VContent,
-  VFooter
+  VFooter  
 } from "vuetify/lib";
 
 export default {
@@ -40,7 +42,8 @@ export default {
     VLayout,
     VFlex,
     VContent,
-    VFooter
+    VFooter,
+    Banner
   },
   data() {
     return {

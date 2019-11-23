@@ -1,6 +1,8 @@
 /* eslint-disable array-element-newline */
 /* eslint-disable no-magic-numbers */
 
+import { PawnType } from './gameEnums.js'
+
 export default {
     board: {
         numberOfColumns: 12,
@@ -28,19 +30,21 @@ export default {
     },
     pawns: [
         {
-            typeId: 50,
+            typeId: PawnType.CRUISER,
             name: 'Cruiser',
             range: 1,
             destroys: [100002],
-            destroyed: [100001]
+            destroyed: [100001],
+            fleetSize: 3
         },
         {
-            typeId: 51,
+            typeId: PawnType.SUBMARINE,
             name: 'Submarine',
             range: 4,
             destroys: [],
-            destroyed: [100002, 100001]
+            destroyed: [100002, 100001],
+            fleetSize: 4
         }
 
     ]
-}
+};
