@@ -1,22 +1,20 @@
 import Vue from 'vue';
-import Vuetify from 'vuetify/lib';
 import routerFactory from './router.js';
 import VueRouter from 'vue-router';
-import App from './Components/App.vue';
+import App from './Views/App.vue';
+import BootstrapVue from 'bootstrap-vue'
+import './Assets/scss/custom.scss'
 
-const opts = {},
-  router = routerFactory.createRouter(),
-  vuetify = new Vuetify(opts);
+const router = routerFactory.createRouter()
 
-Vue.use(Vuetify);
-Vue.use(VueRouter);
+Vue.use(BootstrapVue)
+Vue.use(VueRouter)
 
-Vue.config.productionTip = false;
+Vue.config.productionTip = false
 
 // eslint-disable-next-line no-new
 new Vue({
   el: '#app',
   router,
-  vuetify,
   render: h => h(App)
 });

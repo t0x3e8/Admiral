@@ -5,17 +5,17 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": ".NET Core Launch (web)",
+      "name": "Debug [Server] .NET Core",
       "type": "coreclr",
       "request": "launch",
       "preLaunchTask": "build",
-      // If you have changed target frameworks, make sure to update the program path.
       "program": "${workspaceFolder}/bin/Debug/netcoreapp2.2/code.dll",
       "args": [],
       "cwd": "${workspaceFolder}",
       "stopAtEntry": false,
-      "launchBrowser": {
-        "enabled": true
+      "serverReadyAction": {
+        "action": "openExternally",
+        "pattern": "^\\s*Now listening on:\\s+(https?://\\S+)"
       },
       "env": {
         "ASPNETCORE_ENVIRONMENT": "Development"
@@ -25,30 +25,12 @@
       }
     },
     {
-      "name": ".NET Core Attach",
-      "type": "coreclr",
-      "request": "attach",
-      "processId": "${command:pickProcess}"
-    },
-    {
-        "name": "Run mocha",
-        "type": "node",
-        "request": "launch",
-        "program": "${workspaceRoot}/node_modules/mocha/bin/_mocha",
-        "stopOnEntry": false,
-        "args": [
-            "tests/**/*.test.js",
-            "--no-timeouts",
-            "--colors",
-            "--require", 
-            "@babel/register"
-        ],
-        "cwd": "${workspaceRoot}",
-        "runtimeExecutable": null,
-        "internalConsoleOptions": "openOnSessionStart",
-        "env": {
-            "NODE_ENV": "test"
-        }
-    },
+      "type": "chrome",
+      "request": "launch",
+      "name": "Debug [Client] Vue.js",
+      "webRoot": "${workspaceFolder}",
+      "url": "https://localhost:5001"
+    }
+
   ]
 }

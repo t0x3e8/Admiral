@@ -30,7 +30,7 @@ import {
   VCardText,
   VCardActions,
   VSpacer
-} from "vuetify/lib";
+} from "bootstrap-vue"
 
 export default {
   components: {
