@@ -1,17 +1,18 @@
 <template>
-    <div
-      class="boardCell"
-      :class="{ port1: isPort1, port2: isPort2, sea: isSea, neutral: isNeutral, isEntrance: isPortEntrance}"
-    >
-      <!-- <pawn v-if="cellData.pawn" v-bind:pawnData="cellData.pawn" /> -->
-    </div>
+  <div
+    class="boardCell"
+    :class="{ port1: isPort1, port2: isPort2, sea: isSea, neutral: isNeutral, isEntrance: isPortEntrance}"
+  >
+    <pawn-control v-if="cellData.pawn" v-bind:pawnData="cellData.pawn" class="pawn" />
+  </div>
 </template>
 
 <script>
 import { CellType } from "../GameEngine/gameEnums.js";
+import PawnControl from "./PawnControl.vue";
 
 export default {
-  components: {},
+  components: { PawnControl },
   props: {
     cellData: Object
   },
@@ -35,6 +36,10 @@ $port1-color: #43a047;
 $port-entrance-color: #546e7a;
 $port2-color: #1b5e20;
 $neutral-color: #263238;
+
+.pawn {
+  position: absolute;
+}
 
 .boardCell {
   border-radius: 0%;
