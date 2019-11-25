@@ -22,8 +22,8 @@ html {
   html {
     font-size: 100%;
   }
-  .board {
-    width: 62vh;
+  #board {
+    width: 62vh !important;
   }
 }
 </style>
