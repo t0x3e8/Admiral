@@ -18,12 +18,4 @@ export default {};
 html {
   font-size: 62.5%;
 }
-@media (min-height: 754px) and (orientation: landscape) {
-  html {
-    font-size: 100%;
-  }
-  #board {
-    width: 62vh !important;
-  }
-}
 </style>

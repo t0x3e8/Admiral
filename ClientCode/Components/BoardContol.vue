@@ -1,5 +1,5 @@
 <template>
-  <b-container id="board">
+  <b-container id="board" class="my-2">
     <b-row v-for="(columns, rowIndex) in cells" :key="`1${rowIndex}`" no-gutters>
       <b-col v-for="(cell, colIndex) in columns" :key="`2${colIndex}`">
         <cell-control :cellData="cell" class="cell" />

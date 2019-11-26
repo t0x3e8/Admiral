@@ -2,7 +2,8 @@
 @import './base/variables';
 
 // Custom components
-@import './components/home';
+@import './components/home.scss';
+@import './components/boardcontrol.scss';
 
 
 @import 'node_modules/bootstrap/scss/bootstrap';
