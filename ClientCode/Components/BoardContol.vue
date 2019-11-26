@@ -25,9 +25,8 @@ export default {
 
 <style>
 .cell {
-  background-color: pink;
   width: 100%;
   padding-bottom: 100%;
-  border: 1px blue solid;
+  border: 1px white solid;
 }
 </style>
