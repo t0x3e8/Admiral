@@ -4,10 +4,8 @@ obj/
 bin/Debug/
 
 .nyc_output/
-
+wwwroot/
 node_modules/
 publish/
 bin/
-wwwroot/js/app.js
-wwwroot/js/app.js.map
-wwwroot/js/app.js
+wwwroot/
