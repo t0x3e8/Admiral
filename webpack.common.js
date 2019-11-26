@@ -12,7 +12,17 @@ module.exports = {
     rules: [
       {
         test: /\.vue$/u,
-        loader: 'vue-loader'
+        use: [
+          {
+            loader: 'vue-loader'
+          },
+          {
+            loader: 'vue-svg-inline-loader',
+            options: {
+              removeAttributes: ['defs']
+            }
+          }
+        ]
       },
       {
         test: /\.styl$/u,
@@ -47,14 +57,14 @@ module.exports = {
         exclude: /node_modules/u
       },
       {
-        test: /\.(png|jpg|gif|svg|ico)$/u,
+        test: /\.(png|jpg|gif|ico)$/u,
         loader: 'file-loader',
         options: {
           name: '[name].[ext]?[hash]'
         }
       },
       {
-        test: /\.(jpg|jpeg|png|woff|woff2|eot|ttf|svg)$/u,
+        test: /\.(jpg|jpeg|png|woff|woff2|eot|ttf)$/u,
         loader: 'url-loader'
       }
     ]
