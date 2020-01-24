@@ -5,6 +5,7 @@ import App from './Views/App.vue';
 import BootstrapVue from 'bootstrap-vue'
 import './Assets/scss/custom.scss'
 import './assets/graphics/favicon.ico'
+import store from './Store/index.js'
 
 const router = routerFactory.createRouter()
 
@@ -17,5 +18,6 @@ Vue.config.productionTip = false
 new Vue({
   el: '#app',
   router,
+  store,
   render: h => h(App)
 });

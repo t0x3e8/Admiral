@@ -12,7 +12,8 @@ module.exports = {
         "plugin:vue/recommended"
     ],
     "parserOptions": {
-        "ecmaVersion": 2015,
+        "parser": "babel-eslint",
+        "ecmaVersion": 6,
         "sourceType": "module"
     },
     "rules": {

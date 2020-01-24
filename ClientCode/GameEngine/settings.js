@@ -30,12 +30,12 @@ export default {
     },
     pawns: [
         {
-            typeId: PawnType.CRUISER,
-            name: 'Cruiser',
+            typeId: PawnType.BATTERIES,
+            name: 'Batteries',
             range: 1,
             destroys: [100002],
             destroyed: [100001],
-            fleetSize: 3
+            fleetSize: 4
         },
         {
             typeId: PawnType.SUBMARINE,

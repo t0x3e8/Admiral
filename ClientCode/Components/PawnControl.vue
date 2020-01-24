@@ -1,5 +1,7 @@
 <template>
-  <img svg-inline class="icon" src="./../Assets/graphics/pawns/mine.svg" />
+  <div>
+    <component :is="shipIcon"></component>
+  </div>
 </template>
 
 <script>
@@ -8,13 +10,19 @@ export default {
   props: {
     pawnData: Object
   },
-  data() {
-    return {
-    };
+  computed : {
+    shipIcon () {
+      import('./../Assets/graphics/pawns/battleship.svg')
+      .then(module => {
+        return module
+      })
+      .catch(error => {
+        console.log(error);
+      })
+    }
   }
 };
 </script>
 
 <style lang="scss">
-
 </style>

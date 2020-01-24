@@ -15,13 +15,14 @@ module.exports = {
         use: [
           {
             loader: 'vue-loader'
-          },
-          {
-            loader: 'vue-svg-inline-loader',
-            options: {
-              removeAttributes: ['defs']
-            }
           }
+        ]
+      },
+      {
+        test: /\.svg$/u,
+        use: [
+          'babel-loader',
+          'vue-svg-loader'
         ]
       },
       {

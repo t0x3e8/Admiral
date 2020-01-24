@@ -62,6 +62,7 @@ class Board {
    */
   initializePawns() {
     const pawnsMap = settings.pawns
+
     let pawnCount = 0,
       fleetSizeCount = 0
 
