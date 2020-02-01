@@ -39,7 +39,13 @@ module.exports = {
         "brace-style": "error",
         "callback-return": "error",
         "camelcase": "error",
-        "capitalized-comments": "error",
+        "capitalized-comments": [
+            "error",
+            "always",
+            {
+                "ignorePattern": "webpackMode"
+            }
+        ],
         "class-methods-use-this": "error",
         "comma-dangle": "error",
         "comma-spacing": "error",
@@ -58,7 +64,10 @@ module.exports = {
         "func-name-matching": "error",
         "func-names": "off",
         "func-style": "error",
-        "function-paren-newline": "error",
+        "function-paren-newline": [
+            "error",
+            "consistent"
+        ],
         "generator-star-spacing": "error",
         "global-require": "error",
         "guard-for-in": "error",

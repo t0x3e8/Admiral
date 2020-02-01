@@ -1,18 +1,13 @@
-/* eslint-disable capitalized-comments */
 <template>
-  <component :is="dynamicPawnIcon" />
+  <component
+    :is="dynamicPawnIcon"
+    class="pawnIcon"
+  />
 </template>
 
 <script>
-import Batteries from "./pawns/batteries.svg";
-import Cruiser from "./pawns/cruiser.svg";
-
 export default {
-  name: "DynamicPawnIcon",
-  components: {
-    Batteries,
-    Cruiser
-  },
+  name: "PawnControl",
   props: {
     pawnData: {
       type: Object,
@@ -22,12 +17,17 @@ export default {
   computed: {
     dynamicPawnIcon () {
       return () => import(
-        /* webpackMode: "lazy" */
-        "./pawns/battleship.svg"
+
+        /* webpackMode: "eager" */
+        `./pawns/${this.pawnData.type}.svg`
       )
     }
   }
 };
 </script>
 
-<style lang="scss"></style>
+<style lang="scss">
+  .pawnIcon {
+    position: absolute;
+  }
+</style>

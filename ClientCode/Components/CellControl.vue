@@ -12,7 +12,6 @@
     <pawn-control
       v-if="cellData.pawn"
       :pawn-data="cellData.pawn"
-      :class="pawn"
     />
   </div>
 </template>
@@ -44,36 +43,33 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-$sea-color: #1e88e5;
-$port1-color: #43a047;
-$port-entrance-color: #546e7a;
-$port2-color: #1b5e20;
-$neutral-color: #263238;
+  $sea-color: #1e88e5;
+  $port1-color: #43a047;
+  $port-entrance-color: #546e7a;
+  $port2-color: #1b5e20;
+  $neutral-color: #263238;
 
-.pawn {
-  position: absolute;
-}
 
-.boardCell {
-  border-radius: 0%;
-}
+  .boardCell {
+    border-radius: 0%;
+  }
 
-.port1 {
-  background-color: $port1-color;
-}
+  .port1 {
+    background-color: $port1-color;
+  }
 
-.port2 {
-  background-color: $port2-color;
-}
+  .port2 {
+    background-color: $port2-color;
+  }
 
-.neutral {
-  background-color: $neutral-color;
-}
+  .neutral {
+    background-color: $neutral-color;
+  }
 
-.sea {
-  background-color: $sea-color;
-}
-.isEntrance {
-  background-color: $port-entrance-color;
-}
+  .sea {
+    background-color: $sea-color;
+  }
+  .isEntrance {
+    background-color: $port-entrance-color;
+  }
 </style>
