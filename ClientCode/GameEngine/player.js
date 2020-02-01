@@ -1,5 +1,5 @@
-import uuid from 'uuid/v1';
-import _ from 'underscore';
+import uuid from "uuid/v1";
+import _ from "underscore";
 
 const PlayerState = {
   Stopped: 0,
