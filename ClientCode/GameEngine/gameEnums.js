@@ -19,6 +19,6 @@ export const CombatResult = {
     SEA: 0
   },
   PawnType = {
-    SUBMARINE: 'submarine',
-    BATTERIES: 'batteries'
+    SUBMARINE: "submarine",
+    BATTERIES: "batteries"
   }

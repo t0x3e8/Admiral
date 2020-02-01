@@ -221,7 +221,7 @@ module.exports = {
         "quote-props": "off",
         "quotes": [
             "error",
-            "single"
+            "double"
         ],
         "radix": "error",
         "require-atomic-updates": "error",

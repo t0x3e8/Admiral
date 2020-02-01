@@ -1,12 +1,12 @@
 /* eslint-disable no-magic-numbers */
 /* eslint-disable max-statements */
 /* eslint-disable max-lines-per-function */
-import eventEmitter from 'events';
-import util from 'util';
-import uuid from 'uuid/v1';
-import Board from './board.js';
-import History from './history.js';
-import {GameState} from './gameEnums.js';
+import eventEmitter from "events";
+import util from "util";
+import uuid from "uuid/v1";
+import Board from "./board.js";
+import History from "./history.js";
+import {GameState} from "./gameEnums.js";
 
 /**
  * A class representing a Game object.
@@ -33,7 +33,7 @@ class Game {
     that.setState = function(newState) {
       state = newState;
       if (state === GameState.Started) {
-        that.emit('gameStarting');
+        that.emit("gameStarting");
         // Initialize History and Board. Let players know that turn started and wait.
         that.history = new History();
         that.history.pushTurn(that.players[0], that.players[1]);
@@ -45,9 +45,9 @@ class Game {
         // eslint-disable-next-line no-warning-comments
         // TODO: Set timer to send an email notification after a while
         that.notifyPlayers();
-        that.emit('gameWaiting');
+        that.emit("gameWaiting");
       } else if (state === GameState.Turn) {
-        that.emit('gameTurnProcessing');
+        that.emit("gameTurnProcessing");
         // Let Board to process the turn and save output in the history
         that.history.pushTurn(that.players[0], that.players[1]);
         gameResult = that.board.processTurn(that.players[0], that.players[1]);
@@ -56,7 +56,7 @@ class Game {
         } else {
           that.setState(GameState.Ended);
         }
-        that.emit('gameTurnProcessed');
+        that.emit("gameTurnProcessed");
       } else if (state === GameState.Ended) {
         that.history.end(gameResult, () => {
           if (gameResult === 1) {
@@ -65,7 +65,7 @@ class Game {
             that.players[1].getPlayerId();
           }
         });
-        that.emit('gameEnded');
+        that.emit("gameEnded");
       }
     };
 

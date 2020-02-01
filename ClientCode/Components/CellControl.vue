@@ -1,9 +1,19 @@
 <template>
   <div
     class="boardCell"
-    :class="{ port1: isPort1, port2: isPort2, sea: isSea, neutral: isNeutral, isEntrance: isPortEntrance}"
+    :class="{
+      port1: isPort1,
+      port2: isPort2,
+      sea: isSea,
+      neutral: isNeutral,
+      isEntrance: isPortEntrance
+    }"
   >
-    <pawn-control v-if="cellData.pawn" v-bind:pawnData="cellData.pawn" class="pawn" />
+    <pawn-control
+      v-if="cellData.pawn"
+      :pawn-data="cellData.pawn"
+      :class="pawn"
+    />
   </div>
 </template>
 
@@ -14,7 +24,10 @@ import PawnControl from "./PawnControl.vue";
 export default {
   components: { PawnControl },
   props: {
-    cellData: Object
+    cellData: {
+      type: Object,
+      default: null
+    }
   },
   data() {
     return {

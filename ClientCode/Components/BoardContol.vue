@@ -1,8 +1,21 @@
 <template>
-  <b-container id="board" class="my-2">
-    <b-row v-for="(columns, rowIndex) in cells" :key="`1${rowIndex}`" no-gutters>
-      <b-col v-for="(cell, colIndex) in columns" :key="`2${colIndex}`">
-        <cell-control :cellData="cell" class="cell" />
+  <b-container
+    id="board"
+    class="my-2"
+  >
+    <b-row
+      v-for="(columns, rowIndex) in cells"
+      :key="`1${rowIndex}`"
+      no-gutters
+    >
+      <b-col
+        v-for="(cell, colIndex) in columns"
+        :key="`2${colIndex}`"
+      >
+        <cell-control
+          :cell-data="cell"
+          class="cell"
+        />
       </b-col>
     </b-row>
   </b-container>
@@ -15,7 +28,8 @@ import CellControl from "./CellControl.vue";
 export default {
   components: { CellControl },
   data() {
-    let board = new Board();
+    const board = new Board();
+
     return {
       cells: board.cells
     };

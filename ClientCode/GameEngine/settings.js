@@ -1,7 +1,7 @@
 /* eslint-disable array-element-newline */
 /* eslint-disable no-magic-numbers */
 
-import { PawnType } from './gameEnums.js'
+import { PawnType } from "./gameEnums.js"
 
 export default {
     board: {
@@ -31,7 +31,7 @@ export default {
     pawns: [
         {
             typeId: PawnType.BATTERIES,
-            name: 'Batteries',
+            name: "Batteries",
             range: 1,
             destroys: [100002],
             destroyed: [100001],
@@ -39,7 +39,7 @@ export default {
         },
         {
             typeId: PawnType.SUBMARINE,
-            name: 'Submarine',
+            name: "Submarine",
             range: 4,
             destroys: [],
             destroyed: [100002, 100001],

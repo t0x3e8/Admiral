@@ -1,28 +1,33 @@
+/* eslint-disable capitalized-comments */
 <template>
-  <div>
-    <component :is="shipIcon"></component>
-  </div>
+  <component :is="dynamicPawnIcon" />
 </template>
 
 <script>
+import Batteries from "./pawns/batteries.svg";
+import Cruiser from "./pawns/cruiser.svg";
 
 export default {
-  props: {
-    pawnData: Object
+  name: "DynamicPawnIcon",
+  components: {
+    Batteries,
+    Cruiser
   },
-  computed : {
-    shipIcon () {
-      import('./../Assets/graphics/pawns/battleship.svg')
-      .then(module => {
-        return module
-      })
-      .catch(error => {
-        console.log(error);
-      })
+  props: {
+    pawnData: {
+      type: Object,
+      default: null
+    }
+  },
+  computed: {
+    dynamicPawnIcon () {
+      return () => import(
+        /* webpackMode: "lazy" */
+        "./pawns/battleship.svg"
+      )
     }
   }
 };
 </script>
 
-<style lang="scss">
-</style>
+<style lang="scss"></style>

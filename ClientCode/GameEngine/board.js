@@ -1,10 +1,10 @@
 /* eslint-disable no-magic-numbers */
 
-import uuid from 'uuid/v1'
-import settings from './settings.js'
-import Cell from './cell.js'
-import Pawn from './pawn.js'
-import Utils from './utils.js'
+import uuid from "uuid/v1"
+import settings from "./settings.js"
+import Cell from "./cell.js"
+import Pawn from "./pawn.js"
+import Utils from "./utils.js"
 
 /**
  * The Board object represents the structure of the board, including characteristics  of board eg.
