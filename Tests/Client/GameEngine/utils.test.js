@@ -1,12 +1,12 @@
 /* eslint-disable no-magic-numbers */
 /* global describe, it */
 
-import { expect } from 'chai';
-import Utils from '../../../ClientCode/GameEngine/Utils.js';
+import { expect } from "chai";
+import Utils from "../../../ClientCode/GameEngine/Utils.js";
 
-describe('Test covarage of utils methods', () => {
-  it('GIVEN that a Utils is initialized ' +
-    'THEN it should be possible to generate random number from 0 to {max}', () => {
+describe("Test covarage of utils methods", () => {
+  it("GIVEN that a Utils is initialized " +
+    "THEN it should be possible to generate random number from 0 to {max}", () => {
       let result = -1,
         i = 0
 

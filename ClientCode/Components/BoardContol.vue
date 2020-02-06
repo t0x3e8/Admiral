@@ -27,7 +27,7 @@ import CellControl from "./CellControl.vue";
 
 export default {
   components: { CellControl },
-  data() {
+  data () {
     const board = new Board();
 
     return {

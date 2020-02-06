@@ -16,8 +16,8 @@ class Board {
     const that = this,
       boardId = uuid()
 
-    that.cells = Board.initializeCells()
-    this.initializePawns()
+    that.cells = Board.initializeCells();
+    that.initializePawns();
 
     /**
      * @returns {uuid} gets unique board id
