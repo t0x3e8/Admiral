@@ -2,9 +2,7 @@
   <component
     :is="dynamicPawnIcon"
     class="pawnIcon"
-    :class="{
-      selected: isSelected
-    }"
+    :class="[pawnData.selected ? 'selected': '']"
     @click="pawnSelected"
   />
 </template>
@@ -20,7 +18,6 @@
     },
     data () {
       return {
-        isSelected: false
       }
     },
     computed: {
@@ -34,7 +31,12 @@
     },
     methods: {
       pawnSelected() {
-        this.isSelected = !this.isSelected
+        console.debug("event-emit: cell-click");
+
+        this.$root.$emit("cell-click", {
+          col: this.pawnData.col,
+          row: this.pawnData.row
+        });
       }
     }
   };

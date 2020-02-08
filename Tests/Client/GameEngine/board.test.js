@@ -1,3 +1,5 @@
+/* eslint-disable max-statements */
+/* eslint-disable object-property-newline */
 /* eslint-disable max-lines-per-function */
 /* eslint-disable max-len */
 /* eslint-disable prefer-destructuring */
@@ -66,4 +68,34 @@ describe("BOARD requirements", () => {
 
     expect(board.cells.length).greaterThan(0);
   });
+
+  it("GIVEN that Board is initialized " +
+    "WHEN Cell or Pawn is clicked " +
+    "THEN it should be possible to select a Pawn if any assigned to Cell " +
+    "AND unselect any previous Pawn by updating cells field", () => {
+      const board = new Board(),
+        pawnSubmarine = new Pawn({
+          type: PawnType.SUBMARINE
+        }),
+        pawnBatteries = new Pawn({
+          type: PawnType.BATTERIES
+        });
+
+      board.cells[5][5].assignPawn(pawnSubmarine);
+      board.select({col: 5, row: 5});
+      board.cells[6][6].assignPawn(pawnBatteries);
+
+      expect(board.cells[5][5]).to.not.be.empty;
+      expect(board.cells[5][5].pawn).to.not.be.null;
+      expect(board.cells[6][6]).to.not.be.empty;
+      expect(board.cells[6][6].pawn).to.not.be.null;
+
+      expect(board.cells[5][5].pawn.selected).to.be.true;
+      expect(board.cells[6][6].pawn.selected).to.be.false;
+
+      board.select({col: 6, row: 6});
+
+      expect(board.cells[5][5].pawn.selected).to.be.false;
+      expect(board.cells[6][6].pawn.selected).to.be.true;
+    });
 });

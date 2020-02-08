@@ -22,25 +22,40 @@
 </template>
 
 <script>
-import Board from "../GameEngine/board.js";
-import CellControl from "./CellControl.vue";
+  import Board from "../GameEngine/board.js";
+  import CellControl from "./CellControl.vue";
 
-export default {
-  components: { CellControl },
-  data () {
-    const board = new Board();
+  export default {
+    name: "BoardControl",
+    components: { CellControl },
+    data () {
+      const board = new Board();
 
-    return {
-      cells: board.cells
-    };
-  }
-};
+      return {
+        board,
+        cells: board.cells
+      };
+    },
+    mounted() {
+      this.$root.$on("cell-click", this.onCellClick);
+    },
+    methods: {
+      onCellClick(payload) {
+        console.debug("event-on: cell-click");
+
+        this.board.select({
+          col: payload.col,
+          row: payload.row
+        })
+      }
+    }
+  };
 </script>
 
 <style>
-.cell {
-  width: 100%;
-  padding-bottom: 100%;
-  border: 1px white solid;
-}
+  .cell {
+    width: 100%;
+    padding-bottom: 100%;
+    border: 1px white solid;
+  }
 </style>

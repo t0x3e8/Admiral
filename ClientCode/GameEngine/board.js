@@ -72,9 +72,78 @@ class Board {
           type: pawnsMap[pawnCount].typeId
         })
 
+        // eslint-disable-next-line no-warning-comments
+        // TODO This is only temporary!
         this.cells[Utils.getRandom(18)][Utils.getRandom(12)].assignPawn(newPawn);
       }
     }
+  }
+
+  /**
+   * Select a pawn at specific cell
+   * @param {*} payload - object with: col, row
+   * @returns {void}
+   */
+  select(payload) {
+    const pawnToSelect = this.cells[payload.row][payload.col].pawn;
+
+    if (pawnToSelect) {
+      this.unselectAny();
+      pawnToSelect.selected = true;
+    }
+  }
+
+  /**
+   * Unselect any pawn if selected
+   * @returns {void}
+   */
+  unselectAny() {
+    const pawnSelected = this.findSelected();
+
+    if (pawnSelected) {
+      this.unselect({
+        col: pawnSelected.col,
+        row: pawnSelected.row
+      });
+    }
+  }
+
+  /**
+   * Unselect a pawn at specific cell
+   * @param {*} payload - object with: col, row
+   * @returns {void}
+   */
+  unselect(payload) {
+    const pawnToUnselect = this.cells[payload.row][payload.col].pawn;
+
+    if (pawnToUnselect) {
+      pawnToUnselect.selected = false;
+    }
+  }
+
+  /**
+   * Loop through all cells to find a pawn which is selected
+   * @returns {pawn} or null if not found
+   */
+  findSelected() {
+    let rowPosition = 0,
+        colPosition = 0;
+    const { numberOfColumns, numberOfRows } = settings.board;
+
+    for (rowPosition = 0; rowPosition < numberOfRows; rowPosition += 1) {
+      for (colPosition = 0; colPosition < numberOfColumns; colPosition += 1) {
+        const { pawn } = this.cells[rowPosition][colPosition];
+
+        if (pawn && pawn.selected) {
+          return {
+            col: pawn.col,
+            row: pawn.row
+          }
+        }
+      }
+    }
+
+    return null;
   }
 }
 
