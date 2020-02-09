@@ -1,3 +1,4 @@
+/* eslint-disable max-statements */
 /* eslint-disable no-magic-numbers */
 
 import uuid from "uuid/v1"
@@ -98,7 +99,7 @@ class Board {
    * @returns {void}
    */
   unselectAny() {
-    const pawnSelected = this.findSelected();
+    const pawnSelected = this.findSelectedPawn();
 
     if (pawnSelected) {
       this.unselect({
@@ -125,7 +126,7 @@ class Board {
    * Loop through all cells to find a pawn which is selected
    * @returns {pawn} or null if not found
    */
-  findSelected() {
+  findSelectedPawn() {
     let rowPosition = 0,
         colPosition = 0;
     const { numberOfColumns, numberOfRows } = settings.board;
@@ -144,6 +145,39 @@ class Board {
     }
 
     return null;
+  }
+
+  /**
+   * Function identifies all cells in range of the pawn
+   * @param {uuid} pawn Pawn for which the range should be calculate
+   * @returns {void}
+   */
+  rangeCells(pawn) {
+    const colMax = pawn.col + pawn.range,
+          colMin = pawn.col - pawn.range,
+          rowMax = pawn.row + pawn.range;
+
+    let col = colMin,
+        row = pawn.row - pawn.range;
+
+    /*
+     * Each field within the square range is tested, if:
+     * - the field has no pawns in it, mark the field as in range,
+     * - the field has a pawn, but the pawn is opponent's pawn, mark the field as in range,
+     */
+    for (row; row <= rowMax; row += 1) {
+      if (this.cells[row] !== null) {
+        for (col; col <= colMax; col += 1) {
+          if (this.cells[row][col] !== null) {
+            // eslint-disable-next-line max-depth
+            if (col !== pawn.col || row !== pawn.row) {
+              this.cells[row][col].inRange = true;
+            }
+          }
+        }
+        col = colMin;
+      }
+    }
   }
 }
 

@@ -4,7 +4,7 @@
     class="my-2"
   >
     <b-row
-      v-for="(columns, rowIndex) in cells"
+      v-for="(columns, rowIndex) in board.cells"
       :key="`1${rowIndex}`"
       no-gutters
     >
@@ -32,8 +32,7 @@
       const board = new Board();
 
       return {
-        board,
-        cells: board.cells
+        board
       };
     },
     mounted() {
@@ -46,7 +45,13 @@
         this.board.select({
           col: payload.col,
           row: payload.row
-        })
+        });
+
+        const selectedPawn = this.board.findSelectedPawn();
+
+        if (selectedPawn) {
+          this.board.rangeCells(selectedPawn);
+        }
       }
     }
   };

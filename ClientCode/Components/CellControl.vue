@@ -6,7 +6,8 @@
       port2: isPort2,
       sea: isSea,
       neutral: isNeutral,
-      isEntrance: isPortEntrance
+      isEntrance: isPortEntrance,
+      inRange: inRange
     }"
   >
     <pawn-control
@@ -34,6 +35,7 @@ export default {
       isPort2: this.cellData.type === CellType.PLAYER_TWO_PORT,
       isSea: this.cellData.type === CellType.SEA,
       isNeutral: this.cellData.type === CellType.NEUTRAL,
+      inRange: this.cellData.inRange,
       isPortEntrance:
         this.cellData.type === CellType.PLAYER_ONE_ENTRANCE ||
         this.cellData.type === CellType.PLAYER_TWO_ENTRANCE
@@ -71,5 +73,9 @@ export default {
   }
   .isEntrance {
     background-color: $port-entrance-color;
+  }
+
+  .inRange {
+    background-color: aqua;
   }
 </style>

@@ -1,5 +1,6 @@
 import uuid from "uuid/v1";
-import _ from "underscore";
+import settings from "./settings.js";
+import { find } from "underscore";
 
 /**
  * A class representing a Pawn object.
@@ -19,6 +20,7 @@ class Pawn {
         that.oldRow = pawnData.row;
         that.player = null;
         that.selected = false;
+        that.range = find(settings.pawns, element => element.typeId === that.type).range;
 
         /**
          * @returns {uuid} gets unique pawn id
@@ -58,7 +60,7 @@ class Pawn {
         that.row = newRow;
 
         if ((that.col === null || that.row === null) && that.player) {
-            that.player.setPawns(_(that.player.pawns, that));
+            that.player.setPawns((that.player.pawns, that));
         }
     }
 }

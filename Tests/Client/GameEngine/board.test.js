@@ -98,4 +98,21 @@ describe("BOARD requirements", () => {
       expect(board.cells[5][5].pawn.selected).to.be.false;
       expect(board.cells[6][6].pawn.selected).to.be.true;
     });
+
+    it("GIVEN that Board is initialized " +
+    "WHEN Cell or Pawn is clicked " +
+    "THEN it should be possible see the range of possible moves", () => {
+      const board = new Board(),
+        pawnSubmarine = new Pawn({
+          type: PawnType.SUBMARINE
+        });
+
+      board.cells[5][5].assignPawn(pawnSubmarine);
+      board.select({col: 5, row: 5});
+      board.rangeCells(pawnSubmarine);
+
+      expect(board.cells[5][5]).to.not.be.empty;
+      expect(board.cells[5][5].pawn).to.not.be.null;
+      expect(board.cells[3][3].inRange).to.be.true;
+    });
 });

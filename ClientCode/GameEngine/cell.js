@@ -14,6 +14,7 @@ class Cell {
     that.colIndex = cellData.columnIndex;
     that.rowIndex = cellData.rowIndex;
     that.pawn = null;
+    that.inRange = false;
 
     /**
      * @returns {uuid} gets unique cell id
