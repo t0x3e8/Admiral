@@ -163,9 +163,9 @@ class Board {
      * - the field has a pawn, but the pawn is opponent's pawn, mark the field as in range,
      */
     for (row; row <= rowMax; row += 1) {
-      if (this.cells[row] !== null) {
+      if (this.cells[row]) {
         for (col; col <= colMax; col += 1) {
-          if (this.cells[row][col] !== null) {
+          if (this.cells[row][col]) {
             // eslint-disable-next-line max-depth
             if (col !== pawn.col || row !== pawn.row) {
               this.cells[row][col].inRange = true;
