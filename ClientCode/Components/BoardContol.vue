@@ -47,6 +47,8 @@
           row: payload.row
         });
 
+        this.board.cleanRange();
+
         const selectedPawn = this.board.getSelected();
 
         if (selectedPawn) {

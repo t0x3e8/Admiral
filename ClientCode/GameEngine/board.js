@@ -6,6 +6,7 @@ import settings from "./settings.js"
 import Cell from "./cell.js"
 import Pawn from "./pawn.js"
 import Utils from "./utils.js"
+import _ from "underscore";
 
 /**
  * The Board object represents the structure of the board, including characteristics  of board eg.
@@ -88,8 +89,9 @@ class Board {
   select(payload) {
     const pawnToSelect = this.cells[payload.row][payload.col].pawn;
 
+    this.unselectAny();
+
     if (pawnToSelect) {
-      this.unselectAny();
       pawnToSelect.selected = true;
     }
   }
@@ -127,18 +129,11 @@ class Board {
    * @returns {pawn} or null if not found
    */
   getSelected() {
-    let rowPosition = 0,
-        colPosition = 0;
-    const { numberOfColumns, numberOfRows } = settings.board;
+    const allCells = _.flatten(this.cells),
+      selectedCell = _.find(allCells, cell => cell.pawn && cell.pawn.selected);
 
-    for (rowPosition = 0; rowPosition < numberOfRows; rowPosition += 1) {
-      for (colPosition = 0; colPosition < numberOfColumns; colPosition += 1) {
-        const { pawn } = this.cells[rowPosition][colPosition];
-
-        if (pawn && pawn.selected) {
-          return pawn;
-        }
-      }
+    if (selectedCell) {
+      return selectedCell.pawn;
     }
 
     return null;
@@ -175,6 +170,18 @@ class Board {
         col = colMin;
       }
     }
+  }
+
+  /**
+   * Cleans the range of the selection
+   * @returns {void}
+   */
+  cleanRange() {
+    this.cells.forEach(row => {
+      row.forEach(cell => {
+        cell.inRange = false;
+      })
+    });
   }
 }
 

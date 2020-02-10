@@ -2,6 +2,7 @@
   <div
     class="boardCell"
     :class="classObject"
+    @click="cellClicked"
   >
     <pawn-control
       v-if="cellData.pawn"
@@ -61,6 +62,16 @@ export default {
         cellDefaultStyle,
         cellInRangeStyle
       ];
+    }
+  },
+  methods: {
+    cellClicked() {
+      console.debug("event-emit: cell-click");
+
+      this.$root.$emit("cell-click", {
+        col: this.cellData.colIndex,
+        row: this.cellData.rowIndex
+      });
     }
   }
 };

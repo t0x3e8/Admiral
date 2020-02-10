@@ -3,7 +3,7 @@
     :is="dynamicPawnIcon"
     class="pawnIcon"
     :class="[pawnData.selected ? 'selected': '']"
-    @click="pawnSelected"
+    @click="pawnClicked"
   />
 </template>
 
@@ -30,7 +30,7 @@
       }
     },
     methods: {
-      pawnSelected() {
+      pawnClicked() {
         console.debug("event-emit: cell-click");
 
         this.$root.$emit("cell-click", {
