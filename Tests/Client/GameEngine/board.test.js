@@ -39,6 +39,7 @@ describe("BOARD requirements", () => {
     expect(cell.getCellId()).to.not.be.empty;
     expect(cell.colIndex).to.be.equal(1);
     expect(cell.rowIndex).to.be.equal(1);
+    expect(cell.inRange).to.be.false;
     expect(cell.pawn).to.be.null;
     expect(cell.type).to.be.equal(CellType.PLAYER_ONE_PORT);
   });
@@ -59,6 +60,7 @@ describe("BOARD requirements", () => {
     expect(pawn.row).to.be.equal(board.cells[1][1].rowIndex);
     expect(pawn.oldCol).to.be.undefined;
     expect(pawn.oldRow).to.be.undefined;
+    expect(pawn.range).to.be.greaterThan(0);
   });
 
   it("GIVEN that a Board is initialized " +
@@ -70,34 +72,35 @@ describe("BOARD requirements", () => {
   });
 
   it("GIVEN that Board is initialized " +
-    "WHEN Cell or Pawn is clicked " +
-    "THEN it should be possible to select a Pawn if any assigned to Cell " +
-    "AND unselect any previous Pawn by updating cells field", () => {
+    "AND a Pawn has be selected by user " +
+    "THEN it should be possible to determine the selected Pawn", () => {
       const board = new Board(),
         pawnSubmarine = new Pawn({
           type: PawnType.SUBMARINE
-        }),
-        pawnBatteries = new Pawn({
-          type: PawnType.BATTERIES
         });
+
+      let selectedPawn = null;
 
       board.cells[5][5].assignPawn(pawnSubmarine);
       board.select({col: 5, row: 5});
-      board.cells[6][6].assignPawn(pawnBatteries);
+      selectedPawn = board.getSelected();
 
       expect(board.cells[5][5]).to.not.be.empty;
       expect(board.cells[5][5].pawn).to.not.be.null;
-      expect(board.cells[6][6]).to.not.be.empty;
-      expect(board.cells[6][6].pawn).to.not.be.null;
-
-      expect(board.cells[5][5].pawn.selected).to.be.true;
-      expect(board.cells[6][6].pawn.selected).to.be.false;
-
-      board.select({col: 6, row: 6});
-
-      expect(board.cells[5][5].pawn.selected).to.be.false;
-      expect(board.cells[6][6].pawn.selected).to.be.true;
+      expect(selectedPawn).to.not.be.to.null;
+      expect(selectedPawn.col).to.be.equal(5);
+      expect(selectedPawn.row).to.be.equal(5);
+      expect(selectedPawn.range).to.be.greaterThan(0);
+      expect(selectedPawn.type).to.be.equal(pawnSubmarine.type);
     });
+
+    it("GIVEN that a Board is initialized " +
+    "THEN it should have cells and ID assigned.", () => {
+   const board = new Board();
+
+   expect(board.getBoardId()).to.not.be.empty;
+   expect(board.cells[1][1]).to.not.be.empty;
+ });
 
     it("GIVEN that Board is initialized " +
     "WHEN Cell or Pawn is clicked " +

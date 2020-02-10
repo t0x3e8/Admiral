@@ -1,14 +1,7 @@
 <template>
   <div
     class="boardCell"
-    :class="{
-      port1: isPort1,
-      port2: isPort2,
-      sea: isSea,
-      neutral: isNeutral,
-      isEntrance: isPortEntrance,
-      inRange: inRange
-    }"
+    :class="classObject"
   >
     <pawn-control
       v-if="cellData.pawn"
@@ -31,15 +24,44 @@ export default {
   },
   data() {
     return {
-      isPort1: this.cellData.type === CellType.PLAYER_ONE_PORT,
-      isPort2: this.cellData.type === CellType.PLAYER_TWO_PORT,
-      isSea: this.cellData.type === CellType.SEA,
-      isNeutral: this.cellData.type === CellType.NEUTRAL,
-      inRange: this.cellData.inRange,
-      isPortEntrance:
-        this.cellData.type === CellType.PLAYER_ONE_ENTRANCE ||
-        this.cellData.type === CellType.PLAYER_TWO_ENTRANCE
+
     };
+  },
+  computed: {
+    classObject() {
+      let cellDefaultStyle = "",
+          cellInRangeStyle = "";
+
+      switch (this.cellData.type) {
+        case CellType.PLAYER_ONE_PORT:
+          cellDefaultStyle = "port1";
+          break;
+        case CellType.PLAYER_TWO_PORT:
+          cellDefaultStyle = "port2";
+          break;
+        case CellType.SEA:
+          cellDefaultStyle = "sea";
+          break;
+        case CellType.NEUTRAL:
+          cellDefaultStyle = "neutral";
+          break;
+        case CellType.PLAYER_ONE_ENTRANCE:
+        case CellType.PLAYER_TWO_ENTRANCE:
+          cellDefaultStyle = "entrance";
+          break;
+        default:
+          break;
+      }
+
+      if (this.cellData.inRange) {
+        cellInRangeStyle = "inRange";
+      }
+
+      return [
+        cellDefaultStyle,
+        cellInRangeStyle
+      ];
+    }
   }
 };
 </script>
@@ -71,7 +93,7 @@ export default {
   .sea {
     background-color: $sea-color;
   }
-  .isEntrance {
+  .entrance {
     background-color: $port-entrance-color;
   }
 

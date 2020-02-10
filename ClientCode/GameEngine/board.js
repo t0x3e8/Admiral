@@ -99,7 +99,7 @@ class Board {
    * @returns {void}
    */
   unselectAny() {
-    const pawnSelected = this.findSelectedPawn();
+    const pawnSelected = this.getSelected();
 
     if (pawnSelected) {
       this.unselect({
@@ -126,7 +126,7 @@ class Board {
    * Loop through all cells to find a pawn which is selected
    * @returns {pawn} or null if not found
    */
-  findSelectedPawn() {
+  getSelected() {
     let rowPosition = 0,
         colPosition = 0;
     const { numberOfColumns, numberOfRows } = settings.board;
@@ -136,10 +136,7 @@ class Board {
         const { pawn } = this.cells[rowPosition][colPosition];
 
         if (pawn && pawn.selected) {
-          return {
-            col: pawn.col,
-            row: pawn.row
-          }
+          return pawn;
         }
       }
     }

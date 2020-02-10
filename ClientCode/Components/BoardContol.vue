@@ -47,7 +47,7 @@
           row: payload.row
         });
 
-        const selectedPawn = this.board.findSelectedPawn();
+        const selectedPawn = this.board.getSelected();
 
         if (selectedPawn) {
           this.board.rangeCells(selectedPawn);
