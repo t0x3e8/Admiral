@@ -52,7 +52,7 @@
         const selectedPawn = this.board.getSelected();
 
         if (selectedPawn) {
-          this.board.rangeCells(selectedPawn);
+          this.board.rangeCellsBFS(selectedPawn, selectedPawn.range);
         }
       }
     }

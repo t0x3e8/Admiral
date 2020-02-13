@@ -18,7 +18,9 @@ class Board {
     const that = this,
       boardId = uuid()
 
-    that.cells = Board.initializeCells();
+    that.cells = [];
+
+    this.initializeCells();
     that.initializePawns();
 
     /**
@@ -33,9 +35,8 @@ class Board {
    * Initialized the intance of Board with an array of cells. The map of the cells is based on settings.js
    * @returns {array} Returns 2-dimentional array of cells
    */
-  static initializeCells() {
-    const { map, numberOfColumns, numberOfRows } = settings.board,
-      cells = []
+  initializeCells() {
+    const { map, numberOfColumns, numberOfRows } = settings.board;
 
     let colPosition = 0,
       rowPosition = 0,
@@ -49,13 +50,12 @@ class Board {
         row[colPosition] = new Cell({
           type: cellType,
           columnIndex: colPosition,
-          rowIndex: rowPosition
+          rowIndex: rowPosition,
+          board: this
         })
       }
-      cells[rowPosition] = row
+      this.cells[rowPosition] = row
     }
-
-    return cells;
   }
 
   /**
@@ -169,6 +169,43 @@ class Board {
         }
         col = colMin;
       }
+    }
+  }
+
+  rangeCellsBFS(pawn, maxDepth) {
+    const queue = [],
+          visited = [];
+
+    let currentDepth = 0,
+        elementsToDepthIncrease = 1,
+        nextElementsToDepthIncrease = 0;
+
+    queue.push(this.cells[pawn.row][pawn.col]);
+    visited.push(this.cells[pawn.row][pawn.col]);
+
+    while (queue.length > 0) {
+      const cell = queue.shift(1),
+            neighbours = cell.getCellNeighbours();
+
+      nextElementsToDepthIncrease += neighbours.length;
+
+      // eslint-disable-next-line no-plusplus
+      if (--elementsToDepthIncrease === 0) {
+        // eslint-disable-next-line no-plusplus
+        if (++currentDepth > maxDepth) {
+          return;
+        }
+        elementsToDepthIncrease = nextElementsToDepthIncrease;
+        nextElementsToDepthIncrease = 0;
+      }
+
+      neighbours.forEach(n => {
+        if (!visited.includes(n)) {
+          // visited.push(n);
+          n.inRange = true;
+          queue.push(n);
+        }
+      });
     }
   }
 

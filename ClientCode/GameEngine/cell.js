@@ -15,6 +15,7 @@ class Cell {
     that.rowIndex = cellData.rowIndex;
     that.pawn = null;
     that.inRange = false;
+    that.board = cellData.board;
 
     /**
      * @returns {uuid} gets unique cell id
@@ -29,6 +30,28 @@ class Cell {
 
     that.pawn = pawn;
     pawn.updatePosition(that.colIndex, that.rowIndex);
+  }
+
+  getCellNeighbours() {
+    const neighbours = [],
+        row = this.rowIndex,
+        col = this.colIndex,
+        offset = 1;
+
+    if (this.board.cells[row - offset]) {
+      neighbours.push(this.board.cells[row - offset][col]);
+    }
+    if (this.board.cells[row + offset]) {
+      neighbours.push(this.board.cells[row + offset][col]);
+    }
+    if (this.board.cells[row][col - offset]) {
+      neighbours.push(this.board.cells[row][col - offset]);
+    }
+    if (this.board.cells[row][col + offset]) {
+      neighbours.push(this.board.cells[row][col + offset]);
+    }
+
+    return neighbours;
   }
 }
 

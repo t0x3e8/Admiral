@@ -39,13 +39,14 @@ module.exports = {
         "brace-style": "error",
         "callback-return": "error",
         "camelcase": "error",
-        "capitalized-comments": [
-            "error",
-            "always",
-            {
-                "ignorePattern": "webpackMode"
-            }
-        ],
+        // "capitalized-comments": [
+        //     "error",
+        //     "always",
+        //     {
+        //         "ignorePattern": "webpackMode",
+        //         "ignoreInlineComments": true
+        //     }
+        // ],
         "class-methods-use-this": "error",
         "comma-dangle": "error",
         "comma-spacing": "error",

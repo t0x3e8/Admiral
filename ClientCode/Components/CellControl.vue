@@ -30,8 +30,7 @@ export default {
   },
   computed: {
     classObject() {
-      let cellDefaultStyle = "",
-          cellInRangeStyle = "";
+      let cellDefaultStyle = "";
 
       switch (this.cellData.type) {
         case CellType.PLAYER_ONE_PORT:
@@ -55,13 +54,10 @@ export default {
       }
 
       if (this.cellData.inRange) {
-        cellInRangeStyle = "inRange";
+        cellDefaultStyle += "-range";
       }
 
-      return [
-        cellDefaultStyle,
-        cellInRangeStyle
-      ];
+      return [cellDefaultStyle];
     }
   },
   methods: {
@@ -87,28 +83,41 @@ export default {
 
   .boardCell {
     border-radius: 0%;
+    cursor: pointer;
   }
 
   .port1 {
     background-color: $port1-color;
   }
+  .port1-range {
+    background-color: darken($port1-color, 20%)
+  }
 
   .port2 {
     background-color: $port2-color;
+  }
+  .port2-range {
+    background-color: darken($port2-color, 10%)
   }
 
   .neutral {
     background-color: $neutral-color;
   }
+  .neutral-range {
+    background-color: darken($neutral-color, 5%)
+  }
 
   .sea {
     background-color: $sea-color;
   }
+  .sea-range {
+    background-color: darken($sea-color, 20%)
+  }
+
   .entrance {
     background-color: $port-entrance-color;
   }
-
-  .inRange {
-    background-color: aqua;
+  .entrance-range {
+    background-color: darken($port-entrance-color, 10%)
   }
 </style>

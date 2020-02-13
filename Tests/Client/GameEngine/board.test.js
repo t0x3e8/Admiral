@@ -135,4 +135,15 @@ describe("BOARD requirements", () => {
       expect(board.cells[1][1].pawn).to.not.be.null;
       expect(board.cells[0][0].inRange).to.be.true;
     });
+
+    it("BFS - under work", () => {
+      const board = new Board(),
+        pawnSubmarine = new Pawn({
+          type: PawnType.SUBMARINE
+        });
+
+      board.cells[1][1].assignPawn(pawnSubmarine);
+      board.select({ col: 1, row: 1 });
+      board.rangeCellsBFS(pawnSubmarine, 1);
+    });
 });
