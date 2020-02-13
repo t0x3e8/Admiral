@@ -216,7 +216,7 @@ module.exports = {
         "one-var-declaration-per-line": "error",
         "operator-assignment": "error",
         "operator-linebreak": "error",
-        "padded-blocks": [ "error", "never" ],
+        // "padded-blocks": [ "error", "never" ],
         "padding-line-between-statements": "error",
         "prefer-arrow-callback": "error",
         "prefer-const": "error",

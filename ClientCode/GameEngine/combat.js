@@ -6,7 +6,6 @@ import {CombatResult} from "./gameEnums.js";
  * Object processes combats based on provided oponents.
  * @return {void}
  */
-// eslint-disable-next-line padded-blocks
 class Combat {
 
   /**

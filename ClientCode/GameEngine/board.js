@@ -185,7 +185,7 @@ class Board {
 
     while (queue.length > 0) {
       const cell = queue.shift(1),
-            neighbours = cell.getCellNeighbours();
+            neighbours = cell.getAdjacentCells();
 
       nextElementsToDepthIncrease += neighbours.length;
 

@@ -32,26 +32,31 @@ class Cell {
     pawn.updatePosition(that.colIndex, that.rowIndex);
   }
 
-  getCellNeighbours() {
-    const neighbours = [],
+  /**
+   * The function creates arrat of adjacent (neighboring) cells.
+   * Adjacent cells are those that are located directly on the X and Y axes.
+   * @returns {array} The array containing adjacent cells
+   */
+  getAdjacentCells() {
+    const adjacentCells = [],
         row = this.rowIndex,
         col = this.colIndex,
         offset = 1;
 
     if (this.board.cells[row - offset]) {
-      neighbours.push(this.board.cells[row - offset][col]);
+      adjacentCells.push(this.board.cells[row - offset][col]);
     }
     if (this.board.cells[row + offset]) {
-      neighbours.push(this.board.cells[row + offset][col]);
+      adjacentCells.push(this.board.cells[row + offset][col]);
     }
     if (this.board.cells[row][col - offset]) {
-      neighbours.push(this.board.cells[row][col - offset]);
+      adjacentCells.push(this.board.cells[row][col - offset]);
     }
     if (this.board.cells[row][col + offset]) {
-      neighbours.push(this.board.cells[row][col + offset]);
+      adjacentCells.push(this.board.cells[row][col + offset]);
     }
 
-    return neighbours;
+    return adjacentCells;
   }
 }
 

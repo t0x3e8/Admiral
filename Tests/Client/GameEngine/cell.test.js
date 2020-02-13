@@ -15,10 +15,10 @@ describe("CELL requirements", () => {
             cellTopRigth = board.cells[0][11],
             cellMiddle = board.cells[9][5];
 
-      expect(cellTopLeft.getCellNeighbours(board).length).to.be.equal(2);
-      expect(cellBottomRight.getCellNeighbours(board).length).to.be.equal(2);
-      expect(cellBottomLeft.getCellNeighbours(board).length).to.be.equal(2);
-      expect(cellTopRigth.getCellNeighbours(board).length).to.be.equal(2);
-      expect(cellMiddle.getCellNeighbours(board).length).to.be.equal(4);
+      expect(cellTopLeft.getAdjacentCells(board).length).to.be.equal(2);
+      expect(cellBottomRight.getAdjacentCells(board).length).to.be.equal(2);
+      expect(cellBottomLeft.getAdjacentCells(board).length).to.be.equal(2);
+      expect(cellTopRigth.getAdjacentCells(board).length).to.be.equal(2);
+      expect(cellMiddle.getAdjacentCells(board).length).to.be.equal(4);
     });
 });
