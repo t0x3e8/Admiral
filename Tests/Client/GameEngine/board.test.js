@@ -108,15 +108,20 @@ describe("BOARD requirements", () => {
       const board = new Board(),
         pawnSubmarine = new Pawn({
           type: PawnType.SUBMARINE
+        }),
+        pawnBattleship = new Pawn({
+          type: PawnType.BATTLESHIP
         });
 
       board.cells[5][5].assignPawn(pawnSubmarine);
+      board.cells[5][4].assignPawn(pawnBattleship);
       board.select({ col: 5, row: 5 });
       board.rangeCells(pawnSubmarine);
 
       expect(board.cells[5][5]).to.not.be.empty;
       expect(board.cells[5][5].pawn).to.not.be.null;
       expect(board.cells[3][3].inRange).to.be.true;
+      expect(board.cells[5][4].inRange).to.be.false;
     });
 
   it("GIVEN that Board is initialized " +

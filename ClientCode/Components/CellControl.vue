@@ -90,34 +90,34 @@ export default {
     background-color: $port1-color;
   }
   .port1-range {
-    background-color: darken($port1-color, 20%)
+    background-color: darken($port1-color, 30%)
   }
 
   .port2 {
     background-color: $port2-color;
   }
   .port2-range {
-    background-color: darken($port2-color, 10%)
+    background-color: darken($port2-color, 30%)
   }
 
   .neutral {
     background-color: $neutral-color;
   }
   .neutral-range {
-    background-color: darken($neutral-color, 5%)
+    background-color: darken($neutral-color, 30%)
   }
 
   .sea {
     background-color: $sea-color;
   }
   .sea-range {
-    background-color: darken($sea-color, 20%)
+    background-color: darken($sea-color, 30%)
   }
 
   .entrance {
     background-color: $port-entrance-color;
   }
   .entrance-range {
-    background-color: darken($port-entrance-color, 10%)
+    background-color: darken($port-entrance-color, 30%)
   }
 </style>

@@ -151,17 +151,15 @@ class Board {
       return;
     }
 
-    const queue = [],
-          visited = [];
+    const queue = [];
 
-          let currentDepth = 1,
-              elementsToDepthIncrease = 1,
-              nextElementsToDepthIncrease = 0,
-              cell = this.cells[pawn.row][pawn.col],
-              adjacentCells = [];
+    let currentDepth = 1,
+        elementsToDepthIncrease = 1,
+        nextElementsToDepthIncrease = 0,
+        cell = this.cells[pawn.row][pawn.col],
+        adjacentCells = [];
 
     queue.push(cell);
-    visited.push(cell);
 
     while (queue.length > 0) {
       cell = queue.shift(1);
@@ -170,14 +168,12 @@ class Board {
       nextElementsToDepthIncrease += adjacentCells.length;
 
       // eslint-disable-next-line no-loop-func
-      adjacentCells.forEach(n => {
-        // eslint-disable-next-line no-negated-condition
-        if (!visited.includes(n)) {
-          visited.push(n);
-          n.inRange = true;
-          queue.push(n);
-        } else {
+      adjacentCells.forEach(adjacentCell => {
+        if (adjacentCell.inRange || adjacentCell.pawn || adjacentCell.type !== cell.type) {
           nextElementsToDepthIncrease -= 1;
+        } else {
+          adjacentCell.inRange = true;
+          queue.push(adjacentCell);
         }
       });
 
