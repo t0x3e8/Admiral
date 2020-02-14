@@ -48,6 +48,5 @@
   }
 
   .selected {
-    background-color: pink
   }
 </style>

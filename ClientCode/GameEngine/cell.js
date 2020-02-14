@@ -1,3 +1,4 @@
+/* eslint-disable max-statements */
 import uuid from "uuid/v1";
 
 /**
@@ -43,17 +44,37 @@ class Cell {
         col = this.colIndex,
         offset = 1;
 
+    // R-1, C
     if (this.board.cells[row - offset]) {
       adjacentCells.push(this.board.cells[row - offset][col]);
     }
+    // R-1, C-1
+    if (this.board.cells[row - offset] && this.board.cells[row - offset][col - offset]) {
+      adjacentCells.push(this.board.cells[row - offset][col - offset]);
+    }
+    // R+1, C
     if (this.board.cells[row + offset]) {
       adjacentCells.push(this.board.cells[row + offset][col]);
     }
+    // R-1, C+1
+    if (this.board.cells[row - offset] && this.board.cells[row - offset][col + offset]) {
+      adjacentCells.push(this.board.cells[row - offset][col + offset]);
+    }
+    // R, C-1
     if (this.board.cells[row][col - offset]) {
       adjacentCells.push(this.board.cells[row][col - offset]);
     }
+    // R+1, C-1
+    if (this.board.cells[row + offset] && this.board.cells[row + offset][col - offset]) {
+      adjacentCells.push(this.board.cells[row + offset][col - offset]);
+    }
+    // R, C+1
     if (this.board.cells[row][col + offset]) {
       adjacentCells.push(this.board.cells[row][col + offset]);
+    }
+    // R+1, C+1
+    if (this.board.cells[row + offset] && this.board.cells[row + offset][col + offset]) {
+      adjacentCells.push(this.board.cells[row + offset][col + offset]);
     }
 
     return adjacentCells;

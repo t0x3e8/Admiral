@@ -140,72 +140,57 @@ class Board {
   }
 
   /**
-   * Function identifies all cells in range of the pawn
-   * @param {uuid} pawn Pawn for which the range should be calculate
+   * The function selects cells that are within the Pawn's range.
+   * The selected cells change the inRange property to true.
+   * The algorithm used: Breadth First Search
+   * @param {pawn} pawn The pawn for which selection is conducted
    * @returns {void}
    */
   rangeCells(pawn) {
-    const colMax = pawn.col + pawn.range,
-          colMin = pawn.col - pawn.range,
-          rowMax = pawn.row + pawn.range;
-
-    let col = colMin,
-        row = pawn.row - pawn.range;
-
-    /*
-     * Each field within the square range is tested, if:
-     * - the field has no pawns in it, mark the field as in range,
-     * - the field has a pawn, but the pawn is opponent's pawn, mark the field as in range,
-     */
-    for (row; row <= rowMax; row += 1) {
-      if (this.cells[row]) {
-        for (col; col <= colMax; col += 1) {
-          if (this.cells[row][col]) {
-            // eslint-disable-next-line max-depth
-            if (col !== pawn.col || row !== pawn.row) {
-              this.cells[row][col].inRange = true;
-            }
-          }
-        }
-        col = colMin;
-      }
+    if (!pawn || pawn.range === 0) {
+      return;
     }
-  }
 
-  rangeCellsBFS(pawn, maxDepth) {
     const queue = [],
           visited = [];
 
-    let currentDepth = 0,
-        elementsToDepthIncrease = 1,
-        nextElementsToDepthIncrease = 0;
+          let currentDepth = 1,
+              elementsToDepthIncrease = 1,
+              nextElementsToDepthIncrease = 0,
+              cell = this.cells[pawn.row][pawn.col],
+              adjacentCells = [];
 
-    queue.push(this.cells[pawn.row][pawn.col]);
-    visited.push(this.cells[pawn.row][pawn.col]);
+    queue.push(cell);
+    visited.push(cell);
 
     while (queue.length > 0) {
-      const cell = queue.shift(1),
-            neighbours = cell.getAdjacentCells();
+      cell = queue.shift(1);
+      adjacentCells = cell.getAdjacentCells();
 
-      nextElementsToDepthIncrease += neighbours.length;
+      nextElementsToDepthIncrease += adjacentCells.length;
 
-      // eslint-disable-next-line no-plusplus
-      if (--elementsToDepthIncrease === 0) {
-        // eslint-disable-next-line no-plusplus
-        if (++currentDepth > maxDepth) {
+      // eslint-disable-next-line no-loop-func
+      adjacentCells.forEach(n => {
+        // eslint-disable-next-line no-negated-condition
+        if (!visited.includes(n)) {
+          visited.push(n);
+          n.inRange = true;
+          queue.push(n);
+        } else {
+          nextElementsToDepthIncrease -= 1;
+        }
+      });
+
+      elementsToDepthIncrease -= 1;
+      if (elementsToDepthIncrease === 0) {
+        currentDepth += 1;
+        if (currentDepth > pawn.range) {
           return;
         }
+
         elementsToDepthIncrease = nextElementsToDepthIncrease;
         nextElementsToDepthIncrease = 0;
       }
-
-      neighbours.forEach(n => {
-        if (!visited.includes(n)) {
-          // visited.push(n);
-          n.inRange = true;
-          queue.push(n);
-        }
-      });
     }
   }
 

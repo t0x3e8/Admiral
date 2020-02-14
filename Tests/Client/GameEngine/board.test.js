@@ -144,6 +144,6 @@ describe("BOARD requirements", () => {
 
       board.cells[1][1].assignPawn(pawnSubmarine);
       board.select({ col: 1, row: 1 });
-      board.rangeCellsBFS(pawnSubmarine, 1);
+      board.rangeCells(pawnSubmarine);
     });
 });
