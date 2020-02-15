@@ -83,41 +83,45 @@ export default {
 
   .boardCell {
     border-radius: 0%;
-    cursor: pointer;
   }
 
   .port1 {
     background-color: $port1-color;
   }
   .port1-range {
-    background-color: darken($port1-color, 30%)
+    background-color: darken($port1-color, 30%);
+    cursor: pointer;
   }
 
   .port2 {
     background-color: $port2-color;
   }
   .port2-range {
-    background-color: darken($port2-color, 30%)
+    background-color: darken($port2-color, 30%);
+    cursor: pointer;
   }
 
   .neutral {
     background-color: $neutral-color;
   }
   .neutral-range {
-    background-color: darken($neutral-color, 30%)
+    background-color: darken($neutral-color, 30%);
+    cursor: pointer;
   }
 
   .sea {
     background-color: $sea-color;
   }
   .sea-range {
-    background-color: darken($sea-color, 30%)
+    background-color: darken($sea-color, 30%);
+    cursor: pointer;
   }
 
   .entrance {
     background-color: $port-entrance-color;
   }
   .entrance-range {
-    background-color: darken($port-entrance-color, 30%)
+    background-color: darken($port-entrance-color, 30%);
+    cursor: pointer;
   }
 </style>
