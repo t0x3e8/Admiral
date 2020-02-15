@@ -1,37 +1,21 @@
-import uuid from 'uuid/v1';
+import uuid from "uuid/v1";
 
 /**
- * Representing History object
+ * Representing History of the Game
  * @returns {void}
  */
 class History {
   constructor() {
-    const that = this,
-      historyId = uuid();
+    const historyId = uuid();
 
-    that.records = [];
+    this.records = [];
 
     /**
      * @returns {uuid} gets unique history id
      */
-    that.getHistoryId = function() {
+    this.getHistoryId = function() {
       return historyId;
     };
-  }
-
-  /**
-   * Should be called when there is no more turns in the game and history can be called.
-   * @param {number} result 0 - unresolved, 1 - player 1 wins, 2 - player 2 wins
-   * @param {uuid} playerId uuid of winning player
-   * @return {void}
-   */
-  end(result, playerId) {
-    const that = this;
-
-    that.records.push({
-      result,
-      player: playerId
-    });
   }
 
   /**
@@ -61,20 +45,6 @@ class History {
 
     // eslint-disable-next-line no-magic-numbers
     return that.records[turnNumber - 1];
-  }
-
-  /**
-   * Helper method to create record
-   * @param {Player} player1 Player number 1
-   * @param {Player} player2 Player number 2
-   * @return {object} new record
-   */
-  // eslint-disable-next-line class-methods-use-this
-  createRecord(player1, player2) {
-    return {
-      player1,
-      player2
-    };
   }
 }
 

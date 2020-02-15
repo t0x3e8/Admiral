@@ -9,10 +9,15 @@ module.exports = {
     },
     "extends": [
         "eslint:recommended",
-        "plugin:vue/recommended"
+        "plugin:vue/recommended",
+        "prettier/vue"
+    ],
+    "plugins": [
+      "vue"
     ],
     "parserOptions": {
-        "ecmaVersion": 2015,
+        "parser": "babel-eslint",
+        "ecmaVersion": 6,
         "sourceType": "module"
     },
     "rules": {
@@ -38,7 +43,14 @@ module.exports = {
         "brace-style": "error",
         "callback-return": "error",
         "camelcase": "error",
-        "capitalized-comments": "error",
+        // "capitalized-comments": [
+        //     "error",
+        //     "always",
+        //     {
+        //         "ignorePattern": "webpackMode",
+        //         "ignoreInlineComments": true
+        //     }
+        // ],
         "class-methods-use-this": "error",
         "comma-dangle": "error",
         "comma-spacing": "error",
@@ -57,7 +69,10 @@ module.exports = {
         "func-name-matching": "error",
         "func-names": "off",
         "func-style": "error",
-        "function-paren-newline": "error",
+        "function-paren-newline": [
+            "error",
+            "consistent"
+        ],
         "generator-star-spacing": "error",
         "global-require": "error",
         "guard-for-in": "error",
@@ -205,7 +220,7 @@ module.exports = {
         "one-var-declaration-per-line": "error",
         "operator-assignment": "error",
         "operator-linebreak": "error",
-        "padded-blocks": [ "error", "never" ],
+        // "padded-blocks": [ "error", "never" ],
         "padding-line-between-statements": "error",
         "prefer-arrow-callback": "error",
         "prefer-const": "error",
@@ -220,7 +235,7 @@ module.exports = {
         "quote-props": "off",
         "quotes": [
             "error",
-            "single"
+            "double"
         ],
         "radix": "error",
         "require-atomic-updates": "error",

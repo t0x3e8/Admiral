@@ -1,17 +1,17 @@
 export default {
 
     storeToken(token) {
-        localStorage.setItem('auth', JSON.stringify(token));
+        localStorage.setItem("auth", JSON.stringify(token));
         this.onChange(true);
     },
 
     deleteToken() {
-        Reflect.deleteProperty(localStorage, 'auth');
+        Reflect.deleteProperty(localStorage, "auth");
         this.onChange(false);
     },
 
     getToken () {
-        return JSON.parse(localStorage.getItem('auth'))
+        return JSON.parse(localStorage.getItem("auth"))
     },
 
     isAuthorized() {

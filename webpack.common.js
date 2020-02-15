@@ -1,68 +1,79 @@
-const path = require('path')
-const VueLoaderPlugin = require('vue-loader/lib/plugin')
+const path = require("path")
+const VueLoaderPlugin = require("vue-loader/lib/plugin")
 
 module.exports = {
-  entry: './ClientCode/main.js',
+  entry: "./ClientCode/main.js",
   output: {
-    path: path.resolve(__dirname, './wwwroot/js'),
-    publicPath: '/wwwroot/',
-    filename: 'app.js'
+    path: path.resolve(__dirname, "./wwwroot/js"),
+    publicPath: "/wwwroot/",
+    filename: "app.js"
   },
   module: {
     rules: [
       {
         test: /\.vue$/u,
-        loader: 'vue-loader'
+        use: [
+          {
+            loader: "vue-loader"
+          }
+        ]
+      },
+      {
+        test: /\.svg$/u,
+        use: [
+          "babel-loader",
+          "vue-svg-loader"
+        ]
       },
       {
         test: /\.styl$/u,
         loader: [
-          'style-loader',
-          'css-loader',
-          'stylus-loader'
+          "style-loader",
+          "css-loader",
+          "stylus-loader"
         ]
       },
       {
         test: /\.css$/u,
         loader: [
-          'vue-style-loader',
-          'css-loader'
+          "vue-style-loader",
+          "css-loader"
         ],
         exclude: /node_modules/u
       },
       {
         test: /\.s(c|a)ss$/u,
         loader: [
-          'style-loader',
-          'css-loader',
-          'sass-loader'
+          "style-loader",
+          "css-loader",
+          "sass-loader"
         ]
       },
       {
         test: /\.js$/u,
         loader: [
-          'babel-loader',
-          'eslint-loader'
+          "babel-loader",
+          "eslint-loader"
         ],
         exclude: /node_modules/u
       },
       {
-        test: /\.(png|jpg|gif|svg|ico)$/u,
-        loader: 'file-loader',
+        test: /\.(png|jpg|gif|ico)$/u,
+        loader: "file-loader",
         options: {
-          name: '[name].[ext]?[hash]'
+          name: "[name].[ext]?[hash]"
         }
       },
       {
-        test: /\.(jpg|jpeg|png|woff|woff2|eot|ttf|svg)$/u,
-        loader: 'url-loader'
+        test: /\.(jpg|jpeg|png|woff|woff2|eot|ttf)$/u,
+        loader: "url-loader"
       }
     ]
   },
   plugins: [new VueLoaderPlugin()],
   resolve: {
     alias: {
-      'vue$': 'vue/dist/vue.esm.js'
+      "vue$": "vue/dist/vue.esm.js"
     }
   },
   performance: {

@@ -1,11 +1,9 @@
 module.exports = {
-    'env': {
-      'development': {
-        'sourceMaps': true,
-        'retainLines': true
+    "env": {
+      "development": {
+        "sourceMaps": true,
+        "retainLines": true
       }
     },
-    presets: [
-        '@babel/preset-env'
-    ]
+    presets: ["@babel/preset-env"]
   }

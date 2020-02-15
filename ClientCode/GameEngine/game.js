@@ -1,12 +1,12 @@
 /* eslint-disable no-magic-numbers */
 /* eslint-disable max-statements */
 /* eslint-disable max-lines-per-function */
-import eventEmitter from 'events';
-import util from 'util';
-import uuid from 'uuid/v1';
-import Board from './board.js';
-import History from './history.js';
-import {GameState} from './gameEnums.js';
+import eventEmitter from "events";
+import util from "util";
+import uuid from "uuid/v1";
+import Board from "./board.js";
+import History from "./history.js";
+import { GameState } from "./gameEnums.js";
 
 /**
  * A class representing a Game object.
@@ -17,7 +17,7 @@ class Game {
     const that = this,
       gameId = uuid();
 
-      let state = GameState.NotStarted,
+    let state = GameState.NotStarted,
       gameResult = 0;
 
     that.board = null;
@@ -30,10 +30,10 @@ class Game {
      * @param {GameState} newState parameter representing the new game state
      * @return {void}
      */
-    that.setState = function(newState) {
+    that.setState = function (newState) {
       state = newState;
       if (state === GameState.Started) {
-        that.emit('gameStarting');
+        that.emit("gameStarting");
         // Initialize History and Board. Let players know that turn started and wait.
         that.history = new History();
         that.history.pushTurn(that.players[0], that.players[1]);
@@ -45,9 +45,9 @@ class Game {
         // eslint-disable-next-line no-warning-comments
         // TODO: Set timer to send an email notification after a while
         that.notifyPlayers();
-        that.emit('gameWaiting');
+        that.emit("gameWaiting");
       } else if (state === GameState.Turn) {
-        that.emit('gameTurnProcessing');
+        that.emit("gameTurnProcessing");
         // Let Board to process the turn and save output in the history
         that.history.pushTurn(that.players[0], that.players[1]);
         gameResult = that.board.processTurn(that.players[0], that.players[1]);
@@ -56,7 +56,7 @@ class Game {
         } else {
           that.setState(GameState.Ended);
         }
-        that.emit('gameTurnProcessed');
+        that.emit("gameTurnProcessed");
       } else if (state === GameState.Ended) {
         that.history.end(gameResult, () => {
           if (gameResult === 1) {
@@ -65,7 +65,7 @@ class Game {
             that.players[1].getPlayerId();
           }
         });
-        that.emit('gameEnded');
+        that.emit("gameEnded");
       }
     };
 
@@ -73,7 +73,7 @@ class Game {
      * Method to be called when player's turn has ended and a player wants to commit its move.
      * @returns {void}
      */
-    that.commitTurn = function() {
+    that.commitTurn = function () {
       const isTurnCommitted = that.players[0].isReady() && that.players[1].isReady();
 
       if (isTurnCommitted) {
@@ -84,14 +84,14 @@ class Game {
     /**
      * @returns {uuid} gets unique game id
      */
-    that.getGameId = function() {
+    that.getGameId = function () {
       return gameId;
     };
 
     /**
      * @returns {uuid} gets current game state
      */
-    that.getState = function() {
+    that.getState = function () {
       return state;
     };
   }
@@ -116,7 +116,7 @@ class Game {
     const that = this;
 
     if (that.players.length === 2) {
-        that.setState(GameState.Started);
+      that.setState(GameState.Started);
     }
   }
 
@@ -126,9 +126,9 @@ class Game {
    */
   notifyPlayers() {
     const that = this,
-     commitTurnCallback = that.commitTurn;
+      commitTurnCallback = that.commitTurn;
 
-     that.players.forEach(player => {
+    that.players.forEach(player => {
       player.startTurn(commitTurnCallback);
     });
   }

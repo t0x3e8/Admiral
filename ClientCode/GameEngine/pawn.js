@@ -1,9 +1,11 @@
-import uuid from 'uuid/v1';
-import _ from 'underscore';
+import uuid from "uuid/v1";
+import settings from "./settings.js";
+import { find } from "underscore";
 
 /**
  * A class representing a Pawn object.
- * @param {object} pawnData - Object containing pawn information as: type, col, row, pawnId (optional)
+ * @param {object} pawnData - Object containing pawn information as: type, col, oldCol,
+ * row, oldRow, pawnId (optional), selected
  * @returns {void}
  */
 class Pawn {
@@ -17,6 +19,8 @@ class Pawn {
         that.row = pawnData.row;
         that.oldRow = pawnData.row;
         that.player = null;
+        that.selected = false;
+        that.range = find(settings.pawns, element => element.typeId === that.type).range;
 
         /**
          * @returns {uuid} gets unique pawn id
@@ -54,23 +58,10 @@ class Pawn {
         that.oldRow = that.row;
         that.col = newCol;
         that.row = newRow;
-        // eslint-disable-next-line padded-blocks
+
         if ((that.col === null || that.row === null) && that.player) {
-
-            /*
-             * Check whether the method "player.setPawns" is not more appropriate
-             * that.player.pawns = _(that.player.pawns, that);
-             */
-
-            that.player.setPawns(_(that.player.pawns, that));
+            that.player.setPawns((that.player.pawns, that));
         }
-    }
-
-    resetState() {
-        const that = this;
-
-        that.oldCol = that.col;
-        that.oldRow = that.row;
     }
 }
 

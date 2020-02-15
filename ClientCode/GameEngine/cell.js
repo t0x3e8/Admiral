@@ -1,4 +1,5 @@
-import uuid from 'uuid/v1';
+/* eslint-disable max-statements */
+import uuid from "uuid/v1";
 
 /**
  * A class representing a Cell object.
@@ -14,6 +15,8 @@ class Cell {
     that.colIndex = cellData.columnIndex;
     that.rowIndex = cellData.rowIndex;
     that.pawn = null;
+    that.inRange = false;
+    that.board = cellData.board;
 
     /**
      * @returns {uuid} gets unique cell id
@@ -24,10 +27,63 @@ class Cell {
   }
 
   assignPawn(pawn) {
-    const that = this;
+    const boardStartPos = 0;
 
-    that.pawn = pawn;
-    pawn.updatePosition(that.colIndex, that.rowIndex);
+    // remove pawn from old Cell
+    if (pawn.row >= boardStartPos && pawn.col >= boardStartPos) {
+      this.board.cells[pawn.row][pawn.col].pawn = null;
+    }
+
+    // set pawn to new Cell
+    this.pawn = pawn;
+    pawn.updatePosition(this.colIndex, this.rowIndex);
+  }
+
+  /**
+   * The function creates arrat of adjacent (neighboring) cells.
+   * Adjacent cells are those that are located directly on the X and Y axes.
+   * @returns {array} The array containing adjacent cells
+   */
+  getAdjacentCells() {
+    const adjacentCells = [],
+        row = this.rowIndex,
+        col = this.colIndex,
+        offset = 1;
+
+    // R-1, C
+    if (this.board.cells[row - offset]) {
+      adjacentCells.push(this.board.cells[row - offset][col]);
+    }
+    // R-1, C-1
+    if (this.board.cells[row - offset] && this.board.cells[row - offset][col - offset]) {
+      adjacentCells.push(this.board.cells[row - offset][col - offset]);
+    }
+    // R+1, C
+    if (this.board.cells[row + offset]) {
+      adjacentCells.push(this.board.cells[row + offset][col]);
+    }
+    // R-1, C+1
+    if (this.board.cells[row - offset] && this.board.cells[row - offset][col + offset]) {
+      adjacentCells.push(this.board.cells[row - offset][col + offset]);
+    }
+    // R, C-1
+    if (this.board.cells[row][col - offset]) {
+      adjacentCells.push(this.board.cells[row][col - offset]);
+    }
+    // R+1, C-1
+    if (this.board.cells[row + offset] && this.board.cells[row + offset][col - offset]) {
+      adjacentCells.push(this.board.cells[row + offset][col - offset]);
+    }
+    // R, C+1
+    if (this.board.cells[row][col + offset]) {
+      adjacentCells.push(this.board.cells[row][col + offset]);
+    }
+    // R+1, C+1
+    if (this.board.cells[row + offset] && this.board.cells[row + offset][col + offset]) {
+      adjacentCells.push(this.board.cells[row + offset][col + offset]);
+    }
+
+    return adjacentCells;
   }
 }
 

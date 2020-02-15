@@ -1,12 +1,11 @@
-import settings from './settings';
-import {find, contains} from 'underscore';
-import {CombatResult} from './gameEnums.js';
+import settings from "./settings";
+import {find, contains} from "underscore";
+import {CombatResult} from "./gameEnums.js";
 
 /**
  * Object processes combats based on provided oponents.
  * @return {void}
  */
-// eslint-disable-next-line padded-blocks
 class Combat {
 
   /**
