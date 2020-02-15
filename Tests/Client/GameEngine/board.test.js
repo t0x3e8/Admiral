@@ -141,4 +141,22 @@ describe("BOARD requirements", () => {
       expect(board.cells[1][1].pawn).to.not.be.null;
       expect(board.cells[0][0].inRange).to.be.true;
     });
+
+  it("GIVEN I have a Board with Cells and one Pawn assigned to a random Cell (Origin) " +
+    "WHEN I want to move the Pawn to new Cell (Destination) " +
+    "THEN both Cells (Origin and Destination) should update their status", () => {
+      const board = new Board(),
+        pawnSubmarine = new Pawn({
+          type: PawnType.SUBMARINE,
+          range: 2
+        });
+
+      board.cells[1][1].assignPawn(pawnSubmarine);
+      expect(board.cells[1][1].pawn).to.not.be.null;
+      expect(board.cells[1][2].pawn).to.be.null;
+
+      board.cells[1][2].assignPawn(pawnSubmarine);
+      expect(board.cells[1][1].pawn).to.be.null;
+      expect(board.cells[1][2].pawn).to.not.be.null;
+    });
 });

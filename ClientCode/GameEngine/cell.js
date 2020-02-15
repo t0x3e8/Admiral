@@ -27,10 +27,14 @@ class Cell {
   }
 
   assignPawn(pawn) {
-    const that = this;
-
-    that.pawn = pawn;
-    pawn.updatePosition(that.colIndex, that.rowIndex);
+    // remove pawn from old Cell
+    if (pawn.row >= 0 && pawn.col >= 0) {
+      this.board.cells[pawn.row][pawn.col].pawn = null;
+    }
+    
+    // set pawn to new Cell
+    this.pawn = pawn;
+    pawn.updatePosition(this.colIndex, this.rowIndex);
   }
 
   /**
