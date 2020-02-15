@@ -58,8 +58,7 @@ export default {
       }
     },
     moveOrAttack(destCell) {
-      const selectedPawn = this.board.getSelected(),
-        selectedCell = this.board.cells[selectedPawn.row][selectedPawn.col];
+      const selectedPawn = this.board.getSelected();
 
       if (selectedPawn && destCell.pawn === null) {
         destCell.assignPawn(selectedPawn);
