@@ -78,7 +78,7 @@ export default {
   $port1-color: #43a047;
   $port-entrance-color: #546e7a;
   $port2-color: #1b5e20;
-  $neutral-color: #263238;
+  $neutral-color: #1155ff;
 
 
   .boardCell {
