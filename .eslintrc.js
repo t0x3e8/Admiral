@@ -13,8 +13,6 @@ module.exports = {
         "prettier/vue"
     ],
     "plugins": [
-      "babel",
-      "prettier",
       "vue"
     ],
     "parserOptions": {
