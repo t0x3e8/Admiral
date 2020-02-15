@@ -1,3 +1,4 @@
+/* eslint-disable max-lines-per-function */
 /* eslint-disable max-statements */
 /* eslint-disable no-magic-numbers */
 
@@ -6,6 +7,7 @@ import settings from "./settings.js"
 import Cell from "./cell.js"
 import Pawn from "./pawn.js"
 import Utils from "./utils.js"
+import Rules from "./Utils/Rules.js"
 import _ from "underscore";
 
 /**
@@ -16,11 +18,11 @@ import _ from "underscore";
 class Board {
   constructor() {
     const that = this,
-      boardId = uuid()
+      boardId = uuid();
 
     that.cells = [];
 
-    this.initializeCells();
+    that.initializeCells();
     that.initializePawns();
 
     /**
@@ -169,8 +171,16 @@ class Board {
 
       // eslint-disable-next-line no-loop-func
       adjacentCells.forEach(adjacentCell => {
-        if (adjacentCell.inRange || adjacentCell.pawn || adjacentCell.type !== cell.type) {
-          nextElementsToDepthIncrease -= 1;
+
+        /*
+         * Adjacent Cell cannot be alredy "inRange" meaning not being already visited,
+         * Adjacent Cell cannot have a Pawn assigned
+         * Adjacent Cell and Main Cell cannot be pair of Sea and Port
+         */
+        if (Rules.isCellInRange(adjacentCell) ||
+            Rules.hasCellAssignedPawn(adjacentCell) ||
+            Rules.isPairOfSeaAndPort(adjacentCell, cell)) {
+              nextElementsToDepthIncrease -= 1;
         } else {
           adjacentCell.inRange = true;
           queue.push(adjacentCell);

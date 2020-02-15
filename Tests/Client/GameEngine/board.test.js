@@ -129,7 +129,8 @@ describe("BOARD requirements", () => {
     "THEN it should be possible clean the range of previous selection", () => {
       const board = new Board(),
         pawnSubmarine = new Pawn({
-          type: PawnType.SUBMARINE
+          type: PawnType.SUBMARINE,
+          range: 2
         });
 
       board.cells[1][1].assignPawn(pawnSubmarine);
