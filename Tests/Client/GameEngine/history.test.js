@@ -5,7 +5,6 @@
 import { expect } from "chai";
 import Board from "../../../ClientCode/GameEngine/board.js";
 import Pawn from "../../../ClientCode/GameEngine/pawn.js";
-import History from "../../../ClientCode/GameEngine/history.js";
 import { PawnType } from "../../../ClientCode/GameEngine/gameEnums";
 
 describe("History requirements", () => {
@@ -20,7 +19,8 @@ describe("History requirements", () => {
 
       board.cells[5][5].assignPawn(pawnSubmarine);
 
-        
+      expect(pawnSubmarine.col).to.be.equal(5);
+      expect(pawnSubmarine.row).to.be.equal(5);
 
     });
 });

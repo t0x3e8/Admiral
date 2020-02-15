@@ -27,11 +27,13 @@ class Cell {
   }
 
   assignPawn(pawn) {
+    const boardStartPos = 0;
+
     // remove pawn from old Cell
-    if (pawn.row >= 0 && pawn.col >= 0) {
+    if (pawn.row >= boardStartPos && pawn.col >= boardStartPos) {
       this.board.cells[pawn.row][pawn.col].pawn = null;
     }
-    
+
     // set pawn to new Cell
     this.pawn = pawn;
     pawn.updatePosition(this.colIndex, this.rowIndex);
