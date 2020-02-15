@@ -1,6 +1,6 @@
 <template>
   <div>
-    <banner-control />
+    <banner-control :game-id="game.getGameId()" />
     <board-control />
   </div>
 </template>
@@ -8,11 +8,17 @@
 <script>
 import BannerControl from "./../Components/BannerControl.vue";
 import BoardControl from "./../Components/BoardContol.vue";
+import Game from "./../GameEngine/game";
 
 export default {
-  data() {
-    return {};
+  components: {
+    BoardControl,
+    BannerControl
   },
-  components: { BoardControl, BannerControl }
+  data() {
+    return {
+      game: new Game()
+    };
+  }
 };
 </script>
