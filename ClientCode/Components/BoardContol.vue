@@ -19,12 +19,11 @@ import CellControl from "./CellControl.vue";
 export default {
   name: "BoardControl",
   components: { CellControl },
-  data() {
-    const board = new Board();
-
-    return {
-      board
-    };
+  props: {
+    board: {
+      type: Board,
+      default: null
+    }
   },
   mounted() {
     this.$root.$on("cell-click", this.onCellClick);

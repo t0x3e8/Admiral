@@ -1,7 +1,7 @@
 <template>
   <div>
     <banner-control :game-id="game.getGameId()" />
-    <board-control />
+    <board-control :board="game.board" />
   </div>
 </template>
 

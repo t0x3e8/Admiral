@@ -12,6 +12,7 @@ describe("GAME requirements", () => {
 
         expect(game.getGameId(), "Unique ID must be generated").to.not.be.empty;
         expect(game.history, "The History must be initiated").to.not.be.null;
+        expect(game.board, "The Board must be initiated").to.not.be.null;
         expect(game.players.length, "At creation players not assigned").to.be.equal(0);
     });
 });
