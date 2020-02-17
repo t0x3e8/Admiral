@@ -19,7 +19,7 @@ class Game {
       gameResult = 0;
 
     this.board = null;
-    this.history = null;
+    this.history = new History();
     this.players = [];
 
     /**
@@ -32,7 +32,6 @@ class Game {
       if (state === GameState.Started) {
         this.emit("gameStarting");
         // Initialize History and Board. Let players know that turn started and wait.
-        this.history = new History();
         this.history.pushTurn(this.players[0], this.players[1]);
         this.board = new Board();
         this.board.init(this.players[0], this.players[1]);
