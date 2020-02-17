@@ -156,10 +156,11 @@ class Board {
     const queue = [];
 
     let currentDepth = 1,
-        elementsToDepthIncrease = 1,
-        nextElementsToDepthIncrease = 0,
-        cell = this.cells[pawn.row][pawn.col],
-        adjacentCells = [];
+      elementsToDepthIncrease = 1,
+      nextElementsToDepthIncrease = 0,
+      cell = this.cells[pawn.row][pawn.col],
+      adjacentCells = [],
+      i = 0;
 
     queue.push(cell);
 
@@ -170,7 +171,8 @@ class Board {
       nextElementsToDepthIncrease += adjacentCells.length;
 
       // eslint-disable-next-line no-loop-func
-      adjacentCells.forEach(adjacentCell => {
+      for (i = 0; i < adjacentCells.length; i += 1) {
+        const adjacentCell = adjacentCells[i];
 
         /*
          * Adjacent Cell cannot be alredy "inRange" meaning not being already visited,
@@ -178,14 +180,14 @@ class Board {
          * Adjacent Cell and Main Cell cannot be pair of Sea and Port
          */
         if (Rules.isCellInRange(adjacentCell) ||
-            Rules.hasCellAssignedPawn(adjacentCell) ||
-            Rules.isPairOfSeaAndPort(adjacentCell, cell)) {
-              nextElementsToDepthIncrease -= 1;
+          Rules.hasCellAssignedPawn(adjacentCell) ||
+          Rules.isPairOfSeaAndPort(adjacentCell, cell)) {
+          nextElementsToDepthIncrease -= 1;
         } else {
           adjacentCell.inRange = true;
           queue.push(adjacentCell);
         }
-      });
+      }
 
       elementsToDepthIncrease -= 1;
       if (elementsToDepthIncrease === 0) {
