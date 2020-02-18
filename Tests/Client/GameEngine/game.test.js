@@ -30,5 +30,9 @@ describe("GAME requirements", () => {
 
       expect(game.players.length, "Player should be added to the game").to.be.equal(1);
       expect(game.players[0].name, "Player name should be as specified.").to.be.equal(playerName);
+
+      game.leaves(player);
+
+      expect(game.players.length, "Player should be removed from the game").to.be.equal(0);
     })
 });

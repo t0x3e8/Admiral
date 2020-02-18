@@ -34,6 +34,15 @@ class Game {
   join(player) {
     this.players.push(player);
   }
+
+  /**
+   * Game will unsubscribe player.
+   * @param {object} player - should represent Player object
+   * @return {void}
+   */
+  leaves(player) {
+    this.players.splice(this.players.findIndex(o => o.getPlayerId() === player.getPlayerId()), 1);
+  }
 }
 
 export default Game;
