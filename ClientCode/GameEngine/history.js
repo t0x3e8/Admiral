@@ -9,6 +9,7 @@ class History {
     const historyId = uuid();
 
     this.records = [];
+    this.recordNumber = 0;
 
     /**
      * @returns {uuid} gets unique history id
@@ -16,35 +17,37 @@ class History {
     this.getHistoryId = function() {
       return historyId;
     };
-  }
 
-  /**
-   * Should be called to record a turn setup
-   * @param {Player} player1 Player number 1
-   * @param {Player} player2 Player number 2
-   * @returns {void}
-   */
-  pushTurn(player1, player2) {
-    const that = this;
+    /**
+     * @returns {uuid} Gets the current record number
+     */
+    this.getRecordNumber = function() {
+      return this.recordNumber;
+    }
 
-    let record = null;
-
-    if (player1 && player2) {
-      record = that.createRecord(player1, player2);
-      that.records.push(record);
+    /**
+     * Increases and sets the record number
+     * @returns {void}
+     */
+    this.increaseRecordNumber = function() {
+      this.recordNumber += 1;
     }
   }
 
   /**
-   * Gets the specific turn records
-   * @param {number} turnNumber Number of the turn, when the first turn is 1
-   * @return {object} Specific turn
+   * Should be called to record a turn setup
+   * @param {payload} payload represents playerID, type (HistoryType)
+   * @returns {void}
    */
-  getTurn(turnNumber) {
-    const that = this;
+  record(payload) {
+    const record = {
+      type: payload.type,
+      playerID: payload.playerId,
+      id: this.getRecordNumber()
+    }
 
-    // eslint-disable-next-line no-magic-numbers
-    return that.records[turnNumber - 1];
+    this.records.push(record);
+    this.increaseRecordNumber();
   }
 }
 

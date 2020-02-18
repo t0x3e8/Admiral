@@ -5,6 +5,7 @@
 import uuid from "uuid/v1";
 import Board from "./board.js";
 import History from "./history.js";
+import { HistoryType } from "./gameEnums.js";
 
 /**
  * A class representing a Game object.
@@ -33,6 +34,10 @@ class Game {
    */
   join(player) {
     this.players.push(player);
+    this.history.record({
+      type: HistoryType.PLAYER_JOINS,
+      playerId: player.getPlayerId()
+    })
   }
 
   /**
@@ -42,6 +47,10 @@ class Game {
    */
   leaves(player) {
     this.players.splice(this.players.findIndex(o => o.getPlayerId() === player.getPlayerId()), 1);
+    this.history.record({
+      type: HistoryType.PLAYER_LEAVES,
+      playerId: player.getPlayerId()
+    })
   }
 }
 
