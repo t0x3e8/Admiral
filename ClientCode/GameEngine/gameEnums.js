@@ -34,5 +34,7 @@ export const CombatResult = {
     PLAYER_JOINS: 1,
     PLAYER_LEAVES: 2,
     GAME_STARTED: 10,
-    GAME_STOPPED: 11
+    GAME_STOPPED: 11,
+    GAME_CREATED: 20,
+    GAME_DESTOYED: 21
   }

@@ -17,6 +17,9 @@ class Game {
 
     this.board = new Board();
     this.history = new History();
+    this.history.record({
+      type: HistoryType.GAME_CREATED
+    })
     this.players = [];
 
     /**
