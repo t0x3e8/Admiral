@@ -52,7 +52,7 @@ describe("BOARD requirements", () => {
           type: PawnType.SUBMARINE
         });
 
-      board.cells[1][1].assignPawn(pawn);
+      board.assignPawn(board.cells[1][1], pawn);
       expect(board.cells[1][1]).to.not.be.empty;
       expect(board.cells[1][1].pawn).to.not.be.null;
       expect(board.cells[1][1].pawn.getPawnId()).to.be.equal(pawn.getPawnId());
@@ -81,7 +81,7 @@ describe("BOARD requirements", () => {
 
       let selectedPawn = null;
 
-      board.cells[5][5].assignPawn(pawnSubmarine);
+      board.assignPawn(board.cells[5][5], pawnSubmarine);
       board.select({ col: 5, row: 5 });
       selectedPawn = board.getSelected();
 
@@ -113,8 +113,8 @@ describe("BOARD requirements", () => {
           type: PawnType.BATTLESHIP
         });
 
-      board.cells[5][5].assignPawn(pawnSubmarine);
-      board.cells[5][4].assignPawn(pawnBattleship);
+      board.assignPawn(board.cells[5][5], pawnSubmarine);
+      board.assignPawn(board.cells[5][4], pawnBattleship);
       board.select({ col: 5, row: 5 });
       board.rangeCells(pawnSubmarine);
 
@@ -133,7 +133,7 @@ describe("BOARD requirements", () => {
           range: 2
         });
 
-      board.cells[1][1].assignPawn(pawnSubmarine);
+      board.assignPawn(board.cells[1][1], pawnSubmarine);
       board.select({ col: 1, row: 1 });
       board.rangeCells(pawnSubmarine);
 
@@ -151,11 +151,11 @@ describe("BOARD requirements", () => {
           range: 2
         });
 
-      board.cells[1][1].assignPawn(pawnSubmarine);
+      board.assignPawn(board.cells[1][1], pawnSubmarine);
       expect(board.cells[1][1].pawn).to.not.be.null;
       expect(board.cells[1][2].pawn).to.be.null;
 
-      board.cells[1][2].assignPawn(pawnSubmarine);
+      board.move(board.cells[1][1], board.cells[1][2]);
       expect(board.cells[1][1].pawn).to.be.null;
       expect(board.cells[1][2].pawn).to.not.be.null;
     });

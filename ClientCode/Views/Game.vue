@@ -1,9 +1,16 @@
 <template>
-  <div>
+  <b-container fluid>
     <banner-control :game-id="game.getGameId()" />
-    <board-control :board="game.board" />
-    <history-control :history="game.history" />
-  </div>
+    <b-row>
+      <b-col> </b-col>
+      <b-col cols="8">
+        <board-control :board="game.board" />
+      </b-col>
+      <b-col>
+        <history-control :history="game.history" />
+      </b-col>
+    </b-row>
+  </b-container>
 </template>
 
 <script>
@@ -29,7 +36,7 @@ export default {
       name: "michał"
     });
 
-    this.game.join(player)
+    this.game.join(player);
   }
 };
 </script>

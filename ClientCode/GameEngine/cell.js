@@ -26,19 +26,6 @@ class Cell {
     };
   }
 
-  assignPawn(pawn) {
-    const boardStartPos = 0;
-
-    // remove pawn from old Cell
-    if (pawn.row >= boardStartPos && pawn.col >= boardStartPos) {
-      this.board.cells[pawn.row][pawn.col].pawn = null;
-    }
-
-    // set pawn to new Cell
-    this.pawn = pawn;
-    pawn.updatePosition(this.colIndex, this.rowIndex);
-  }
-
   /**
    * The function creates arrat of adjacent (neighboring) cells.
    * Adjacent cells are those that are located directly on the X and Y axes.

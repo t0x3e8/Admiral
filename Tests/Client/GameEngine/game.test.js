@@ -33,7 +33,7 @@ describe("GAME requirements", () => {
       expect(game.players[0].name, "Player name should be as specified.").to.be.equal(playerName);
       expect(game.history.getRecordNumber(), "History should track player join").to.be.equal(2);
 
-      game.leaves(player);
+      game.leave(player);
 
       expect(game.players.length, "Player should be removed from the game").to.be.equal(0);
       expect(game.history.getRecordNumber(), "History should track player leave").to.be.equal(3);

@@ -78,7 +78,7 @@ class Board {
 
         // eslint-disable-next-line no-warning-comments
         // TODO This is only temporary!
-        this.cells[Utils.getRandom(18)][Utils.getRandom(12)].assignPawn(newPawn);
+        this.assignPawn(this.cells[Utils.getRandom(18)][Utils.getRandom(12)], newPawn);
       }
     }
   }
@@ -207,11 +207,37 @@ class Board {
    * @returns {void}
    */
   cleanRange() {
-    this.cells.forEach(row => {
-      row.forEach(cell => {
-        cell.inRange = false;
-      })
-    });
+    const { numberOfColumns, numberOfRows } = settings.board;
+
+    for (let r = 0; r < numberOfRows; r += 1) {
+      for (let c = 0; c < numberOfColumns; c += 1) {
+        this.cells[r][c].inRange = false;
+      }
+    }
+  }
+
+  /**
+   * Function move the pawn from the origin cell to destination cell
+   * @param {Cell} originCell must contain assigned pawn
+   * @param {Cell} destinationCell it's an empty cell to which the pawn will be assigned
+   * @returns {void}
+   */
+  move(originCell, destinationCell) {
+    const {pawn} = this.cells[originCell.rowIndex][originCell.colIndex];
+
+    originCell.pawn = null;
+    this.assignPawn(destinationCell, pawn);
+  }
+
+  /**
+   * Function assigned a specified pawn to the cell
+   * @param {Cell} cell to which the pawn will be assigned
+   * @param {Pawn} pawn which represents the ship
+   */
+  // eslint-disable-next-line class-methods-use-this
+  assignPawn(cell, pawn) {
+    cell.pawn = pawn;
+    pawn.updatePosition(cell.colIndex, cell.rowIndex);
   }
 }
 

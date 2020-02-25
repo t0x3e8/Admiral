@@ -48,7 +48,7 @@ class Game {
    * @param {object} player - should represent Player object
    * @return {void}
    */
-  leaves(player) {
+  leave(player) {
     this.players.splice(this.players.findIndex(o => o.getPlayerId() === player.getPlayerId()), 1);
     this.history.record({
       type: HistoryType.PLAYER_LEAVES,
