@@ -1,34 +1,36 @@
 <template>
-  <b-container fluid>
-    <banner-control :game-id="game.getGameId()" />
-    <b-row>
-      <b-col> </b-col>
-      <b-col cols="8">
+  <b-container fluid class="mt-1">
+    <b-row no-gutters>
+      <b-col cols="3">
+        <game-settings-control :game-id="game.getGameId()" />
+      </b-col>
+      <b-col cols="6">
         <board-control :board="game.board" />
       </b-col>
-      <b-col>
-        <history-control :history="game.history" />
+      <b-col cols="3">
+        <history-control v-if="showHistory" :history="game.history" />
       </b-col>
     </b-row>
   </b-container>
 </template>
 
 <script>
-import BannerControl from "./../Components/BannerControl.vue";
 import BoardControl from "./../Components/BoardContol.vue";
 import HistoryControl from "./../Components/HistoryControl.vue";
+import GameSettingsControl from "./../Components/GameSettingsControl.vue";
 import Game from "./../GameEngine/game";
 import Player from "./../GameEngine/player";
 
 export default {
   components: {
     BoardControl,
-    BannerControl,
-    HistoryControl
+    HistoryControl,
+    GameSettingsControl
   },
   data() {
     return {
-      game: new Game()
+      game: new Game(),
+      showHistory: false
     };
   },
   mounted() {
