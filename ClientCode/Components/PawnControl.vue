@@ -46,7 +46,4 @@
   .pawnIcon {
     position: absolute;
   }
-
-  .selected {
-  }
 </style>

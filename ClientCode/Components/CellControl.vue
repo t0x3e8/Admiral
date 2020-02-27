@@ -1,13 +1,6 @@
 <template>
-  <div
-    class="boardCell"
-    :class="classObject"
-    @click="cellClicked"
-  >
-    <pawn-control
-      v-if="cellData.pawn"
-      :pawn-data="cellData.pawn"
-    />
+  <div class="boardCell" :class="classObject" @click="cellClicked">
+    <pawn-control v-if="cellData.pawn" :pawn-data="cellData.pawn" />
   </div>
 </template>
 
@@ -24,9 +17,7 @@ export default {
     }
   },
   data() {
-    return {
-
-    };
+    return {};
   },
   computed: {
     classObject() {
@@ -74,54 +65,53 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  $sea-color: #1e88e5;
-  $port1-color: #43a047;
-  $port-entrance-color: #546e7a;
-  $port2-color: #1b5e20;
-  $neutral-color: #1155ff;
+$sea-color: #1e88e5;
+$port1-color: #43a047;
+$port-entrance-color: #546e7a;
+$port2-color: #1b5e20;
+$neutral-color: #1155ff;
 
+.boardCell {
+  border-radius: 0%;
+}
 
-  .boardCell {
-    border-radius: 0%;
-  }
+.port1 {
+  background-color: $port1-color;
+}
+.port1-range {
+  background-color: darken($port1-color, 30%);
+  cursor: pointer;
+}
 
-  .port1 {
-    background-color: $port1-color;
-  }
-  .port1-range {
-    background-color: darken($port1-color, 30%);
-    cursor: pointer;
-  }
+.port2 {
+  background-color: $port2-color;
+}
+.port2-range {
+  background-color: darken($port2-color, 30%);
+  cursor: pointer;
+}
 
-  .port2 {
-    background-color: $port2-color;
-  }
-  .port2-range {
-    background-color: darken($port2-color, 30%);
-    cursor: pointer;
-  }
+.neutral {
+  background-color: $neutral-color;
+}
+.neutral-range {
+  background-color: darken($neutral-color, 30%);
+  cursor: pointer;
+}
 
-  .neutral {
-    background-color: $neutral-color;
-  }
-  .neutral-range {
-    background-color: darken($neutral-color, 30%);
-    cursor: pointer;
-  }
+.sea {
+  background-color: $sea-color;
+}
+.sea-range {
+  background-color: darken($sea-color, 30%);
+  cursor: pointer;
+}
 
-  .sea {
-    background-color: $sea-color;
-  }
-  .sea-range {
-    background-color: darken($sea-color, 30%);
-    cursor: pointer;
-  }
-
-  .entrance {
-    background-color: $port-entrance-color;
-  }
-  .entrance-range {
-    background-color: darken($port-entrance-color, 30%);
-    cursor: pointer;
-  }
+.entrance {
+  background-color: $port-entrance-color;
+}
+.entrance-range {
+  background-color: darken($port-entrance-color, 30%);
+  cursor: pointer;
+}
 </style>

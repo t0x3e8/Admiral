@@ -19,12 +19,11 @@ import CellControl from "./CellControl.vue";
 export default {
   name: "BoardControl",
   components: { CellControl },
-  data() {
-    const board = new Board();
-
-    return {
-      board
-    };
+  props: {
+    board: {
+      type: Board,
+      default: null
+    }
   },
   mounted() {
     this.$root.$on("cell-click", this.onCellClick);
@@ -58,10 +57,11 @@ export default {
       }
     },
     moveOrAttack(destCell) {
-      const selectedPawn = this.board.getSelected();
+      const selectedPawn = this.board.getSelected(),
+            originCell = this.board.cells[selectedPawn.row][selectedPawn.col];
 
-      if (selectedPawn && destCell.pawn === null) {
-        destCell.assignPawn(selectedPawn);
+      if (originCell && destCell.pawn === null) {
+        this.board.move(originCell, destCell);
         this.board.cleanRange();
       }
     }

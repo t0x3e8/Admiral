@@ -52,15 +52,13 @@ class Pawn {
     }
 
     updatePosition(newCol, newRow) {
-        const that = this;
+        this.oldCol = this.col;
+        this.oldRow = this.row;
+        this.col = newCol;
+        this.row = newRow;
 
-        that.oldCol = that.col;
-        that.oldRow = that.row;
-        that.col = newCol;
-        that.row = newRow;
-
-        if ((that.col === null || that.row === null) && that.player) {
-            that.player.setPawns((that.player.pawns, that));
+        if ((this.col === null || this.row === null) && this.player) {
+            this.player.setPawns((this.player.pawns, this));
         }
     }
 }

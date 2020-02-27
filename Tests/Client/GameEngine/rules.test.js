@@ -1,3 +1,4 @@
+/* eslint-disable no-magic-numbers */
 /* eslint-disable max-lines-per-function */
 /* eslint-disable max-statements */
 /* eslint-disable no-unused-expressions */
@@ -6,6 +7,7 @@ import Cell from "../../../ClientCode/GameEngine/cell.js";
 import { CellType, PawnType } from "../../../ClientCode/GameEngine/gameEnums";
 import Rules from "../../../ClientCode/GameEngine/Utils/Rules.js";
 import Pawn from "../../../ClientCode/GameEngine/pawn.js";
+import Board from "../../../ClientCode/GameEngine/board.js";
 
 /* global describe, it */
 
@@ -65,11 +67,11 @@ describe("RULES to calculate cell's range requirements", () => {
   it("GIVEN a Pawn needs to determine its range " +
     "WHEN Cell has a Pawn assigned to it " +
     "THEN Rule should return negative result", () => {
-      const cell = new Cell({ type: CellType.SEA }),
+      const board = new Board(),
             pawn = new Pawn({ type: PawnType.BATTERIES});
 
-      expect(Rules.hasCellAssignedPawn(cell)).to.be.false;
-      cell.assignPawn(pawn);
-      expect(Rules.hasCellAssignedPawn(cell)).to.be.true;
+      expect(Rules.hasCellAssignedPawn(board.cells[0][0])).to.be.false;
+      board.assignPawn(board.cells[0][0], pawn);
+      expect(Rules.hasCellAssignedPawn(board.cells[0][0])).to.be.true;
     });
 });

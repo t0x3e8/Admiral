@@ -17,18 +17,17 @@ import _ from "underscore";
  */
 class Board {
   constructor() {
-    const that = this,
-      boardId = uuid();
+    const boardId = uuid();
 
-    that.cells = [];
+    this.cells = [];
 
-    that.initializeCells();
-    that.initializePawns();
+    this.initializeCells();
+    this.initializePawns();
 
     /**
      * @returns {uuid} gets unique board id
      */
-    that.getBoardId = function () {
+    this.getBoardId = function () {
       return boardId
     }
   }
@@ -78,7 +77,7 @@ class Board {
 
         // eslint-disable-next-line no-warning-comments
         // TODO This is only temporary!
-        this.cells[Utils.getRandom(18)][Utils.getRandom(12)].assignPawn(newPawn);
+        this.assignPawn(this.cells[Utils.getRandom(18)][Utils.getRandom(12)], newPawn);
       }
     }
   }
@@ -156,10 +155,11 @@ class Board {
     const queue = [];
 
     let currentDepth = 1,
-        elementsToDepthIncrease = 1,
-        nextElementsToDepthIncrease = 0,
-        cell = this.cells[pawn.row][pawn.col],
-        adjacentCells = [];
+      elementsToDepthIncrease = 1,
+      nextElementsToDepthIncrease = 0,
+      cell = this.cells[pawn.row][pawn.col],
+      adjacentCells = [],
+      i = 0;
 
     queue.push(cell);
 
@@ -170,7 +170,8 @@ class Board {
       nextElementsToDepthIncrease += adjacentCells.length;
 
       // eslint-disable-next-line no-loop-func
-      adjacentCells.forEach(adjacentCell => {
+      for (i = 0; i < adjacentCells.length; i += 1) {
+        const adjacentCell = adjacentCells[i];
 
         /*
          * Adjacent Cell cannot be alredy "inRange" meaning not being already visited,
@@ -178,14 +179,14 @@ class Board {
          * Adjacent Cell and Main Cell cannot be pair of Sea and Port
          */
         if (Rules.isCellInRange(adjacentCell) ||
-            Rules.hasCellAssignedPawn(adjacentCell) ||
-            Rules.isPairOfSeaAndPort(adjacentCell, cell)) {
-              nextElementsToDepthIncrease -= 1;
+          Rules.hasCellAssignedPawn(adjacentCell) ||
+          Rules.isPairOfSeaAndPort(adjacentCell, cell)) {
+          nextElementsToDepthIncrease -= 1;
         } else {
           adjacentCell.inRange = true;
           queue.push(adjacentCell);
         }
-      });
+      }
 
       elementsToDepthIncrease -= 1;
       if (elementsToDepthIncrease === 0) {
@@ -205,11 +206,37 @@ class Board {
    * @returns {void}
    */
   cleanRange() {
-    this.cells.forEach(row => {
-      row.forEach(cell => {
-        cell.inRange = false;
-      })
-    });
+    const { numberOfColumns, numberOfRows } = settings.board;
+
+    for (let r = 0; r < numberOfRows; r += 1) {
+      for (let c = 0; c < numberOfColumns; c += 1) {
+        this.cells[r][c].inRange = false;
+      }
+    }
+  }
+
+  /**
+   * Function move the pawn from the origin cell to destination cell
+   * @param {Cell} originCell must contain assigned pawn
+   * @param {Cell} destinationCell it's an empty cell to which the pawn will be assigned
+   * @returns {void}
+   */
+  move(originCell, destinationCell) {
+    const {pawn} = this.cells[originCell.rowIndex][originCell.colIndex];
+
+    originCell.pawn = null;
+    this.assignPawn(destinationCell, pawn);
+  }
+
+  /**
+   * Function assigned a specified pawn to the cell
+   * @param {Cell} cell to which the pawn will be assigned
+   * @param {Pawn} pawn which represents the ship
+   */
+  // eslint-disable-next-line class-methods-use-this
+  assignPawn(cell, pawn) {
+    cell.pawn = pawn;
+    pawn.updatePosition(cell.colIndex, cell.rowIndex);
   }
 }
 
