@@ -17,18 +17,17 @@ import _ from "underscore";
  */
 class Board {
   constructor() {
-    const that = this,
-      boardId = uuid();
+    const boardId = uuid();
 
-    that.cells = [];
+    this.cells = [];
 
-    that.initializeCells();
-    that.initializePawns();
+    this.initializeCells();
+    this.initializePawns();
 
     /**
      * @returns {uuid} gets unique board id
      */
-    that.getBoardId = function () {
+    this.getBoardId = function () {
       return boardId
     }
   }

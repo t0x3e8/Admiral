@@ -37,6 +37,7 @@ class Game {
    */
   join(player) {
     this.players.push(player);
+
     this.history.record({
       type: HistoryType.PLAYER_JOINS,
       playerId: player.getPlayerId()
@@ -50,6 +51,7 @@ class Game {
    */
   leave(player) {
     this.players.splice(this.players.findIndex(o => o.getPlayerId() === player.getPlayerId()), 1);
+
     this.history.record({
       type: HistoryType.PLAYER_LEAVES,
       playerId: player.getPlayerId()
