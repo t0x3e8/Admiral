@@ -3,13 +3,17 @@
 /* global describe, it */
 
 import { expect } from "chai";
+import uuid from "uuid/v1";
 import Game from "./../../../ClientCode/GameEngine/game.js"
 import Player from "./../../../ClientCode/GameEngine/player"
 
 describe("GAME requirements", () => {
   it("GIVEN I have created a new game " +
     "THEN Game should have unique ID, History, and at least one player", () => {
-      const game = new Game();
+      const gamePayLoad = {
+          gameId: uuid()
+        },
+        game = new Game(gamePayLoad);
 
       expect(game.getGameId(), "Unique ID must be generated").to.not.be.empty;
       expect(game.history, "The History must be initiated").to.not.be.null;
@@ -21,7 +25,10 @@ describe("GAME requirements", () => {
   it("GIVEN I have created a new game " +
     "WHEN a Player joins the game AND a Player leaves the game" +
     "THEN I want these events to be record in History", () => {
-      const game = new Game(),
+      const gamePayLoad = {
+          gameId: uuid()
+        },
+        game = new Game(gamePayLoad),
         playerName = "TestUser",
         player = new Player({
           name: playerName
