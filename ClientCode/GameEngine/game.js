@@ -2,7 +2,6 @@
 /* eslint-disable max-statements */
 /* eslint-disable max-lines-per-function */
 
-import uuid from "uuid/v1";
 import Board from "./board.js";
 import History from "./history.js";
 import { HistoryType } from "./gameEnums.js";
@@ -12,8 +11,8 @@ import { HistoryType } from "./gameEnums.js";
  * @returns {void}
  */
 class Game {
-  constructor() {
-    const gameId = uuid();
+  constructor(payload) {
+    const {gameId} = payload;
 
     this.board = new Board();
     this.history = new History();
