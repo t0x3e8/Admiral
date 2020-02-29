@@ -8,7 +8,7 @@ namespace code.api.Controllers
     public class GameController : ControllerBase
     {
         // GET: api/TodoItems/5
-        [HttpGet("{id}")]
+        [HttpGet]
         [Route("api/[controller]/Item/{id}")]
         public ActionResult<TestItem> GetTestItem(long id)
         {
