@@ -24,5 +24,13 @@ namespace code.api.Controllers
             return Ok(games);
         }
 
+        [HttpPost]
+        public ActionResult<Game> AddGame() {
+            var game = new Game();
+            this.gameRepository.AddGame(game);
+
+            return Ok(game);            
+        }
+
     }
 }

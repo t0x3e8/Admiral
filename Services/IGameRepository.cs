@@ -2,6 +2,6 @@ using System.Collections.Generic;
 
 public interface IGameRepository
 {
-    void CreateGame(Game game);
+    void AddGame(Game game);
     IEnumerable<Game> GetGames();
 }

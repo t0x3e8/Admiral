@@ -10,13 +10,14 @@ public class GameRepository : IGameRepository
         this.dbContext = dbContext;
     }
 
-    public void CreateGame(Game game)
+    public void AddGame(Game game)
     {
         if (game == null)
             throw new ArgumentNullException(nameof(game));
 
         game.Id = Guid.NewGuid();
         this.dbContext.Games.Add(game);
+        this.dbContext.SaveChanges();
     }
 
     public IEnumerable<Game> GetGames()
