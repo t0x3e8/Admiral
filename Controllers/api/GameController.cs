@@ -1,22 +1,27 @@
 
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 
 namespace code.api.Controllers
 {
     [ApiController]
+    [Route("api/games")]
     public class GameController : ControllerBase
     {
-        // GET: api/TodoItems/5
-        [HttpGet]
-        [Route("api/[controller]/Item/{id}")]
-        public ActionResult<TestItem> GetTestItem(long id)
+        private readonly IGameRepository gameRepository;
+
+        public GameController(IGameRepository gameRepository)
         {
-            return new TestItem()
-            {
-                Id = id,
-                IsComplete = false
-            };
+            this.gameRepository = gameRepository;
+        }
+
+        [HttpGet]
+        [HttpOptions]
+        public ActionResult<IEnumerable<Game>> GetGames()
+        {
+            var games = this.gameRepository.GetGames();
+            return Ok(games);
         }
 
     }
