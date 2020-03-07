@@ -35,7 +35,7 @@ jobs:
   pool:
     vmImage: 'windows-latest'
   steps:
-    - task: DotNetCoreInstaller@0    
+    - task: UseDotNet@2    
       displayName: Install dotnet version 3.1.102
       inputs:
         version: '3.1.102'
