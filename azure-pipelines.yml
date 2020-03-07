@@ -36,9 +36,9 @@ jobs:
     vmImage: 'windows-latest'
   steps:
     - task: DotNetCoreInstaller@0    
-      displayName: Install dotnet version 2.2.x
+      displayName: Install dotnet version 3.1
       inputs:
-        version: '2.2.402'
+        version: '3.1'
     - task: DotNetCoreCLI@2
       displayName: Restore dependencies
       inputs:
