@@ -38,7 +38,7 @@ namespace code
 
             // register database
             services.AddDbContext<AdmiralDbContext>(options => {
-                options.UseSqlite(Configuration.GetConnectionString("AdmiralContext"));
+                options.UseSqlServer(Configuration.GetConnectionString("AdmiralContext"));
             });
             
             services.AddScoped<IClientService, ClientService>();
