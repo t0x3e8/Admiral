@@ -4,7 +4,7 @@ import VueRouter from "vue-router";
 import App from "./Views/App.vue";
 import BootstrapVue from "bootstrap-vue"
 import "./Assets/scss/custom.scss"
-import "./assets/graphics/favicon.ico"
+import "./Assets/graphics/favicon.ico"
 import store from "./Store/index.js"
 
 const router = routerFactory.createRouter()
