@@ -1,4 +1,5 @@
-﻿using code.Models;
+﻿using System;
+using code.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -6,6 +7,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using AutoMapper;
 
 namespace code
 {
@@ -36,11 +38,13 @@ namespace code
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Admiral API", Version = "v1" });
             });
 
+            // register AutoMapper
+            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
             // register database
             services.AddDbContext<AdmiralDbContext>(options => {
                 options.UseSqlServer(Configuration.GetConnectionString("AdmiralContext"));
             });
-            
             services.AddScoped<IClientService, ClientService>();
             services.AddScoped<IGameRepository, GameRepository>();
         }
