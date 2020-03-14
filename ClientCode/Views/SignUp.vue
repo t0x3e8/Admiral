@@ -10,10 +10,13 @@
               required
               placeholder="Enter your nickname ..."
               size="lg"
-              :state="nicknameState"
               aria-describedby="nickname-feedback"
+              :state="nicknameState"
+              @input="nicknameChanged"
             ></b-form-input>
-            <b-form-invalid-feedback class id="nickname-feedback">{{ nicknameInputError }}</b-form-invalid-feedback>
+            <b-form-invalid-feedback id="nickname-feedback" class>{{
+              nicknameInputError
+            }}</b-form-invalid-feedback>
           </b-form-group>
 
           <b-button
@@ -21,7 +24,8 @@
             variant="primary"
             class="float-right"
             :disabled="isSubmitDisabled"
-          >Join</b-button>
+            >Join</b-button
+          >
         </b-form>
       </b-card>
     </div>
@@ -29,6 +33,7 @@
 </template>
 
 <script>
+/* eslint-disable max-statements */
 import axios from "axios";
 import auth from "../auth.js";
 
@@ -37,37 +42,34 @@ export default {
     return {
       nickname: null,
       isSubmitDisabled: false,
-      nicknameInputError: ""
+      nicknameInputError: "",
+      nicknameMaxLength: 24,
+      nicknameState: null
     };
   },
-  computed: {
-    nicknameState() {
+  methods: {
+    nicknameChanged() {
       this.isSubmitDisabled = true;
+      this.nicknameState = null;
 
-      if (this.nickname === null) 
-        return null;
-
-      if (this.nickname.trim() === "") {
+      if (this.nickname === null) {
+        this.nicknameState = null;
+      } else if (this.nickname.trim() === "") {
         this.nicknameInputError = "Enter Your nickname";
-        return false;
-      }
-
-      if (this.nickname.length >= 24) {
+        this.nicknameState = false;
+      } else if (this.nickname.length >= this.nicknameMaxLength) {
         this.nicknameInputError =
           "It's too long. Enter shorter name, please :)";
-        return false;
+        this.nicknameState = false;
       }
-
-      if (/^[a-zA-Z](?:_?[ a-z0-9]+)*$/.test(this.nickname) === false) {
+      // test the nickname if it starts with letter and does contain only digits, letters and space
+      if ((/^[a-zA-Z](?:_?[ a-z0-9]+)*$/u).test(this.nickname) === false) {
         this.nicknameInputError = "Really? No strange characters allowed ...";
-        return false;
+        this.nicknameState = false;
       }
 
       this.isSubmitDisabled = false;
-      return null;
-    }
-  },
-  methods: {
+    },
     onJoin(evt) {
       evt.preventDefault();
 
@@ -91,3 +93,8 @@ export default {
   }
 };
 </script>
+<style scoped>
+.row {
+  font-size: 100%;
+}
+</style>
