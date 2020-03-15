@@ -19,10 +19,9 @@ import Cell from "./CellComponent.vue";
 export default {
   name: "PortComponent",
   components: { Cell },
-  props: {
-    board: {
-      type: Board,
-      default: null
+  data() {
+    return {
+      board: new Board(true)
     }
   },
   mounted() {

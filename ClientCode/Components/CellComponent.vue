@@ -18,7 +18,9 @@ export default {
     }
   },
   data() {
-    return {};
+    return {
+      showCell: false
+    };
   },
   computed: {
     classObject() {
@@ -53,13 +55,18 @@ export default {
     }
   },
   methods: {
+    isEnable() {
+      return this.cellData.type !== CellType.HIDDEN;
+    },
     cellClicked() {
+      if (this.isEnable()) {
       console.debug("event-emit: cell-click");
 
       this.$root.$emit("cell-click", {
         col: this.cellData.colIndex,
         row: this.cellData.rowIndex
       });
+      }
     }
   }
 };

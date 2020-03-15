@@ -1,10 +1,17 @@
 <template>
   <b-container fluid class="mt-1">
     <b-row no-gutters>
-      <b-col cols="5">
+      <b-col cols="4">
         <game-settings />
       </b-col>
-      <b-col cols="8">
+      <b-col cols="8" class="portSetup">
+        <b-jumbotron
+          bg-variant="transparent"
+          border-variant="light"
+          header="Port setup"
+          lead="Place your ships and be ready for the battle!"
+        >
+        </b-jumbotron>
         <port />
       </b-col>
     </b-row>
@@ -13,7 +20,7 @@
 
 <script>
 import GameSettings from "./../Components/GameSettingsComponent.vue";
-import Port from "./../Components/PortComponent.vue"
+import Port from "./../Components/PortComponent.vue";
 
 export default {
   name: "GameSetupView",
@@ -23,4 +30,8 @@ export default {
   }
 };
 </script>
-<style scoped></style>
+<style scoped>
+.portSetup {
+  border-left: 1px solid #AAA;
+}
+</style>
