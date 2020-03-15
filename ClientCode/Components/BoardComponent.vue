@@ -6,7 +6,7 @@
       no-gutters
     >
       <b-col v-for="(cell, colIndex) in columns" :key="`2${colIndex}`">
-        <cell-control :cell-data="cell" class="cell" />
+        <cell :cell-data="cell" class="cell" />
       </b-col>
     </b-row>
   </b-container>
@@ -14,11 +14,11 @@
 
 <script>
 import Board from "../GameEngine/board.js";
-import CellControl from "./CellControl.vue";
+import Cell from "./CellComponent.vue";
 
 export default {
-  name: "BoardControl",
-  components: { CellControl },
+  name: "BoardComponent",
+  components: { Cell },
   props: {
     board: {
       type: Board,
@@ -58,7 +58,7 @@ export default {
     },
     moveOrAttack(destCell) {
       const selectedPawn = this.board.getSelected(),
-            originCell = this.board.cells[selectedPawn.row][selectedPawn.col];
+        originCell = this.board.cells[selectedPawn.row][selectedPawn.col];
 
       if (originCell && destCell.pawn === null) {
         this.board.move(originCell, destCell);

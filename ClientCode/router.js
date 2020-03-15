@@ -2,6 +2,7 @@ import VueRouter from "vue-router";
 import About from "./Views/About.vue";
 import Game from "./Views/Game.vue";
 import SignUp from "./Views/SignUp.vue";
+import GameSetup from "./Views/GameSetup.vue";
 import auth from "./auth.js";
 
 export default {
@@ -15,15 +16,20 @@ export default {
           component: About
         },
         {
-          path: "/",
+          path: "/game",
           component: Game,
-          name: "home",
+          name: "game",
           meta: { requiresAuth: true }
         },
         {
           path: "/signup",
           component: SignUp,
           name: "signup"
+        },
+        {
+          path: "/",
+          component: GameSetup,
+          name: "setup"
         }
       ]
     });
@@ -32,7 +38,7 @@ export default {
       const isAuthorized = auth.isAuthorized();
 
       if (to.name === "signup" && isAuthorized) {
-        return next({name: "home"});
+        return next({name: "setup"});
       }
 
       if (to.meta.requiresAuth) {

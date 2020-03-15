@@ -1,15 +1,16 @@
 <template>
   <div class="boardCell" :class="classObject" @click="cellClicked">
-    <pawn-control v-if="cellData.pawn" :pawn-data="cellData.pawn" />
+    <pawn v-if="cellData.pawn" :pawn-data="cellData.pawn" />
   </div>
 </template>
 
 <script>
 import { CellType } from "../GameEngine/gameEnums.js";
-import PawnControl from "./PawnControl.vue";
+import Pawn from "./PawnComponent.vue";
 
 export default {
-  components: { PawnControl },
+  name: "CellComponent",
+  components: { Pawn },
   props: {
     cellData: {
       type: Object,

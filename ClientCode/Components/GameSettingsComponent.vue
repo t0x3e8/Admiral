@@ -12,15 +12,29 @@
         placeholder="Game unique ID"
       ></b-form-input>
     </b-form-group>
-    <b-button class="float-right" type="submit" variant="primary" @click="onStartGame"
+    <b-button
+      class="float-right"
+      type="submit"
+      variant="primary"
+      @click="onStartGame"
       >Start game</b-button
     >
+    <b-list-group>
+      <b-list-group-item
+        v-for="(game, gameIndex) in games"
+        :key="`${gameIndex}`"
+      >
+        {{ game }}
+      </b-list-group-item>
+    </b-list-group>
   </b-container>
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
-  name: "GameSettingsControl",
+  name: "GameSettingsComponent",
   props: {
     gameId: {
       type: Text,
@@ -29,12 +43,27 @@ export default {
   },
   data() {
     return {
-      show: true
+      show: true,
+      games: [],
+      errorMessage: ""
     };
+  },
+  mounted() {
+    this.fetchGames();
   },
   methods: {
     onStartGame() {
       this.show = false;
+    },
+    fetchGames() {
+      axios
+        .get("/api/games")
+        .then(response => {
+          this.games = response.data;
+        })
+        .catch(error => {
+          this.errorMessage = error;
+        });
     }
   }
 };
