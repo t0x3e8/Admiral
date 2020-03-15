@@ -64,7 +64,14 @@ namespace code.Migrations
             migrationBuilder.InsertData(
                 table: "Games",
                 columns: new[] { "Id", "Created", "Status" },
-                values: new object[] { new Guid("7f86d95d-6ffb-4c1c-b8d9-c2a5e6be2993"), new DateTime(2020, 3, 15, 15, 29, 36, 457, DateTimeKind.Local).AddTicks(1725), 0 });
+                values: new object[,]
+                {
+                    { new Guid("7f86d95d-6ffb-4c1c-b8d9-c2a5e6be2993"), new DateTime(2020, 3, 15, 15, 36, 36, 251, DateTimeKind.Local).AddTicks(1164), 0 },
+                    { new Guid("7f86d95d-6ffb-4c1c-b8d9-c2a5e6be2994"), new DateTime(2020, 3, 15, 10, 0, 0, 0, DateTimeKind.Local), 0 },
+                    { new Guid("7f86d95d-6ffb-4c1c-b8d9-c2a5e6be2995"), new DateTime(2020, 3, 15, 13, 0, 0, 0, DateTimeKind.Local), 0 },
+                    { new Guid("7f86d95d-6ffb-4c1c-b8d9-c2a5e6be2996"), new DateTime(2020, 3, 15, 1, 0, 0, 0, DateTimeKind.Local), 0 },
+                    { new Guid("7f86d95d-6ffb-4c1c-b8d9-c2a5e6be2997"), new DateTime(2020, 3, 15, 11, 0, 0, 0, DateTimeKind.Local), 0 }
+                });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Pawn_PlayerId",

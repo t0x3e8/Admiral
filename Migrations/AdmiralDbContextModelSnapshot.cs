@@ -38,7 +38,31 @@ namespace code.Migrations
                         new
                         {
                             Id = new Guid("7f86d95d-6ffb-4c1c-b8d9-c2a5e6be2993"),
-                            Created = new DateTime(2020, 3, 15, 15, 29, 36, 457, DateTimeKind.Local).AddTicks(1725),
+                            Created = new DateTime(2020, 3, 15, 15, 36, 36, 251, DateTimeKind.Local).AddTicks(1164),
+                            Status = 0
+                        },
+                        new
+                        {
+                            Id = new Guid("7f86d95d-6ffb-4c1c-b8d9-c2a5e6be2994"),
+                            Created = new DateTime(2020, 3, 15, 10, 0, 0, 0, DateTimeKind.Local),
+                            Status = 0
+                        },
+                        new
+                        {
+                            Id = new Guid("7f86d95d-6ffb-4c1c-b8d9-c2a5e6be2995"),
+                            Created = new DateTime(2020, 3, 15, 13, 0, 0, 0, DateTimeKind.Local),
+                            Status = 0
+                        },
+                        new
+                        {
+                            Id = new Guid("7f86d95d-6ffb-4c1c-b8d9-c2a5e6be2996"),
+                            Created = new DateTime(2020, 3, 15, 1, 0, 0, 0, DateTimeKind.Local),
+                            Status = 0
+                        },
+                        new
+                        {
+                            Id = new Guid("7f86d95d-6ffb-4c1c-b8d9-c2a5e6be2997"),
+                            Created = new DateTime(2020, 3, 15, 11, 0, 0, 0, DateTimeKind.Local),
                             Status = 0
                         });
                 });
