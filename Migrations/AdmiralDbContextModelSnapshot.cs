@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace code.Migrations
@@ -13,19 +14,21 @@ namespace code.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "3.1.2");
+                .HasAnnotation("ProductVersion", "3.1.2")
+                .HasAnnotation("Relational:MaxIdentifierLength", 128)
+                .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
             modelBuilder.Entity("Game", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("TEXT");
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("Created")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("datetime2");
 
                     b.Property<int>("Status")
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -35,7 +38,31 @@ namespace code.Migrations
                         new
                         {
                             Id = new Guid("7f86d95d-6ffb-4c1c-b8d9-c2a5e6be2993"),
-                            Created = new DateTime(2020, 3, 13, 22, 59, 45, 915, DateTimeKind.Local).AddTicks(8902),
+                            Created = new DateTime(2020, 3, 15, 15, 36, 36, 251, DateTimeKind.Local).AddTicks(1164),
+                            Status = 0
+                        },
+                        new
+                        {
+                            Id = new Guid("7f86d95d-6ffb-4c1c-b8d9-c2a5e6be2994"),
+                            Created = new DateTime(2020, 3, 15, 10, 0, 0, 0, DateTimeKind.Local),
+                            Status = 0
+                        },
+                        new
+                        {
+                            Id = new Guid("7f86d95d-6ffb-4c1c-b8d9-c2a5e6be2995"),
+                            Created = new DateTime(2020, 3, 15, 13, 0, 0, 0, DateTimeKind.Local),
+                            Status = 0
+                        },
+                        new
+                        {
+                            Id = new Guid("7f86d95d-6ffb-4c1c-b8d9-c2a5e6be2996"),
+                            Created = new DateTime(2020, 3, 15, 1, 0, 0, 0, DateTimeKind.Local),
+                            Status = 0
+                        },
+                        new
+                        {
+                            Id = new Guid("7f86d95d-6ffb-4c1c-b8d9-c2a5e6be2997"),
+                            Created = new DateTime(2020, 3, 15, 11, 0, 0, 0, DateTimeKind.Local),
                             Status = 0
                         });
                 });
@@ -44,19 +71,20 @@ namespace code.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<int>("Col")
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("int");
 
                     b.Property<Guid?>("PlayerId")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("Row")
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("int");
 
                     b.Property<int>("Type")
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -69,14 +97,14 @@ namespace code.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("TEXT");
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid?>("GameId")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("TEXT")
+                        .HasColumnType("nvarchar(32)")
                         .HasMaxLength(32);
 
                     b.HasKey("Id");

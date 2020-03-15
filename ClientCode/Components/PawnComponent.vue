@@ -9,7 +9,7 @@
 
 <script>
   export default {
-    name: "PawnControl",
+    name: "PawnComponent",
     props: {
       pawnData: {
         type: Object,

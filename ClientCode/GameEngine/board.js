@@ -9,6 +9,7 @@ import Pawn from "./pawn.js"
 import Utils from "./utils.js"
 import Rules from "./Utils/Rules.js"
 import _ from "underscore";
+import { CellType } from "./gameEnums.js"
 
 /**
  * The Board object represents the structure of the board, including characteristics  of board eg.
@@ -16,13 +17,21 @@ import _ from "underscore";
  * @returns {void}
  */
 class Board {
-  constructor() {
+
+  /**
+   * Constructs the Board object
+   * @param {boolean} portMode configure Board object with settings like: portMode
+   */
+  constructor(portMode) {
     const boardId = uuid();
 
     this.cells = [];
+    this.portMode = portMode ?? false;
 
     this.initializeCells();
-    this.initializePawns();
+    if (portMode) {
+      this.displayPortCells();
+    }
 
     /**
      * @returns {uuid} gets unique board id
@@ -35,6 +44,7 @@ class Board {
   /**
    * Initialized the intance of Board with an array of cells. The map of the cells is based on settings.js
    * @returns {array} Returns 2-dimentional array of cells
+   * @param {boolean} portMode determines whether full Board should be initialized or only Player's port
    */
   initializeCells() {
     const { map, numberOfColumns, numberOfRows } = settings.board;
@@ -47,7 +57,7 @@ class Board {
     for (rowPosition = 0; rowPosition < numberOfRows; rowPosition += 1) {
       row = []
       for (colPosition = 0; colPosition < numberOfColumns; colPosition += 1) {
-        cellType = map[rowPosition][colPosition]
+        cellType = map[rowPosition][colPosition];
         row[colPosition] = new Cell({
           type: cellType,
           columnIndex: colPosition,
@@ -57,6 +67,25 @@ class Board {
       }
       this.cells[rowPosition] = row
     }
+  }
+
+  /**
+   * Changes the full board view into only port view
+   * @returns {void}
+   */
+  displayPortCells() {
+    const { numberOfColumns, numberOfRows } = settings.board;
+
+    for (let r = 0; r < numberOfRows; r += 1) {
+      for (let c = 0; c < numberOfColumns; c += 1) {
+        if (this.cells[r][c].type !== CellType.PLAYER_TWO_PORT &&
+          this.cells[r][c].type !== CellType.PLAYER_TWO_ENTRANCE) {
+          this.cells[r][c].type = CellType.HIDDEN;
+        }
+      }
+    }
+
+    this.cells = _.filter(this.cells, row => _.some(row, cell => cell.type !== CellType.HIDDEN));
   }
 
   /**
@@ -222,7 +251,7 @@ class Board {
    * @returns {void}
    */
   move(originCell, destinationCell) {
-    const {pawn} = this.cells[originCell.rowIndex][originCell.colIndex];
+    const { pawn } = this.cells[originCell.rowIndex][originCell.colIndex];
 
     originCell.pawn = null;
     this.assignPawn(destinationCell, pawn);

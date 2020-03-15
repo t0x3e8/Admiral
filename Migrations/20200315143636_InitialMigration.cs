@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace code.Migrations
 {
-    public partial class _v2 : Migration
+    public partial class InitialMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -44,7 +44,7 @@ namespace code.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     Col = table.Column<int>(nullable: false),
                     Row = table.Column<int>(nullable: false),
                     Type = table.Column<int>(nullable: false),
@@ -64,7 +64,14 @@ namespace code.Migrations
             migrationBuilder.InsertData(
                 table: "Games",
                 columns: new[] { "Id", "Created", "Status" },
-                values: new object[] { new Guid("7f86d95d-6ffb-4c1c-b8d9-c2a5e6be2993"), new DateTime(2020, 3, 13, 22, 59, 45, 915, DateTimeKind.Local).AddTicks(8902), 0 });
+                values: new object[,]
+                {
+                    { new Guid("7f86d95d-6ffb-4c1c-b8d9-c2a5e6be2993"), new DateTime(2020, 3, 15, 15, 36, 36, 251, DateTimeKind.Local).AddTicks(1164), 0 },
+                    { new Guid("7f86d95d-6ffb-4c1c-b8d9-c2a5e6be2994"), new DateTime(2020, 3, 15, 10, 0, 0, 0, DateTimeKind.Local), 0 },
+                    { new Guid("7f86d95d-6ffb-4c1c-b8d9-c2a5e6be2995"), new DateTime(2020, 3, 15, 13, 0, 0, 0, DateTimeKind.Local), 0 },
+                    { new Guid("7f86d95d-6ffb-4c1c-b8d9-c2a5e6be2996"), new DateTime(2020, 3, 15, 1, 0, 0, 0, DateTimeKind.Local), 0 },
+                    { new Guid("7f86d95d-6ffb-4c1c-b8d9-c2a5e6be2997"), new DateTime(2020, 3, 15, 11, 0, 0, 0, DateTimeKind.Local), 0 }
+                });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Pawn_PlayerId",

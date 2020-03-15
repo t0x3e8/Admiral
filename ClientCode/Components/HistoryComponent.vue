@@ -17,7 +17,7 @@
 import History from "../GameEngine/history.js";
 
 export default {
-  name: "HistoryControl",
+  name: "HistoryComponent",
   props: {
     history: {
       type: History,

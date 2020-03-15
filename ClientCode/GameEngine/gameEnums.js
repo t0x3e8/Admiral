@@ -16,7 +16,8 @@ export const CombatResult = {
     PLAYER_ONE_ENTRANCE: 3,
     PLAYER_TWO_ENTRANCE: 4,
     NEUTRAL: 5,
-    SEA: 0
+    SEA: 0,
+    HIDDEN: 666
   },
   PawnType = {
     BATTERIES: "batteries",

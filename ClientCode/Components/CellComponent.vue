@@ -1,15 +1,16 @@
 <template>
   <div class="boardCell" :class="classObject" @click="cellClicked">
-    <pawn-control v-if="cellData.pawn" :pawn-data="cellData.pawn" />
+    <pawn v-if="cellData.pawn" :pawn-data="cellData.pawn" />
   </div>
 </template>
 
 <script>
 import { CellType } from "../GameEngine/gameEnums.js";
-import PawnControl from "./PawnControl.vue";
+import Pawn from "./PawnComponent.vue";
 
 export default {
-  components: { PawnControl },
+  name: "CellComponent",
+  components: { Pawn },
   props: {
     cellData: {
       type: Object,
@@ -17,7 +18,9 @@ export default {
     }
   },
   data() {
-    return {};
+    return {
+      showCell: false
+    };
   },
   computed: {
     classObject() {
@@ -52,13 +55,18 @@ export default {
     }
   },
   methods: {
+    isEnable() {
+      return this.cellData.type !== CellType.HIDDEN;
+    },
     cellClicked() {
+      if (this.isEnable()) {
       console.debug("event-emit: cell-click");
 
       this.$root.$emit("cell-click", {
         col: this.cellData.colIndex,
         row: this.cellData.rowIndex
       });
+      }
     }
   }
 };

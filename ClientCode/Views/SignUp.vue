@@ -38,6 +38,7 @@ import axios from "axios";
 import auth from "../auth.js";
 
 export default {
+  name: "SignUpView",
   data() {
     return {
       nickname: null,

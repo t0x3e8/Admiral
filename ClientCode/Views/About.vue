@@ -9,6 +9,7 @@
 
 <script>
 export default {
+  name: "AboutView",
   data () {
     return {
       msg: "Hello world!"
