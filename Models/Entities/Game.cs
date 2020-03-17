@@ -10,7 +10,10 @@ public class Game
     public List<Player> Players { get; set; }
     [Required]
     public int Status { get; set; }
-    
+    [MaxLength(16)]
+    [Required]
+    public string Name { get; set; }
+
     public Game()
     {
         this.Created = DateTime.Now;

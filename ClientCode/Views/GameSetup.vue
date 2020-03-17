@@ -10,8 +10,7 @@
           border-variant="light"
           header="Port setup"
           lead="Place your ships and be ready for the battle!"
-        >
-        </b-jumbotron>
+        ></b-jumbotron>
         <port />
       </b-col>
     </b-row>
@@ -32,6 +31,6 @@ export default {
 </script>
 <style scoped>
 .portSetup {
-  border-left: 1px solid #AAA;
+  border-left: 1px solid #aaa;
 }
 </style>
