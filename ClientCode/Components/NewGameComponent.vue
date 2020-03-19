@@ -8,7 +8,7 @@
       label-size="lg"
       :state="gameNameState"
     >
-      <b-input-group>
+      <b-input-group class="pl-3">
         <b-form-input
           id="gameNameInput"
           v-model="gameName"
@@ -18,12 +18,7 @@
           :state="gameNameState"
         ></b-form-input>
         <b-input-group-append>
-          <b-button
-            size="sm"
-            text="Start new game"
-            variant="success"
-            type="submit"
-          >Start new game</b-button>
+          <b-button size="sm" text="Start new game" variant="success" type="submit">Start new game</b-button>
         </b-input-group-append>
       </b-input-group>
     </b-form-group>

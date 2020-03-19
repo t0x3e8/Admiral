@@ -16,10 +16,15 @@
  * AND (further outcome)
  */
 
-import { expect } from "chai";
+import {
+  expect
+} from "chai";
 import Board from "../../../ClientCode/GameEngine/board.js";
 import Pawn from "../../../ClientCode/GameEngine/pawn.js";
-import { CellType, PawnType } from "../../../ClientCode/GameEngine/gameEnums";
+import {
+  CellType,
+  PawnType
+} from "../../../ClientCode/GameEngine/gameEnums";
 
 describe("BOARD requirements", () => {
   it("GIVEN that a Board is initialized " +
@@ -82,7 +87,10 @@ describe("BOARD requirements", () => {
       let selectedPawn = null;
 
       board.assignPawn(board.cells[5][5], pawnSubmarine);
-      board.select({ col: 5, row: 5 });
+      board.select({
+        col: 5,
+        row: 5
+      });
       selectedPawn = board.getSelected();
 
       expect(board.cells[5][5]).to.not.be.empty;
@@ -115,7 +123,10 @@ describe("BOARD requirements", () => {
 
       board.assignPawn(board.cells[5][5], pawnSubmarine);
       board.assignPawn(board.cells[5][4], pawnBattleship);
-      board.select({ col: 5, row: 5 });
+      board.select({
+        col: 5,
+        row: 5
+      });
       board.rangeCells(pawnSubmarine);
 
       expect(board.cells[5][5]).to.not.be.empty;
@@ -134,7 +145,10 @@ describe("BOARD requirements", () => {
         });
 
       board.assignPawn(board.cells[1][1], pawnSubmarine);
-      board.select({ col: 1, row: 1 });
+      board.select({
+        col: 1,
+        row: 1
+      });
       board.rangeCells(pawnSubmarine);
 
       expect(board.cells[1][1]).to.not.be.empty;
@@ -158,5 +172,14 @@ describe("BOARD requirements", () => {
       board.move(board.cells[1][1], board.cells[1][2]);
       expect(board.cells[1][1].pawn).to.be.null;
       expect(board.cells[1][2].pawn).to.not.be.null;
+    });
+
+  it("GIVEN I am about to join a game with my port setup of ships " +
+    "THEN Board should be limited to only port view with random assignment of all pawns except mines", () => {
+      const portMode = true,
+        board = new Board(portMode);
+
+      expect(board.cells.length).to.be.equal(6);
+      expect(board.cells[0].length).to.be.equal(12);
     });
 });

@@ -1,3 +1,4 @@
+/* eslint-disable max-lines */
 /* eslint-disable max-lines-per-function */
 /* eslint-disable max-statements */
 /* eslint-disable no-magic-numbers */
@@ -5,11 +6,12 @@
 import uuid from "uuid/v1"
 import settings from "./settings.js"
 import Cell from "./cell.js"
-import Pawn from "./pawn.js"
-import Utils from "./utils.js"
 import Rules from "./Utils/Rules.js"
 import _ from "underscore";
-import { CellType } from "./gameEnums.js"
+import {
+  CellType
+} from "./gameEnums.js";
+import BoardHelper from "./Utils/BoardHelper.js";
 
 /**
  * The Board object represents the structure of the board, including characteristics  of board eg.
@@ -31,6 +33,7 @@ class Board {
     this.initializeCells();
     if (portMode) {
       this.displayPortCells();
+      this.initializePawns();
     }
 
     /**
@@ -47,7 +50,11 @@ class Board {
    * @param {boolean} portMode determines whether full Board should be initialized or only Player's port
    */
   initializeCells() {
-    const { map, numberOfColumns, numberOfRows } = settings.board;
+    const {
+      map,
+      numberOfColumns,
+      numberOfRows
+    } = settings.board;
 
     let colPosition = 0,
       rowPosition = 0,
@@ -70,45 +77,27 @@ class Board {
   }
 
   /**
-   * Changes the full board view into only port view
-   * @returns {void}
-   */
-  displayPortCells() {
-    const { numberOfColumns, numberOfRows } = settings.board;
-
-    for (let r = 0; r < numberOfRows; r += 1) {
-      for (let c = 0; c < numberOfColumns; c += 1) {
-        if (this.cells[r][c].type !== CellType.PLAYER_TWO_PORT &&
-          this.cells[r][c].type !== CellType.PLAYER_TWO_ENTRANCE) {
-          this.cells[r][c].type = CellType.HIDDEN;
-        }
-      }
-    }
-
-    this.cells = _.filter(this.cells, row => _.some(row, cell => cell.type !== CellType.HIDDEN));
-  }
-
-  /**
    * Initialized the intance of Board with the random placement of pawns.
    * @returns {void}
    */
   initializePawns() {
-    const pawnsMap = settings.pawns
+    const allPawns = BoardHelper.getAllPawns(),
+          portCells = _.flatten(this.cells).filter(cell => cell.type !== CellType.SEA);
 
-    let pawnCount = 0,
-      fleetSizeCount = 0
+    let step = 0;
 
-    for (pawnCount; pawnCount < pawnsMap.length; pawnCount += 1) {
-      for (fleetSizeCount = 0; fleetSizeCount < pawnsMap[pawnCount].fleetSize; fleetSizeCount += 1) {
-        const newPawn = new Pawn({
-          type: pawnsMap[pawnCount].typeId
-        })
-
-        // eslint-disable-next-line no-warning-comments
-        // TODO This is only temporary!
-        this.assignPawn(this.cells[Utils.getRandom(18)][Utils.getRandom(12)], newPawn);
-      }
+    for (step; step < portCells.length; step += 1) {
+      this.assignPawn(portCells[step], allPawns[step]);
     }
+  }
+
+  /**
+   * Changes the full board view into only port view
+   * @returns {void}
+   */
+  displayPortCells() {
+    // ToDo: Hardcoded, as the cells are limitted to the last 6 rows. In future it needs more dynamic approach.
+    this.cells = _.last(this.cells, 6);
   }
 
   /**
@@ -235,7 +224,10 @@ class Board {
    * @returns {void}
    */
   cleanRange() {
-    const { numberOfColumns, numberOfRows } = settings.board;
+    const {
+      numberOfColumns,
+      numberOfRows
+    } = settings.board;
 
     for (let r = 0; r < numberOfRows; r += 1) {
       for (let c = 0; c < numberOfColumns; c += 1) {
@@ -251,7 +243,9 @@ class Board {
    * @returns {void}
    */
   move(originCell, destinationCell) {
-    const { pawn } = this.cells[originCell.rowIndex][originCell.colIndex];
+    const {
+      pawn
+    } = this.cells[originCell.rowIndex][originCell.colIndex];
 
     originCell.pawn = null;
     this.assignPawn(destinationCell, pawn);

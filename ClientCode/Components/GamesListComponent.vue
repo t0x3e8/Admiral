@@ -1,7 +1,7 @@
 <template>
   <b-form novalidate @submit.stop.prevent="onNewGame">
     <b-form-group label-for="gameSearchInput" label="List of active games" label-size="lg">
-      <b-list-group>
+      <b-list-group class="pl-3">
         <b-input-group>
           <b-form-input
             id="gameSearchInput"

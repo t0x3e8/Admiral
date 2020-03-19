@@ -15,21 +15,23 @@ export const CombatResult = {
     PLAYER_TWO_PORT: 2,
     PLAYER_ONE_ENTRANCE: 3,
     PLAYER_TWO_ENTRANCE: 4,
-    NEUTRAL: 5,
+    PLAYER_ONE_BATTERY: 5,
+    PLAYER_TWO_BATTERY: 6,
+    NEUTRAL: 7,
     SEA: 0,
     HIDDEN: 666
   },
   PawnType = {
-    BATTERIES: "batteries",
     BATTLESHIP: "battleship",
+    MISSILE: "missileship",
     CRUISER: "cruiser",
     DESTROYER: "destroyer",
-    ESCORTSHIP: "escortship",
-    FRIGATE: "frigate",
-    LANDINGCRAFT: "landingcraft",
-    MINE: "mine",
+    SUBMARINE: "submarine",
+    ESCORT: "escort",
     MINESWEEPER: "minesweeper",
-    SUBMARINE: "submarine"
+    LANDINGSHIP: "landingship",
+    BATTERY: "battery",
+    MINE: "mine"
   },
   HistoryType = {
     PLAYER_JOINS: 1,

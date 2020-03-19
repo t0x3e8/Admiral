@@ -33,6 +33,12 @@ export default {
         case CellType.PLAYER_TWO_PORT:
           cellDefaultStyle = "port2";
           break;
+        case CellType.PLAYER_ONE_BATTERY:
+          cellDefaultStyle = "battery1";
+          break;
+        case CellType.PLAYER_TWO_BATTERY:
+          cellDefaultStyle = "battery2";
+          break;
         case CellType.SEA:
           cellDefaultStyle = "sea";
           break;
@@ -83,7 +89,7 @@ $neutral-color: #1155ff;
   border-radius: 0%;
 }
 
-.port1 {
+.port1, .battery1 {
   background-color: $port1-color;
 }
 .port1-range {
@@ -91,7 +97,7 @@ $neutral-color: #1155ff;
   cursor: pointer;
 }
 
-.port2 {
+.port2, .battery2 {
   background-color: $port2-color;
 }
 .port2-range {
