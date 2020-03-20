@@ -29,7 +29,8 @@ export default {
         {
           path: "/",
           component: GameSetup,
-          name: "setup"
+          name: "setup",
+          meta: { requiresAuth: true }
         }
       ]
     });

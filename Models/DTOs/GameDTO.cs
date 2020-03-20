@@ -6,4 +6,5 @@ public class GameDTO {
     public int GameStatus { get; private set; } 
     public int GameDuration { get; private set; }
     public Guid Id { get; private set; }
+    public string Name { get; private set; }
 }

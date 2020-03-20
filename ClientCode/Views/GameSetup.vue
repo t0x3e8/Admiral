@@ -7,10 +7,10 @@
       <b-col cols="8" class="portSetup">
         <b-jumbotron
           bg-variant="transparent"
-          border-variant="light"
           header="Port setup"
-          lead="Place your ships and be ready for the battle!"
         >
+          <p class="lead">Plane your ships in the port and be ready to the <strong>naval battle</strong>!</p>
+          <hr>
         </b-jumbotron>
         <port />
       </b-col>
@@ -32,6 +32,6 @@ export default {
 </script>
 <style scoped>
 .portSetup {
-  border-left: 1px solid #AAA;
+  border-left: 1px solid #00000010;
 }
 </style>

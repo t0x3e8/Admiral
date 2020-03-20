@@ -68,7 +68,7 @@ describe("RULES to calculate cell's range requirements", () => {
     "WHEN Cell has a Pawn assigned to it " +
     "THEN Rule should return negative result", () => {
       const board = new Board(),
-            pawn = new Pawn({ type: PawnType.BATTERIES});
+            pawn = new Pawn({ type: PawnType.BATTERY});
 
       expect(Rules.hasCellAssignedPawn(board.cells[0][0])).to.be.false;
       board.assignPawn(board.cells[0][0], pawn);

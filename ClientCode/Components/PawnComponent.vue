@@ -45,5 +45,6 @@
 <style module>
   .pawnIcon {
     position: absolute;
+    display: block;
   }
 </style>
