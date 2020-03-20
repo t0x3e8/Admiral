@@ -2,7 +2,6 @@
 import settings from "./../settings.js";
 import _ from "underscore";
 import Pawn from "./../pawn.js";
-import { PawnType } from "../gameEnums.js";
 
 class BoardHelper {
 
@@ -20,11 +19,11 @@ class BoardHelper {
 
     _.forEach(pawnsMap, pawnSetting => {
       for (step = 0; step < pawnSetting.fleetSize; step += 1) {
-          pawn = new Pawn({
-            type: pawnSetting.typeId
-          });
+        pawn = new Pawn({
+          type: pawnSetting.typeId
+        });
 
-          pawnsCollection.push(pawn);
+        pawnsCollection.push(pawn);
       }
     })
 

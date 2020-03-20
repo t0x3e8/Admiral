@@ -9,9 +9,10 @@ import Cell from "./cell.js"
 import Rules from "./Utils/Rules.js"
 import _ from "underscore";
 import {
-  CellType
+  CellType, PawnType
 } from "./gameEnums.js";
 import BoardHelper from "./Utils/BoardHelper.js";
+import Pawn from "./pawn.js";
 
 /**
  * The Board object represents the structure of the board, including characteristics  of board eg.
@@ -81,14 +82,22 @@ class Board {
    * @returns {void}
    */
   initializePawns() {
-    const allPawns = BoardHelper.getAllPawns(),
-          portCells = _.flatten(this.cells).filter(cell => cell.type !== CellType.SEA);
+    const allPawns = _.filter(BoardHelper.getAllPawns(),
+                              pawn => pawn.type !== PawnType.MINE &&
+                              pawn.type !== PawnType.BATTERY),
+          portCells = _.shuffle(_.flatten(this.cells).filter(cell => cell.type === CellType.PLAYER_TWO_PORT ||
+                                                                     cell.type === CellType.PLAYER_TWO_ENTRANCE)),
+          batteryCells = _.flatten(this.cells).filter(cell => cell.type === CellType.PLAYER_TWO_BATTERY)
 
-    let step = 0;
+    batteryCells.forEach(cell => {
+      cell.pawn = new Pawn({
+        type: PawnType.BATTERY
+      })
+    })
 
-    for (step; step < portCells.length; step += 1) {
-      this.assignPawn(portCells[step], allPawns[step]);
-    }
+    allPawns.forEach(pawn => {
+      this.assignPawn(portCells.pop(), pawn);
+    })
   }
 
   /**

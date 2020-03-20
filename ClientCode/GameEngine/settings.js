@@ -78,7 +78,7 @@ export default {
             range: 4,
             destroys: [PawnType.ESCORT, PawnType.SUBMARINE, PawnType.MINESWEEPER, PawnType.LANDINGSHIP],
             destroyed: [PawnType.ESCORT, PawnType.BATTLESHIP, PawnType.MISSILE, PawnType.CRUISER, PawnType.DESTROYER, PawnType.BATTERY, PawnType.MINE],
-            fleetSize: 3
+            fleetSize: 4
         },
         {
             typeId: PawnType.MINESWEEPER,
@@ -94,7 +94,7 @@ export default {
             range: 0,
             destroys: [],
             destroyed: [PawnType.BATTLESHIP, PawnType.MISSILE, PawnType.CRUISER, PawnType.DESTROYER, PawnType.SUBMARINE, PawnType.ESCORT, PawnType.MINESWEEPER, PawnType.BATTERY, PawnType.MINE],
-            fleetSize: 4
+            fleetSize: 1
         },
         {
             typeId: PawnType.BATTERY,
