@@ -8,9 +8,7 @@ import settings from "./settings.js"
 import Cell from "./cell.js"
 import Rules from "./Utils/Rules.js"
 import _ from "underscore";
-import {
-  CellType, PawnType
-} from "./gameEnums.js";
+import { CellType, PawnType } from "./gameEnums.js";
 import BoardHelper from "./Utils/BoardHelper.js";
 import Pawn from "./pawn.js";
 
@@ -252,9 +250,7 @@ class Board {
    * @returns {void}
    */
   move(originCell, destinationCell) {
-    const {
-      pawn
-    } = this.cells[originCell.rowIndex][originCell.colIndex];
+    const { pawn } = this.cells[originCell.rowIndex][originCell.colIndex];
 
     originCell.pawn = null;
     this.assignPawn(destinationCell, pawn);
