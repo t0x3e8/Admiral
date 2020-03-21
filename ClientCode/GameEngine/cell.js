@@ -21,7 +21,7 @@ class Cell {
     /**
      * @returns {uuid} gets unique cell id
      */
-    that.getCellId = function () {
+    that.getCellId = function() {
       return cellId;
     };
   }
@@ -33,9 +33,9 @@ class Cell {
    */
   getAdjacentCells() {
     const adjacentCells = [],
-        row = this.rowIndex,
-        col = this.colIndex,
-        offset = 1;
+      row = this.rowIndex,
+      col = this.colIndex,
+      offset = 1;
 
     // R-1, C
     if (this.board.cells[row - offset]) {

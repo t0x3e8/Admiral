@@ -1,11 +1,6 @@
 <template>
   <b-container id="history">
-    <b-card
-      border-variant="secondary"
-      header="Game History"
-      header-border-variant="secondary"
-      align="center"
-    >
+    <b-card border-variant="secondary" header="Game History" header-border-variant="secondary" align="center">
       <b-card-text>
         <b-table-lite :items="history.records"></b-table-lite>
       </b-card-text>

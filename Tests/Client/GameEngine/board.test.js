@@ -24,33 +24,25 @@ import _ from "underscore";
 import settings from "../../../ClientCode/GameEngine/settings.js";
 
 describe("BOARD requirements", () => {
-  it(
-    "GIVEN that a Board is initialized " +
-      "THEN it should have cells and ID assigned.",
-    () => {
-      const board = new Board();
+  it("GIVEN that a Board is initialized THEN it should have cells and ID assigned.", () => {
+    const board = new Board();
 
-      expect(board.getBoardId()).to.not.be.empty;
-      expect(board.cells[1][1]).to.not.be.empty;
-    }
-  );
+    expect(board.getBoardId()).to.not.be.empty;
+    expect(board.cells[1][1]).to.not.be.empty;
+  });
 
-  it(
-    "GIVEN that a Board is initialized " +
-      "THEN any of its cell should have details assigned.",
-    () => {
-      const board = new Board(),
-        cell = board.cells[1][1];
+  it("GIVEN that a Board is initialized THEN any of its cell should have details assigned.", () => {
+    const board = new Board(),
+      cell = board.cells[1][1];
 
-      expect(cell).to.not.be.empty;
-      expect(cell.getCellId()).to.not.be.empty;
-      expect(cell.colIndex).to.be.equal(1);
-      expect(cell.rowIndex).to.be.equal(1);
-      expect(cell.inRange).to.be.false;
-      expect(cell.pawn).to.be.null;
-      expect(cell.type).to.be.equal(CellType.PLAYER_ONE_PORT);
-    }
-  );
+    expect(cell).to.not.be.empty;
+    expect(cell.getCellId()).to.not.be.empty;
+    expect(cell.colIndex).to.be.equal(1);
+    expect(cell.rowIndex).to.be.equal(1);
+    expect(cell.inRange).to.be.false;
+    expect(cell.pawn).to.be.null;
+    expect(cell.type).to.be.equal(CellType.PLAYER_ONE_PORT);
+  });
 
   it(
     "GIVEN that a Board is initialized " +
@@ -114,16 +106,12 @@ describe("BOARD requirements", () => {
     }
   );
 
-  it(
-    "GIVEN that a Board is initialized " +
-      "THEN it should have cells and ID assigned.",
-    () => {
-      const board = new Board();
+  it("GIVEN that a Board is initialized THEN it should have cells and ID assigned.", () => {
+    const board = new Board();
 
-      expect(board.getBoardId()).to.not.be.empty;
-      expect(board.cells[1][1]).to.not.be.empty;
-    }
-  );
+    expect(board.getBoardId()).to.not.be.empty;
+    expect(board.cells[1][1]).to.not.be.empty;
+  });
 
   it(
     "GIVEN that Board is initialized " +
@@ -206,8 +194,10 @@ describe("BOARD requirements", () => {
         portMode = true,
         board = new Board(portMode),
         portBatteryCells = _.filter(_.flatten(board.cells), cell => cell.type === CellType.PLAYER_TWO_BATTERY),
-        portCells = _.filter(_.flatten(board.cells), cell => cell.type === CellType.PLAYER_TWO_ENTRANCE ||
-                                                                    cell.type === CellType.PLAYER_TWO_PORT),
+        portCells = _.filter(
+          _.flatten(board.cells),
+          cell => cell.type === CellType.PLAYER_TWO_ENTRANCE || cell.type === CellType.PLAYER_TWO_PORT
+        ),
         battleshipCells = _.filter(portCells, cell => cell.pawn !== null && cell.pawn.type === PawnType.BATTLESHIP),
         missileCells = _.filter(portCells, cell => cell.pawn !== null && cell.pawn.type === PawnType.MISSILE),
         cruiserCells = _.filter(portCells, cell => cell.pawn !== null && cell.pawn.type === PawnType.CRUISER),
@@ -220,16 +210,23 @@ describe("BOARD requirements", () => {
       expect(board.cells.length).to.be.equal(6);
       expect(board.cells[0].length).to.be.equal(12);
       expect(portBatteryCells.length).to.be.equal(4);
-      portBatteryCells.forEach(cell => expect(cell).to.have.property("type", CellType.PLAYER_TWO_BATTERY) &&
-                                       expect(cell).to.have.property("pawn").that.is.not.null);
+      portBatteryCells.forEach(
+        cell =>
+          expect(cell).to.have.property("type", CellType.PLAYER_TWO_BATTERY) &&
+          expect(cell).to.have.property("pawn").that.is.not.null
+      );
 
-      expect(battleshipCells.length).to.be.equal(_.find(pawnsSettings, p => p.typeId === PawnType.BATTLESHIP).fleetSize);
+      expect(battleshipCells.length).to.be.equal(
+        _.find(pawnsSettings, p => p.typeId === PawnType.BATTLESHIP).fleetSize
+      );
       expect(missileCells.length).to.be.equal(_.find(pawnsSettings, p => p.typeId === PawnType.MISSILE).fleetSize);
       expect(cruiserCells.length).to.be.equal(_.find(pawnsSettings, p => p.typeId === PawnType.CRUISER).fleetSize);
       expect(destroyerCells.length).to.be.equal(_.find(pawnsSettings, p => p.typeId === PawnType.DESTROYER).fleetSize);
       expect(submarineCells.length).to.be.equal(_.find(pawnsSettings, p => p.typeId === PawnType.SUBMARINE).fleetSize);
       expect(escortCells.length).to.be.equal(_.find(pawnsSettings, p => p.typeId === PawnType.ESCORT).fleetSize);
-      expect(landingShipCells.length).to.be.equal(_.find(pawnsSettings, p => p.typeId === PawnType.LANDINGSHIP).fleetSize);
+      expect(landingShipCells.length).to.be.equal(
+        _.find(pawnsSettings, p => p.typeId === PawnType.LANDINGSHIP).fleetSize
+      );
       expect(mineCells).to.be.empty;
     }
   );

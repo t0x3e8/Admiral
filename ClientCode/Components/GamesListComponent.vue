@@ -17,12 +17,12 @@
           class="flex-column align-items-start"
         >
           <div class="d-flex w-100 justify-content-between">
-            {{game.name}}
-            <small>{{game.gameDuration}} hours ago</small>
+            {{ game.name }}
+            <small>{{ game.gameDuration }} hours ago</small>
           </div>
 
           <p class="mb-1">
-            <b-badge variant="primary" pill>{{game.players.length}}/2</b-badge>
+            <b-badge variant="primary" pill>{{ game.players.length }}/2</b-badge>
           </p>
         </b-list-group-item>
       </b-list-group>

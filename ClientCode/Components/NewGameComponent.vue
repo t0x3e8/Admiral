@@ -1,4 +1,3 @@
-
 <template>
   <b-form novalidate @submit.stop.prevent="onNewGame">
     <b-form-group
@@ -60,5 +59,4 @@ export default {
 };
 </script>
 
-<style scoped>
-</style>
+<style scoped></style>
