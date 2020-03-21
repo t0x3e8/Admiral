@@ -21,8 +21,8 @@ export default {
   },
   computed: {
     dynamicPawnIcon() {
-      return () =>
-        import(
+      return () => import(
+
           /* webpackMode: "eager" */
           `./pawns/${this.pawnData.type}.svg`
         );

@@ -21,9 +21,16 @@ export default {
     };
   },
   mounted() {
-    this.$root.$on("cell-click", this.onCellClick);
+    // this.$root.$on("cell-click", this.onCellClick);
+    this.$root.$on("create-game", this.createGame);
   },
-  methods: {}
+  methods: {
+    createGame(payload) {
+      console.debug("event-on: create-game");
+      const gameName = payload.name;
+      
+    }
+  }
 };
 </script>
 

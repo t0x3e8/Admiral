@@ -5,12 +5,9 @@
         <game-settings />
       </b-col>
       <b-col cols="8" class="portSetup">
-        <b-jumbotron
-          bg-variant="transparent"
-          header="Port setup"
-        >
-          <p class="lead">Plane your ships in the port and be ready to the <strong>naval battle</strong>!</p>
-          <hr>
+        <b-jumbotron bg-variant="transparent" header="Port setup">
+          <p class="lead">Plan your port and be ready to the <strong>naval battle</strong>!</p>
+          <hr />
         </b-jumbotron>
         <port />
       </b-col>
