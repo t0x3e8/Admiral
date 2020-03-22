@@ -29,6 +29,7 @@ export default {
     createGame(payload) {
       console.debug("event-on: create-game");
       const gameName = payload.name;
+
       axios
         .post("/api/games", {
           "name": gameName
@@ -37,7 +38,7 @@ export default {
           this.$router.replace({ name: "game" });
         })
         .catch(error => {
-          console.debug(`Game create error: ${error}`)
+          console.error(`Game create error: ${error}`)
         })
 
     }

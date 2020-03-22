@@ -1,85 +1,41 @@
 <template>
   <div class="row">
     <div class="col col-10 col-md-5 mx-auto py-5">
-      <b-card notitle class="bg-light">
-        <b-form @submit="onJoin">
-          <b-form-group id="input-group-1">
-            <b-form-input
-              id="nicknameInput"
-              v-model="nickname"
-              required
-              placeholder="Enter your nickname ..."
-              size="lg"
-              aria-describedby="nickname-feedback"
-              :state="nicknameState"
-              @input="nicknameChanged"
-            ></b-form-input>
-            <b-form-invalid-feedback id="nickname-feedback" class>{{ nicknameInputError }}</b-form-invalid-feedback>
-          </b-form-group>
-
-          <b-button type="submit" variant="primary" class="float-right" :disabled="isSubmitDisabled">Join</b-button>
-        </b-form>
-      </b-card>
+      <new-player />
     </div>
   </div>
 </template>
 
 <script>
-/* eslint-disable max-statements */
 import axios from "axios";
 import auth from "../auth.js";
+import NewPlayer from "./../Components/NewPlayerComponent.vue";
 
 export default {
   name: "SignUpView",
-  data() {
-    return {
-      nickname: null,
-      isSubmitDisabled: false,
-      nicknameInputError: "",
-      nicknameMaxLength: 24,
-      nicknameState: null
-    };
+  components: { NewPlayer },
+  mounted() {
+    this.$root.$on("join-player", this.joinPlayer);
   },
   methods: {
-    nicknameChanged() {
-      this.isSubmitDisabled = true;
-      this.nicknameState = null;
-
-      if (this.nickname === null) {
-        this.nicknameState = null;
-      } else if (this.nickname.trim() === "") {
-        this.nicknameInputError = "Enter Your nickname";
-        this.nicknameState = false;
-      } else if (this.nickname.length >= this.nicknameMaxLength) {
-        this.nicknameInputError = "It's too long. Enter shorter name, please :)";
-        this.nicknameState = false;
-      }
-      // test the nickname if it starts with letter and does contain only digits, letters and space
-      if (/^[a-zA-Z](?:_?[ a-z0-9]+)*$/u.test(this.nickname) === false) {
-        this.nicknameInputError = "Really? No strange characters allowed ...";
-        this.nicknameState = false;
-      }
-
-      this.isSubmitDisabled = false;
-    },
-    onJoin(evt) {
-      evt.preventDefault();
+    joinPlayer(payload) {
+      console.debug("event-on: join-player");
+      const playerName = payload.playerName;
 
       axios
         .post("/user/CreateJWTToken", {
-          username: this.nickname
+          username: playerName
         })
         .then(response => {
           auth.storeToken({
-            nickname: this.nickname,
+            nickname: playerName,
             token: response.data.token
           });
-          this.nickname = "";
 
-          this.$router.replace({ name: "home" });
+          this.$router.replace({ name: "setup" });
         })
         .catch(error => {
-          this.nicknameInputError = error;
+          console.error(`Player create error: ${error}`);
         });
     }
   }
