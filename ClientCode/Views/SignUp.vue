@@ -14,18 +14,10 @@
               :state="nicknameState"
               @input="nicknameChanged"
             ></b-form-input>
-            <b-form-invalid-feedback id="nickname-feedback" class>{{
-              nicknameInputError
-            }}</b-form-invalid-feedback>
+            <b-form-invalid-feedback id="nickname-feedback" class>{{ nicknameInputError }}</b-form-invalid-feedback>
           </b-form-group>
 
-          <b-button
-            type="submit"
-            variant="primary"
-            class="float-right"
-            :disabled="isSubmitDisabled"
-            >Join</b-button
-          >
+          <b-button type="submit" variant="primary" class="float-right" :disabled="isSubmitDisabled">Join</b-button>
         </b-form>
       </b-card>
     </div>
@@ -59,12 +51,11 @@ export default {
         this.nicknameInputError = "Enter Your nickname";
         this.nicknameState = false;
       } else if (this.nickname.length >= this.nicknameMaxLength) {
-        this.nicknameInputError =
-          "It's too long. Enter shorter name, please :)";
+        this.nicknameInputError = "It's too long. Enter shorter name, please :)";
         this.nicknameState = false;
       }
       // test the nickname if it starts with letter and does contain only digits, letters and space
-      if ((/^[a-zA-Z](?:_?[ a-z0-9]+)*$/u).test(this.nickname) === false) {
+      if (/^[a-zA-Z](?:_?[ a-z0-9]+)*$/u.test(this.nickname) === false) {
         this.nicknameInputError = "Really? No strange characters allowed ...";
         this.nicknameState = false;
       }
@@ -84,7 +75,7 @@ export default {
             token: response.data.token
           });
           this.nickname = "";
-          
+
           this.$router.replace({ name: "home" });
         })
         .catch(error => {
