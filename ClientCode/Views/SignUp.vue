@@ -84,7 +84,7 @@ export default {
             token: response.data.token
           });
           this.nickname = "";
-          console.log(this.$route.query);
+          
           this.$router.replace({ name: "home" });
         })
         .catch(error => {

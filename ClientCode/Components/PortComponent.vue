@@ -11,6 +11,7 @@
 <script>
 import Board from "../GameEngine/board.js";
 import Cell from "./CellComponent.vue";
+import axios from "axios";
 
 export default {
   name: "PortComponent",
@@ -28,7 +29,17 @@ export default {
     createGame(payload) {
       console.debug("event-on: create-game");
       const gameName = payload.name;
-      
+      axios
+        .post("/api/games", {
+          "name": gameName
+        })
+        .then(response => {
+          this.$router.replace({ name: "game" });
+        })
+        .catch(error => {
+          console.debug(`Game create error: ${error}`)
+        })
+
     }
   }
 };
