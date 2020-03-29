@@ -7,8 +7,7 @@
 </template>
 
 <script>
-import axios from "axios";
-import auth from "../auth.js";
+import { mapActions } from "vuex";
 import NewPlayer from "./../Components/NewPlayerComponent.vue";
 
 export default {
@@ -18,25 +17,13 @@ export default {
     this.$root.$on("join-player", this.joinPlayer);
   },
   methods: {
-    joinPlayer(payload) {
+    // eslint-disable-next-line dot-notation
+    ...mapActions(["setPlayer"]),
+    async joinPlayer(payload) {
       console.debug("event-on: join-player");
-      const playerName = payload.playerName;
 
-      axios
-        .post("/user/CreateJWTToken", {
-          username: playerName
-        })
-        .then(response => {
-          auth.storeToken({
-            nickname: playerName,
-            token: response.data.token
-          });
-
-          this.$router.replace({ name: "setup" });
-        })
-        .catch(error => {
-          console.error(`Player create error: ${error}`);
-        });
+      await this.setPlayer(payload);
+      this.$router.push({ name: "setup" });
     }
   }
 };

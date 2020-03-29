@@ -7,7 +7,7 @@ module.exports = {
     commonjs: true,
     es6: true
   },
-  extends: ["eslint:recommended", "plugin:vue/recommended", "plugin:vue/vue3-recommended", "prettier", "prettier/vue"],
+  extends: ["eslint:recommended", "plugin:vue/recommended", "prettier", "prettier/vue"],
   plugins: ["babel", "prettier", "vue"],
   parserOptions: {
     parser: "babel-eslint",

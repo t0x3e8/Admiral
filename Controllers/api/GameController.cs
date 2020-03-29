@@ -3,12 +3,14 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace code.api.Controllers
 {
     [ApiController]
     [Route("api/games")]
+    [Authorize]
     public class GameController : ControllerBase
     {
         private readonly IGameRepository gameRepository;

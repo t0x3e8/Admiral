@@ -32,6 +32,7 @@
 
 <script>
 import axios from "axios";
+import auth from "../auth.js";
 
 export default {
   name: "GamesListComponent",
@@ -51,7 +52,9 @@ export default {
     },
     fetchGames() {
       axios
-        .get("/api/games")
+        .get("/api/games", { 
+          Authorization: `Bearer ${auth.getToken()}` 
+        })
         .then(response => {
           this.games = response.data;
         })

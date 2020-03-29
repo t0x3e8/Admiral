@@ -4,13 +4,9 @@ using System.Security.Claims;
 using System.Text;
 using Microsoft.IdentityModel.Tokens;
 
-public class ClientService : IClientService
+public class PlayersRepository : IPlayersRepository
 {
-    public ClientService()
-    {
-        
-    }
-    public JwtSecurityToken GetJWT(string username, string secretKey)
+    public string GenerateToken(string username, string secretKey)
     {
         var claims = new [] {
             new Claim(ClaimTypes.Name, username)
@@ -22,10 +18,12 @@ public class ClientService : IClientService
         
         JwtSecurityToken token = new JwtSecurityToken(
           claims: claims,
-          expires: DateTime.Now.AddMinutes(30),
+          expires: DateTime.Now.AddDays(7),
           signingCredentials: credentials
         );
 
-        return token;
+        string tokenText = new JwtSecurityTokenHandler().WriteToken(token);
+
+        return tokenText;
     }
 }
