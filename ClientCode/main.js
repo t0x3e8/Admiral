@@ -1,18 +1,12 @@
 import Vue from "vue";
-import routerFactory from "./router.js";
-import VueRouter from "vue-router";
 import App from "./Views/App.vue";
-import BootstrapVue from "bootstrap-vue"
-import "./Assets/scss/custom.scss"
-import "./Assets/graphics/favicon.ico"
-import store from "./Store/index.js"
-
-const router = routerFactory.createRouter()
+import BootstrapVue from "bootstrap-vue";
+import "./Assets/scss/custom.scss";
+import "./Assets/graphics/favicon.ico";
+import store from "./Store/index";
+import router from "./router.js";
 
 Vue.use(BootstrapVue)
-Vue.use(VueRouter)
-
-Vue.config.productionTip = false
 
 // eslint-disable-next-line no-new
 new Vue({

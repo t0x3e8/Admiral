@@ -8,6 +8,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using AutoMapper;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 namespace code
 {
@@ -45,8 +48,29 @@ namespace code
             services.AddDbContext<AdmiralDbContext>(options => {
                 options.UseSqlServer(Configuration.GetConnectionString("AdmiralContext"));
             });
-            services.AddScoped<IClientService, ClientService>();
+            services.AddScoped<IPlayersRepository, PlayersRepository>();
             services.AddScoped<IGameRepository, GameRepository>();
+
+            // configure jwt authentication
+            var appSettings = appSettingsSection.Get<AppSettings>();
+            var key = Encoding.ASCII.GetBytes(appSettings.Secret);
+            services.AddAuthentication(x =>
+            {
+                x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+            .AddJwtBearer(x =>
+            {
+                x.RequireHttpsMetadata = false;
+                x.SaveToken = true;
+                x.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(key),
+                    ValidateIssuer = false,
+                    ValidateAudience = false
+                };
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -77,8 +101,11 @@ namespace code
             app.UseStaticFiles();
             // matches request to an endpoint.
             app.UseRouting();
-            // 
+            
+             
+            app.UseAuthentication();
             app.UseAuthorization();
+            
             // Execute the matched endpoint
             app.UseEndpoints(endpoints =>
             {

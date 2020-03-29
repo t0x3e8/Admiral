@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 public class GameRepository : IGameRepository
 {
@@ -15,13 +16,24 @@ public class GameRepository : IGameRepository
         if (game == null)
             throw new ArgumentNullException(nameof(game));
 
-        game.Id = Guid.NewGuid();
         this.dbContext.Games.Add(game);
-        this.dbContext.SaveChanges();
+    }
+
+    public Game GetGame(Guid gameId)
+    {
+        var query = from g in this.dbContext.Games
+                    where g.Id.Equals(gameId)
+                    select g;
+        return query.FirstOrDefault();
     }
 
     public IEnumerable<Game> GetGames()
     {
         return this.dbContext.Games;
+    }
+
+    public int Save()
+    {
+        return this.dbContext.SaveChanges();
     }
 }

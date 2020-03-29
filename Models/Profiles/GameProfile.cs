@@ -11,5 +11,7 @@ public class GameProfile : AutoMapper.Profile {
                 dest => dest.GameStatus,
                 opt => opt.MapFrom(src => src.Status)
             );
+
+            this.CreateMap<GameForCreationDTO, Game>();
     }
 }

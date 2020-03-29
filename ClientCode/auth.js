@@ -11,7 +11,7 @@ export default {
     },
 
     getToken () {
-        return JSON.parse(localStorage.getItem("auth"))
+        return JSON.parse(localStorage.getItem("auth")).token;
     },
 
     isAuthorized() {

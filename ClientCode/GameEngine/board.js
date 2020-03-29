@@ -3,10 +3,10 @@
 /* eslint-disable max-statements */
 /* eslint-disable no-magic-numbers */
 
-import uuid from "uuid/v1"
-import settings from "./settings.js"
-import Cell from "./cell.js"
-import Rules from "./Utils/Rules.js"
+import uuid from "uuid/v1";
+import settings from "./settings.js";
+import Cell from "./cell.js";
+import Rules from "./Utils/Rules.js";
 import _ from "underscore";
 import { CellType, PawnType } from "./gameEnums.js";
 import BoardHelper from "./Utils/BoardHelper.js";
@@ -18,7 +18,6 @@ import Pawn from "./pawn.js";
  * @returns {void}
  */
 class Board {
-
   /**
    * Constructs the Board object
    * @param {boolean} portMode configure Board object with settings like: portMode
@@ -38,9 +37,9 @@ class Board {
     /**
      * @returns {uuid} gets unique board id
      */
-    this.getBoardId = function () {
-      return boardId
-    }
+    this.getBoardId = function() {
+      return boardId;
+    };
   }
 
   /**
@@ -49,19 +48,15 @@ class Board {
    * @param {boolean} portMode determines whether full Board should be initialized or only Player's port
    */
   initializeCells() {
-    const {
-      map,
-      numberOfColumns,
-      numberOfRows
-    } = settings.board;
+    const { map, numberOfColumns, numberOfRows } = settings.board;
 
     let colPosition = 0,
       rowPosition = 0,
       cellType = 0,
-      row = []
+      row = [];
 
     for (rowPosition = 0; rowPosition < numberOfRows; rowPosition += 1) {
-      row = []
+      row = [];
       for (colPosition = 0; colPosition < numberOfColumns; colPosition += 1) {
         cellType = map[rowPosition][colPosition];
         row[colPosition] = new Cell({
@@ -69,9 +64,9 @@ class Board {
           columnIndex: colPosition,
           rowIndex: rowPosition,
           board: this
-        })
+        });
       }
-      this.cells[rowPosition] = row
+      this.cells[rowPosition] = row;
     }
   }
 
@@ -80,22 +75,26 @@ class Board {
    * @returns {void}
    */
   initializePawns() {
-    const allPawns = _.filter(BoardHelper.getAllPawns(),
-                              pawn => pawn.type !== PawnType.MINE &&
-                              pawn.type !== PawnType.BATTERY),
-          portCells = _.shuffle(_.flatten(this.cells).filter(cell => cell.type === CellType.PLAYER_TWO_PORT ||
-                                                                     cell.type === CellType.PLAYER_TWO_ENTRANCE)),
-          batteryCells = _.flatten(this.cells).filter(cell => cell.type === CellType.PLAYER_TWO_BATTERY)
+    const allPawns = _.filter(
+        BoardHelper.getAllPawns(),
+        pawn => pawn.type !== PawnType.MINE && pawn.type !== PawnType.BATTERY
+      ),
+      portCells = _.shuffle(
+        _.flatten(this.cells).filter(
+          cell => cell.type === CellType.PLAYER_TWO_PORT || cell.type === CellType.PLAYER_TWO_ENTRANCE
+        )
+      ),
+      batteryCells = _.flatten(this.cells).filter(cell => cell.type === CellType.PLAYER_TWO_BATTERY);
 
     batteryCells.forEach(cell => {
       cell.pawn = new Pawn({
         type: PawnType.BATTERY
-      })
-    })
+      });
+    });
 
     allPawns.forEach(pawn => {
       this.assignPawn(portCells.pop(), pawn);
-    })
+    });
   }
 
   /**
@@ -203,9 +202,11 @@ class Board {
          * Adjacent Cell cannot have a Pawn assigned
          * Adjacent Cell and Main Cell cannot be pair of Sea and Port
          */
-        if (Rules.isCellInRange(adjacentCell) ||
+        if (
+          Rules.isCellInRange(adjacentCell) ||
           Rules.hasCellAssignedPawn(adjacentCell) ||
-          Rules.isPairOfSeaAndPort(adjacentCell, cell)) {
+          Rules.isPairOfSeaAndPort(adjacentCell, cell)
+        ) {
           nextElementsToDepthIncrease -= 1;
         } else {
           adjacentCell.inRange = true;
@@ -231,10 +232,7 @@ class Board {
    * @returns {void}
    */
   cleanRange() {
-    const {
-      numberOfColumns,
-      numberOfRows
-    } = settings.board;
+    const { numberOfColumns, numberOfRows } = settings.board;
 
     for (let r = 0; r < numberOfRows; r += 1) {
       for (let c = 0; c < numberOfColumns; c += 1) {
@@ -268,4 +266,4 @@ class Board {
   }
 }
 
-export default Board
+export default Board;

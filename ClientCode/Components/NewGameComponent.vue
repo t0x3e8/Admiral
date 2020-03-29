@@ -1,12 +1,11 @@
-
 <template>
-  <b-form novalidate @submit.stop.prevent="onNewGame">
+  <b-form novalidate @submit.stop.prevent="newNewGameSubmit">
     <b-form-group
       :invalid-feedback="invalidFeedback"
       label-for="gameNameInput"
       label="Enter game name"
       label-size="lg"
-      :state="gameNameState"
+      :state="isGameNameValid"
     >
       <b-input-group class="pl-3">
         <b-form-input
@@ -15,10 +14,10 @@
           type="text"
           required
           trim
-          :state="gameNameState"
+          :state="isGameNameValid"
         ></b-form-input>
         <b-input-group-append>
-          <b-button size="sm" text="Start new game" variant="success" type="submit">Start new game</b-button>
+          <b-button size="sm" text="Start new game" variant="success" type="submit" :disabled="!isGameNameValid">Start new game</b-button>
         </b-input-group-append>
       </b-input-group>
     </b-form-group>
@@ -37,28 +36,33 @@ export default {
     };
   },
   computed: {
-    gameNameState() {
-      if (this.gameName.length <= this.gameNameMinLength) {
+    isGameNameValid() {
+      if (!this.gameName.length) {
         return null;
       }
 
-      return this.gameName.length < this.gameNameMaxLength;
+      return this.gameName.length > this.gameNameMinLength && this.gameName.length < this.gameNameMaxLength;
     },
     invalidFeedback() {
-      if (this.gameName.length > this.gameNameMaxLength) {
+      if (this.gameName.length >= this.gameNameMaxLength) {
         return `Game name is too long. Max is ${this.gameNameMaxLength}`;
+      } else if (this.gameName.length <= this.gameNameMinLength) {
+        return `Game name is too short. Min is ${this.gameNameMinLength}`;
       }
 
       return "";
     }
   },
   methods: {
-    onNewGame(evt) {
-      console.log(evt.target.form.checkValidity());
+    newNewGameSubmit() {
+      if (this.isGameNameValid) {
+        console.debug("event-emit: create-game");
+
+        this.$root.$emit("create-game", { name: this.gameName });
+      }
     }
   }
 };
 </script>
 
-<style scoped>
-</style>
+<style scoped></style>

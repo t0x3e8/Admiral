@@ -66,12 +66,12 @@ export default {
     },
     cellClicked() {
       if (this.isEnable()) {
-      console.debug("event-emit: cell-click");
+        console.debug("event-emit: cell-click");
 
-      this.$root.$emit("cell-click", {
-        col: this.cellData.colIndex,
-        row: this.cellData.rowIndex
-      });
+        this.$root.$emit("cell-click", {
+          col: this.cellData.colIndex,
+          row: this.cellData.rowIndex
+        });
       }
     }
   }
@@ -89,7 +89,8 @@ $neutral-color: #1155ff;
   border-radius: 0%;
 }
 
-.port1, .battery1 {
+.port1,
+.battery1 {
   background-color: $port1-color;
 }
 .port1-range {
@@ -97,7 +98,8 @@ $neutral-color: #1155ff;
   cursor: pointer;
 }
 
-.port2, .battery2 {
+.port2,
+.battery2 {
   background-color: $port2-color;
 }
 .port2-range {
