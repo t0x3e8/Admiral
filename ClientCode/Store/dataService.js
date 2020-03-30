@@ -2,6 +2,12 @@ import axios from "axios";
 import store from "./index.js";
 
 export default {
+  getAxiosConfig() {
+    return {
+      headers: { Authorization: `Bearer ${store.state.player.token}` }
+    };
+  },
+
   async authenticatePlayer(playerName) {
     try {
       const response = await axios.post("/api/players/authenticate", { name: playerName });
@@ -19,10 +25,7 @@ export default {
 
   async getAllGames() {
     try {
-      const authToken = store.getters.getAuthToken,
-        response = await axios.get("/api/games", {
-          headers: { Authorization: `Bearer ${authToken}` }
-        });
+      const response = await axios.get("/api/games", this.getAxiosConfig());
 
       return response.data;
     } catch (error) {
