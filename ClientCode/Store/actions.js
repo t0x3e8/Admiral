@@ -1,4 +1,4 @@
-import { SET_PLAYER } from "./mutationsTypes.js";
+import { SET_PLAYER, GET_ALL_GAMES } from "./mutationsTypes.js";
 import dataSvc from "./dataService.js";
 
 export default {
@@ -13,6 +13,14 @@ export default {
       };
 
       commit(SET_PLAYER, authenticatedPlayer);
+    }
+  },
+
+  async getGames({ commit }) {
+    const responseData = await dataSvc.getAllGames();
+
+    if (responseData !== null) {
+      commit(GET_ALL_GAMES, responseData);
     }
   }
 };

@@ -31,36 +31,26 @@
 </template>
 
 <script>
-import axios from "axios";
-import auth from "../auth.js";
+import { mapActions, mapState } from "vuex";
 
 export default {
   name: "GamesListComponent",
   data() {
     return {
-      games: [],
       errorMessage: "",
       gameSearchText: ""
     };
   },
-  mounted() {
-    this.fetchGames();
+  computed: {
+    ...mapState(["games"])
+  },
+  created() {
+    this.getGames();
   },
   methods: {
+  ...mapActions(["getGames"]),
     onStartGame() {
       this.show = false;
-    },
-    fetchGames() {
-      axios
-        .get("/api/games", { 
-          Authorization: `Bearer ${auth.getToken()}` 
-        })
-        .then(response => {
-          this.games = response.data;
-        })
-        .catch(error => {
-          this.errorMessage = error;
-        });
     }
   }
 };

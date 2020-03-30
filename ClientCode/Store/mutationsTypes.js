@@ -1,2 +1,2 @@
 export const SET_PLAYER = "setPlayer",
-             GET_PLAYER = "getPlayer";
+  GET_ALL_GAMES = "getAllGames";
