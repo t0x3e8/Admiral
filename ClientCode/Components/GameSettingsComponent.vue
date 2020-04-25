@@ -1,5 +1,5 @@
 <template>
-  <b-container v-if="show" id="gamesettings">
+  <b-container>
     <b-row>
       <b-col>
         <new-game />
@@ -23,17 +23,8 @@ export default {
     NewGame,
     GamesList
   },
-  props: {
-    gameId: {
-      type: Text,
-      default: null
-    }
-  },
   data() {
     return {
-      show: true,
-      games: [],
-      errorMessage: ""
     };
   }
 };

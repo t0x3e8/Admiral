@@ -2,45 +2,49 @@
 /* eslint-disable max-statements */
 /* eslint-disable max-lines-per-function */
 
-import Board from "./board.js";
+import GameBoard from "./gameboard.js";
 import History from "./history.js";
-import { HistoryType } from "./gameEnums.js";
+import { HistoryType, GameState } from "./gameEnums.js";
+import Player from "./player.js";
+import _ from "underscore";
 
 /**
  * A class representing a Game object.
  * @returns {void}
  */
 class Game {
-  constructor(payload) {
-    const {gameId} = payload;
+  constructor(gameId) {
+    if (_.isNull(gameId) || _.isUndefined(gameId)) {
+      throw new Error("gameId must be specified")
+    }
 
-    this.board = new Board();
+    this.gameId = gameId;
+    this.board = new GameBoard();
     this.history = new History();
     this.history.record({
       type: HistoryType.GAME_CREATED
-    })
+    });
     this.players = [];
-
-    /**
-     * @returns {uuid} gets unique game id
-     */
-    this.getGameId = function () {
-      return gameId;
-    };
+    this.state = GameState.NOT_STARTED;
   }
 
   /**
    * Game will subscribe player.
    * @param {object} player - should represent Player object
+   * @param {object} pawnsData - players pawns
    * @return {void}
    */
-  join(player) {
-    this.players.push(player);
+  join(player, pawnsData) {
+    if (this.state === GameState.NOT_STARTED) {
 
-    this.history.record({
-      type: HistoryType.PLAYER_JOINS,
-      playerId: player.getPlayerId()
-    })
+      this.players.push(player);
+      this.board.setPawns(pawnsData);
+
+      this.history.record({
+        type: HistoryType.PLAYER_JOINS,
+        playerId: Player.playerId
+      });
+    }
   }
 
   /**
@@ -49,12 +53,15 @@ class Game {
    * @return {void}
    */
   leave(player) {
-    this.players.splice(this.players.findIndex(o => o.getPlayerId() === player.getPlayerId()), 1);
+    this.players.splice(
+      this.players.findIndex((o) => o.getPlayerId() === player.getPlayerId()),
+      1
+    );
 
     this.history.record({
       type: HistoryType.PLAYER_LEAVES,
       playerId: player.getPlayerId()
-    })
+    });
   }
 }
 

@@ -1,48 +1,50 @@
+/* eslint-disable max-lines-per-function */
 /* eslint-disable no-unused-expressions */
 /* eslint-disable no-magic-numbers */
 /* global describe, it */
 
 import { expect } from "chai";
-import uuid from "uuid/v1";
-import Game from "./../../../ClientCode/GameEngine/game.js"
-import Player from "./../../../ClientCode/GameEngine/player"
+import Game from "./../../../ClientCode/GameEngine/game.js";
+import Player from "./../../../ClientCode/GameEngine/player.js";
+import { createGameResponseData } from "./serverResponses.js";
+import { GameState } from "../../../ClientCode/GameEngine/gameEnums.js";
 
 describe("GAME requirements", () => {
-  it("GIVEN I have created a new game " +
-    "THEN Game should have unique ID, History, and at least one player", () => {
-      const gamePayLoad = {
-          gameId: uuid()
-        },
-        game = new Game(gamePayLoad);
+  it("GIVEN I have created a new game THEN Game should have unique ID, History, and at least one player", () => {
+    const gameId = "6eea7a6d-ffda-4038-aea4-6b72f701f17f",
+      game = new Game(gameId);
 
-      expect(game.getGameId(), "Unique ID must be generated").to.not.be.empty;
-      expect(game.history, "The History must be initiated").to.not.be.null;
-      expect(game.history.records.length, "The History must record Game-Created event").to.be.equal(1);
-      expect(game.board, "The Board must be initiated").to.not.be.null;
-      expect(game.players.length, "At creation players not assigned").to.be.equal(0);
-    });
+    expect(game.gameId, "Unique ID must be generated").to.be.equal(gameId);
+    expect(game.history, "The History must be initiated").to.not.be.null;
+    expect(game.history.records.length, "The History must record Game-Created event").to.be.equal(1);
+    expect(game.board, "The Board must be initiated").to.not.be.null;
+    expect(game.players, "At creation players not assigned").to.be.empty;
+    expect(game.state).to.be.equal(GameState.NOT_STARTED);
+  });
 
-  it("GIVEN I have created a new game " +
-    "WHEN a Player joins the game AND a Player leaves the game" +
-    "THEN I want these events to be record in History", () => {
-      const gamePayLoad = {
-          gameId: uuid()
-        },
-        game = new Game(gamePayLoad),
-        playerName = "TestUser",
-        player = new Player({
-          name: playerName
-        });
+  it(
+    "GIVEN a new game WHEN the first Player joins " +
+      "THEN Game should reflect that in the state of board, game and history",
+    () => {
+      const game = new Game(createGameResponseData.id),
+        player = new Player(createGameResponseData.players),
+        pawnsData = createGameResponseData.pawns;
 
-      game.join(player);
+      expect(game.history.getRecordNumber()).to.be.equal(1);
+      game.join(player, pawnsData);
 
       expect(game.players.length, "Player should be added to the game").to.be.equal(1);
-      expect(game.players[0].name, "Player name should be as specified.").to.be.equal(playerName);
+      expect(game.players[0].playerId).to.be.equal(player.id);
+      expect(game.players[0].name).to.be.equal(player.name);
+      expect(game.board.toPawnArray().length).to.be.equal(pawnsData.length);
       expect(game.history.getRecordNumber(), "History should track player join").to.be.equal(2);
+    }
+  );
 
-      game.leave(player);
-
-      expect(game.players.length, "Player should be removed from the game").to.be.equal(0);
-      expect(game.history.getRecordNumber(), "History should track player leave").to.be.equal(3);
-    })
+  it(
+    "GIVEN a new Game without gameId THEN an error should be thrown",
+    () => {
+      expect(() => new Game()).to.throw("gameId must be specified");
+    }
+  );
 });

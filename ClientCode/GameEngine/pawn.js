@@ -1,66 +1,59 @@
-import uuid from "uuid/v1";
+/* eslint-disable max-statements */
 import settings from "./settings.js";
-import { find } from "underscore";
+import _ from "underscore";
 
 /**
  * A class representing a Pawn object.
- * @param {object} pawnData - Object containing pawn information as: type, col, oldCol,
- * row, oldRow, pawnId (optional), selected
  * @returns {void}
  */
 class Pawn {
-    constructor(pawnData) {
-        const pawnId = pawnData.pawnId || uuid(),
-         that = this;
-
-        that.type = pawnData.type;
-        that.col = pawnData.col;
-        that.oldCol = pawnData.col;
-        that.row = pawnData.row;
-        that.oldRow = pawnData.row;
-        that.player = null;
-        that.selected = false;
-        that.range = find(settings.pawns, element => element.typeId === that.type).range;
-
-        /**
-         * @returns {uuid} gets unique pawn id
-         */
-        that.getPawnId = function () {
-            return pawnId;
-        };
+  constructor(pawnType) {
+    if (_.isNull(pawnType) || _.isUndefined(pawnType)) {
+      throw new Error("Pawn Type must be specified");
     }
 
-    /**
-     * Assign pawn to provided player
-     * @param {player} player Player instance
-     * @returns {void}
-     */
-    setPlayer(player) {
-        const that = this;
+    const pawnSetting = _.find(settings.pawns, (p) => p.typeId === pawnType);
 
-        that.player = player;
+    if (!pawnSetting) {
+      throw new Error(`No Pawn of ${pawnType} in Settings`);
     }
 
-    /**
-     * Get assigned player for pawn
-     * @returns {player} returns assigned player
-     */
-    getPlayer() {
-        const that = this;
+    this.type = pawnType;
+    this.col = 0;
+    this.oldCol = 0;
+    this.row = 0;
+    this.oldRow = 0;
+    this.playerId = null;
+    this.selected = false;
+    this.range = pawnSetting.range;
+    this.name = pawnSetting.name;
+    this.svgName = pawnSetting.svgName;
+    this.pawnId = null;
+  }
 
-        return that.player;
+  update(pawnData) {
+    if (this.pawnId !== null) {
+      throw new Error("Pawn is already updated");
     }
 
-    updatePosition(newCol, newRow) {
-        this.oldCol = this.col;
-        this.oldRow = this.row;
-        this.col = newCol;
-        this.row = newRow;
-
-        if ((this.col === null || this.row === null) && this.player) {
-            this.player.setPawns((this.player.pawns, this));
-        }
+    if (this.type !== pawnData.type) {
+      throw new Error("Type of Pawn don't match the pawnData");
     }
+
+    this.pawnId = pawnData.id;
+    this.col = pawnData.col;
+    this.oldCol = pawnData.oldCol;
+    this.row = pawnData.row;
+    this.oldRow = pawnData.oldRow;
+    this.playerId = pawnData.playerId;
+  }
+
+  updatePosition(newCol, newRow) {
+    this.oldCol = this.col;
+    this.oldRow = this.row;
+    this.col = newCol;
+    this.row = newRow;
+  }
 }
 
 export default Pawn;

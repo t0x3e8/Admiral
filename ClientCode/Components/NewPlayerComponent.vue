@@ -18,7 +18,12 @@
             :state="isPlayerNameValid"
           ></b-form-input>
           <b-input-group-append>
-            <b-button size="sm" text="Join" variant="success" type="submit" :disabled="!isPlayerNameValid"
+            <b-button
+              size="sm"
+              text="Join"
+              variant="success"
+              type="submit"
+              :disabled="!isPlayerNameValid"
               >Join</b-button
             >
           </b-input-group-append>
@@ -44,7 +49,10 @@ export default {
         return null;
       }
 
-      return this.playerName.length > this.playerNameMinLength && this.playerName.length < this.playerNameMaxLength;
+      return (
+        this.playerName.length > this.playerNameMinLength &&
+        this.playerName.length < this.playerNameMaxLength
+      );
     },
     invalidFeedback() {
       if (this.playerName.length >= this.playerNameMaxLength) {

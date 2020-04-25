@@ -1,4 +1,8 @@
-import { SET_PLAYER, GET_ALL_GAMES } from "./mutationsTypes.js";
+import {
+  SET_PLAYER,
+  GET_ALL_GAMES,
+  CREATE_NEW_GAME
+} from "./mutationsTypes.js";
 import dataSvc from "./dataService.js";
 
 export default {
@@ -21,6 +25,18 @@ export default {
 
     if (responseData !== null) {
       commit(GET_ALL_GAMES, responseData);
+    }
+  },
+
+  async createGame({ commit, state }, payload) {
+    const responseData = await dataSvc.addGame(
+      payload.gameName,
+      payload.pawns,
+      state.player
+    );
+
+    if (responseData !== null) {
+      commit(CREATE_NEW_GAME, responseData);
     }
   }
 };

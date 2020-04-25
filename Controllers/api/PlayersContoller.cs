@@ -25,12 +25,12 @@ namespace code.api.Controllers
 
         [AllowAnonymous]
         [HttpPost("authenticate")]
-        public ActionResult<PlayerDTO> Authorize([FromBody]PlayerToAuthenticateDTO playerToAuthenticate)
+        public ActionResult<PlayerAuthenticatedDTO> Authorize([FromBody]PlayerToAuthenticateDTO playerToAuthenticate)
         {
             var player = this.mapper.Map<Player>(playerToAuthenticate);
-            var token = this.playersRepository.GenerateToken(player.Name, this.appSettings.Secret);
+            var token = this.playersRepository.GenerateToken(player, this.appSettings.Secret);
             
-            var playerToReturn = this.mapper.Map<PlayerDTO>(player);
+            var playerToReturn = this.mapper.Map<PlayerAuthenticatedDTO>(player);
             playerToReturn.Token = token;
 
             return Ok(playerToReturn);

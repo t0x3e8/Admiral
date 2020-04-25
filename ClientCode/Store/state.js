@@ -1,4 +1,5 @@
 export default {
     player: {},
-    games: []
+    games: [],
+    activeGame: {}
 }

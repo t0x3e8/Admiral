@@ -17,7 +17,14 @@
           :state="isGameNameValid"
         ></b-form-input>
         <b-input-group-append>
-          <b-button size="sm" text="Start new game" variant="success" type="submit" :disabled="!isGameNameValid">Start new game</b-button>
+          <b-button
+            size="sm"
+            text="Start new game"
+            variant="success"
+            type="submit"
+            :disabled="!isGameNameValid"
+            >Start new game</b-button
+          >
         </b-input-group-append>
       </b-input-group>
     </b-form-group>
@@ -25,14 +32,23 @@
 </template>
 
 <script>
+import { CREATE_NEW_GAME } from "./../eventsTypes.js";
+
 export default {
-  /* eslint-disable max-statements */
   name: "NewGameComponent",
+  props: {
+    gameNameMaxLength: {
+      type: Number,
+      default: 16
+    },
+    gameNameMinLength: {
+      type: Number,
+      default: 2
+    }
+  },
   data() {
     return {
-      gameName: "",
-      gameNameMaxLength: 16,
-      gameNameMinLength: 2
+      gameName: ""
     };
   },
   computed: {
@@ -41,7 +57,10 @@ export default {
         return null;
       }
 
-      return this.gameName.length > this.gameNameMinLength && this.gameName.length < this.gameNameMaxLength;
+      return (
+        this.gameName.length > this.gameNameMinLength &&
+        this.gameName.length < this.gameNameMaxLength
+      );
     },
     invalidFeedback() {
       if (this.gameName.length >= this.gameNameMaxLength) {
@@ -56,9 +75,10 @@ export default {
   methods: {
     newNewGameSubmit() {
       if (this.isGameNameValid) {
-        console.debug("event-emit: create-game");
+        console.debug(`event-emit: ${CREATE_NEW_GAME}`);
 
-        this.$root.$emit("create-game", { name: this.gameName });
+        this.$root.$emit(CREATE_NEW_GAME, { name: this.gameName });
+        this.gameName = "";
       }
     }
   }

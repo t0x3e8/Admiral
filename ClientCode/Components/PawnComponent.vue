@@ -24,7 +24,7 @@ export default {
       return () => import(
 
           /* webpackMode: "eager" */
-          `./pawns/${this.pawnData.type}.svg`
+          `./pawns/${this.pawnData.svgName}`
         );
     }
   },

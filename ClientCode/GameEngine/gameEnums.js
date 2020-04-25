@@ -22,16 +22,16 @@ export const CombatResult = {
     HIDDEN: 666
   },
   PawnType = {
-    BATTLESHIP: "battleship",
-    MISSILE: "missileship",
-    CRUISER: "cruiser",
-    DESTROYER: "destroyer",
-    SUBMARINE: "submarine",
-    ESCORT: "escort",
-    MINESWEEPER: "minesweeper",
-    LANDINGSHIP: "landingship",
-    BATTERY: "battery",
-    MINE: "mine"
+    BATTLESHIP: 1,
+    MISSILE: 2,
+    CRUISER: 3,
+    DESTROYER: 4,
+    SUBMARINE: 5,
+    ESCORT: 6,
+    MINESWEEPER: 7,
+    LANDINGSHIP: 8,
+    BATTERY: 9,
+    MINE: 10
   },
   HistoryType = {
     PLAYER_JOINS: 1,

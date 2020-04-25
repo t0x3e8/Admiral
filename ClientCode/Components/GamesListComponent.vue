@@ -18,12 +18,15 @@
         >
           <div class="d-flex w-100 justify-content-between">
             {{ game.name }}
-            <small>{{ game.gameDuration }} hours ago</small>
+            <small>{{ game.gameDuration }}h ago</small>
           </div>
 
-          <p class="mb-1">
-            <b-badge variant="primary" pill>{{ game.players.length }}/2</b-badge>
-          </p>
+          <div class="d-flex w-100 justify-content-between">
+            <p class="mb-1">
+              <b-badge variant="info" pill>{{ game.players.length }}/2</b-badge>
+            </p>
+            <b-button size="sm" text="Join" variant="outline-success" @click="join(game.id)">join</b-button>
+          </div>
         </b-list-group-item>
       </b-list-group>
     </b-form-group>
@@ -32,13 +35,15 @@
 
 <script>
 import { mapActions, mapState } from "vuex";
+import { JOIN_OPEN_GAME } from "./../eventsTypes.js";
 
 export default {
   name: "GamesListComponent",
   data() {
     return {
-      errorMessage: "",
-      gameSearchText: ""
+      gameSearchText: "",
+      timer: "",
+      timerInterval: 60000
     };
   },
   computed: {
@@ -46,11 +51,22 @@ export default {
   },
   created() {
     this.getGames();
+    this.timer = setInterval(this.getGames, this.timerInterval);
+  },
+  beforeDestroy() {
+    clearInterval(this.timer);
   },
   methods: {
-  ...mapActions(["getGames"]),
-    onStartGame() {
-      this.show = false;
+    ...mapActions(["getGames"]),
+
+    join(gameId) {
+      console.debug(`event-emit: ${JOIN_OPEN_GAME}`);
+
+      this.$root.$emit(JOIN_OPEN_GAME, { gameId });
+    },
+
+    cancelAutoUpdate() {
+      clearInterval(this.timer);
     }
   }
 };

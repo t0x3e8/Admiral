@@ -27,6 +27,11 @@ namespace code.Migrations
                     b.Property<DateTime>("Created")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(16)")
+                        .HasMaxLength(16);
+
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
@@ -38,46 +43,53 @@ namespace code.Migrations
                         new
                         {
                             Id = new Guid("7f86d95d-6ffb-4c1c-b8d9-c2a5e6be2993"),
-                            Created = new DateTime(2020, 3, 15, 15, 36, 36, 251, DateTimeKind.Local).AddTicks(1164),
+                            Created = new DateTime(2020, 4, 12, 12, 22, 1, 565, DateTimeKind.Local).AddTicks(2505),
+                            Name = "Game number 1",
                             Status = 0
-                        },
+                        });
+                });
+
+            modelBuilder.Entity("GamePlayer", b =>
+                {
+                    b.Property<Guid>("GameId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("PlayerId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("GameId", "PlayerId");
+
+                    b.HasIndex("PlayerId");
+
+                    b.ToTable("GamesPlayers");
+
+                    b.HasData(
                         new
                         {
-                            Id = new Guid("7f86d95d-6ffb-4c1c-b8d9-c2a5e6be2994"),
-                            Created = new DateTime(2020, 3, 15, 10, 0, 0, 0, DateTimeKind.Local),
-                            Status = 0
-                        },
-                        new
-                        {
-                            Id = new Guid("7f86d95d-6ffb-4c1c-b8d9-c2a5e6be2995"),
-                            Created = new DateTime(2020, 3, 15, 13, 0, 0, 0, DateTimeKind.Local),
-                            Status = 0
-                        },
-                        new
-                        {
-                            Id = new Guid("7f86d95d-6ffb-4c1c-b8d9-c2a5e6be2996"),
-                            Created = new DateTime(2020, 3, 15, 1, 0, 0, 0, DateTimeKind.Local),
-                            Status = 0
-                        },
-                        new
-                        {
-                            Id = new Guid("7f86d95d-6ffb-4c1c-b8d9-c2a5e6be2997"),
-                            Created = new DateTime(2020, 3, 15, 11, 0, 0, 0, DateTimeKind.Local),
-                            Status = 0
+                            GameId = new Guid("7f86d95d-6ffb-4c1c-b8d9-c2a5e6be2993"),
+                            PlayerId = new Guid("223afe6d-e6af-40a9-c57b-08d7db3a097e")
                         });
                 });
 
             modelBuilder.Entity("Pawn", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("Col")
                         .HasColumnType("int");
 
-                    b.Property<Guid?>("PlayerId")
+                    b.Property<Guid>("GameId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("OldCol")
+                        .HasColumnType("int");
+
+                    b.Property<int>("OldRow")
+                        .HasColumnType("int");
+
+                    b.Property<Guid>("PlayerId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("Row")
@@ -88,9 +100,33 @@ namespace code.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("PlayerId");
+                    b.HasIndex("GameId");
 
-                    b.ToTable("Pawn");
+                    b.ToTable("Pawns");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("111afe6d-e6af-40a9-c57b-08d7db3a097e"),
+                            Col = 2,
+                            GameId = new Guid("7f86d95d-6ffb-4c1c-b8d9-c2a5e6be2993"),
+                            OldCol = 0,
+                            OldRow = 0,
+                            PlayerId = new Guid("223afe6d-e6af-40a9-c57b-08d7db3a097e"),
+                            Row = 2,
+                            Type = 2
+                        },
+                        new
+                        {
+                            Id = new Guid("222afe6d-e6af-40a9-c57b-08d7db3a097e"),
+                            Col = 4,
+                            GameId = new Guid("7f86d95d-6ffb-4c1c-b8d9-c2a5e6be2993"),
+                            OldCol = 1,
+                            OldRow = 1,
+                            PlayerId = new Guid("223afe6d-e6af-40a9-c57b-08d7db3a097e"),
+                            Row = 4,
+                            Type = 3
+                        });
                 });
 
             modelBuilder.Entity("Player", b =>
@@ -99,33 +135,44 @@ namespace code.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("GameId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(32)")
-                        .HasMaxLength(32);
+                        .HasColumnType("nvarchar(16)")
+                        .HasMaxLength(16);
 
                     b.HasKey("Id");
 
-                    b.HasIndex("GameId");
+                    b.ToTable("Players");
 
-                    b.ToTable("Player");
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("223afe6d-e6af-40a9-c57b-08d7db3a097e"),
+                            Name = "Roman"
+                        });
+                });
+
+            modelBuilder.Entity("GamePlayer", b =>
+                {
+                    b.HasOne("Game", "Game")
+                        .WithMany("Players")
+                        .HasForeignKey("GameId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Player", "Player")
+                        .WithMany()
+                        .HasForeignKey("PlayerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Pawn", b =>
                 {
-                    b.HasOne("Player", null)
-                        .WithMany("Pawns")
-                        .HasForeignKey("PlayerId");
-                });
-
-            modelBuilder.Entity("Player", b =>
-                {
                     b.HasOne("Game", null)
-                        .WithMany("Players")
-                        .HasForeignKey("GameId");
+                        .WithMany("Pawns")
+                        .HasForeignKey("GameId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

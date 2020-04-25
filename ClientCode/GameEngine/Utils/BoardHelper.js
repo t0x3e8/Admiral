@@ -4,7 +4,6 @@ import _ from "underscore";
 import Pawn from "./../pawn.js";
 
 class BoardHelper {
-
   /**
    * The method returns all player pawns available at the beginning of the game.
    * The collection of pawns is generated on settings.
@@ -17,18 +16,16 @@ class BoardHelper {
     let step = 0,
       pawn = null;
 
-    _.forEach(pawnsMap, pawnSetting => {
+    _.forEach(pawnsMap, (pawnSetting) => {
       for (step = 0; step < pawnSetting.fleetSize; step += 1) {
-        pawn = new Pawn({
-          type: pawnSetting.typeId
-        });
+        pawn = new Pawn(pawnSetting.typeId);
 
         pawnsCollection.push(pawn);
       }
-    })
+    });
 
     return pawnsCollection;
   }
 }
 
-export default BoardHelper
+export default BoardHelper;

@@ -21,10 +21,12 @@ import Board from "../../../ClientCode/GameEngine/board.js";
  */
 
 describe("RULES to calculate cell's range requirements", () => {
-  it("GIVEN a Pawn needs to determine its range " +
-    "WHEN type of Cell is SEA and type of Adjacent Cell is PORT " +
-    "OR type of Cell is PORT and type of Adjacent Cell is SEA " +
-    "THEN Rule should return negative result", () => {
+  it(
+    "GIVEN a Pawn needs to determine its range " +
+      "WHEN type of Cell is SEA and type of Adjacent Cell is PORT " +
+      "OR type of Cell is PORT and type of Adjacent Cell is SEA " +
+      "THEN Rule should return negative result",
+    () => {
       const seaCell = new Cell({ type: CellType.SEA }),
         port1Cell = new Cell({ type: CellType.PLAYER_ONE_PORT }),
         port2Cell = new Cell({ type: CellType.PLAYER_TWO_PORT }),
@@ -50,11 +52,14 @@ describe("RULES to calculate cell's range requirements", () => {
       expect(Rules.isPairOfSeaAndPort(port2Cell, neutralCell)).to.be.false;
       expect(Rules.isPairOfSeaAndPort(port2Cell, entrance1Cell)).to.be.false;
       expect(Rules.isPairOfSeaAndPort(port2Cell, entrance2Cell)).to.be.false;
-    });
+    }
+  );
 
-  it("GIVEN a Pawn needs to determine its range " +
-    "WHEN Cell has been already visited (by other path range) " +
-    "THEN Rule should return negative result", () => {
+  it(
+    "GIVEN a Pawn needs to determine its range " +
+      "WHEN Cell has been already visited (by other path range) " +
+      "THEN Rule should return negative result",
+    () => {
       const cell = new Cell({ type: CellType.SEA });
 
       cell.inRange = true;
@@ -62,16 +67,20 @@ describe("RULES to calculate cell's range requirements", () => {
 
       cell.inRange = false;
       expect(Rules.isCellInRange(cell)).to.be.false;
-    });
+    }
+  );
 
-  it("GIVEN a Pawn needs to determine its range " +
-    "WHEN Cell has a Pawn assigned to it " +
-    "THEN Rule should return negative result", () => {
+  it(
+    "GIVEN a Pawn needs to determine its range " +
+      "WHEN Cell has a Pawn assigned to it " +
+      "THEN Rule should return negative result",
+    () => {
       const board = new Board(),
-            pawn = new Pawn({ type: PawnType.BATTERY});
+        pawn = new Pawn(PawnType.BATTERY);
 
       expect(Rules.hasCellAssignedPawn(board.cells[0][0])).to.be.false;
       board.assignPawn(board.cells[0][0], pawn);
       expect(Rules.hasCellAssignedPawn(board.cells[0][0])).to.be.true;
-    });
+    }
+  );
 });

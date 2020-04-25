@@ -69,8 +69,8 @@ export default {
         console.debug("event-emit: cell-click");
 
         this.$root.$emit("cell-click", {
-          col: this.cellData.colIndex,
-          row: this.cellData.rowIndex
+          col: this.cellData.col,
+          row: this.cellData.row
         });
       }
     }

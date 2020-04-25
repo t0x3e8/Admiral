@@ -1,5 +1,4 @@
 /* eslint-disable max-statements */
-import uuid from "uuid/v1";
 
 /**
  * A class representing a Cell object.
@@ -8,22 +7,12 @@ import uuid from "uuid/v1";
  */
 class Cell {
   constructor(cellData) {
-    const that = this,
-      cellId = uuid();
-
-    that.type = cellData.type;
-    that.colIndex = cellData.columnIndex;
-    that.rowIndex = cellData.rowIndex;
-    that.pawn = null;
-    that.inRange = false;
-    that.board = cellData.board;
-
-    /**
-     * @returns {uuid} gets unique cell id
-     */
-    that.getCellId = function() {
-      return cellId;
-    };
+    this.type = cellData.type;
+    this.col = cellData.colIndex;
+    this.row = cellData.rowIndex;
+    this.pawn = null;
+    this.inRange = false;
+    this.board = cellData.board;
   }
 
   /**
@@ -33,8 +22,7 @@ class Cell {
    */
   getAdjacentCells() {
     const adjacentCells = [],
-      row = this.rowIndex,
-      col = this.colIndex,
+      {col, row} = this,
       offset = 1;
 
     // R-1, C

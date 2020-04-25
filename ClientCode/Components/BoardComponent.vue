@@ -9,66 +9,73 @@
 </template>
 
 <script>
-import Board from "../GameEngine/board.js";
-import Cell from "./CellComponent.vue";
+  import GameBoard from "../GameEngine/gameBoard.js";
+  import Cell from "./CellComponent.vue";
+  import Board from "../GameEngine/board";
 
-export default {
-  name: "BoardComponent",
-  components: { Cell },
-  props: {
-    board: {
-      type: Board,
-      default: null
-    }
-  },
-  mounted() {
-    this.$root.$on("cell-click", this.onCellClick);
-  },
-  methods: {
-    onCellClick(payload) {
-      console.debug("event-on: cell-click");
-
-      const cell = this.board.cells[payload.row][payload.col];
-
-      if (cell.inRange) {
-        // Execute Move or Attack
-        this.moveOrAttack(cell);
-      } else {
-        // Select a Cell with Pawn and calculate the range
-        this.selectAndRange(cell);
+  export default {
+    name: "BoardComponent",
+    components: { Cell },
+    props: {
+      board: {
+        type: [
+          GameBoard,
+          Board
+        ],
+        default: null
       }
     },
-    selectAndRange(cell) {
-      this.board.select({
-        col: cell.colIndex,
-        row: cell.rowIndex
-      });
-
-      this.board.cleanRange();
-
-      const selectedPawn = this.board.getSelected();
-
-      if (selectedPawn) {
-        this.board.rangeCells(selectedPawn);
-      }
+    created() {
+      this.$root.$on("cell-click", this.onCellClick);
     },
-    moveOrAttack(destCell) {
-      const selectedPawn = this.board.getSelected(),
-        originCell = this.board.cells[selectedPawn.row][selectedPawn.col];
+    beforeDestroy() {
+      this.$root.$off("cell-click", this.onCellClick);
+    },
+    methods: {
+      onCellClick(payload) {
+        console.debug("event-on: cell-click");
 
-      if (originCell && destCell.pawn === null) {
-        this.board.move(originCell, destCell);
+        const cell = this.board.cells[payload.row][payload.col];
+
+        if (cell.inRange) {
+          // Execute Move or Attack
+          this.moveOrAttack(cell);
+        } else {
+          // Select a Cell with Pawn and calculate the range
+          this.selectAndRange(cell);
+        }
+      },
+      selectAndRange(cell) {
+        this.board.select({
+          col: cell.col,
+          row: cell.row
+        });
+
         this.board.cleanRange();
+
+        const selectedPawn = this.board.getSelected();
+
+        if (selectedPawn) {
+          this.board.rangeCells(selectedPawn);
+        }
+      },
+      moveOrAttack(destCell) {
+        const selectedPawn = this.board.getSelected(),
+          originCell = this.board.cells[selectedPawn.row][selectedPawn.col];
+
+        if (originCell && destCell.pawn === null) {
+          this.board.move(originCell, destCell);
+          this.board.cleanRange();
+        }
       }
     }
-  }
-};
+  };
 </script>
 
 <style>
-.cell {
-  width: 100%;
-  padding-bottom: 100%;
-  border: 1px white solid;
-}
+  .cell {
+    width: 100%;
+    padding-bottom: 100%;
+    border: 1px white solid;
+  }
 </style>

@@ -39,10 +39,6 @@ const router = new VueRouter({
 router.beforeEach((to, from, next) => {
   const isAuthorized = store.getters.isPlayerAuthorized;
 
-  if (to.name === "signup" && isAuthorized) {
-    return next({ name: "setup" });
-  }
-
   if (to.meta.requiresAuth) {
     if (!isAuthorized) {
       return next({ name: "signup" });
