@@ -3,11 +3,11 @@
 /* eslint-disable max-statements */
 /* eslint-disable no-unused-expressions */
 import { expect } from "chai";
-import Cell from "../../../ClientCode/GameEngine/cell.js";
-import { CellType, PawnType } from "../../../ClientCode/GameEngine/gameEnums";
-import Rules from "../../../ClientCode/GameEngine/Utils/Rules.js";
-import Pawn from "../../../ClientCode/GameEngine/pawn.js";
-import Board from "../../../ClientCode/GameEngine/board.js";
+import Cell from "../../FrontEnd/GameEngine/cell.js";
+import { CellType, PawnType } from "../../FrontEnd/GameEngine/gameEnums";
+import Rules from "../../FrontEnd/GameEngine/Utils/Rules.js";
+import Pawn from "../../FrontEnd/GameEngine/pawn.js";
+import Board from "../../FrontEnd/GameEngine/board.js";
 
 /* global describe, it */
 

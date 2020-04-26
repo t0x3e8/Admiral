@@ -2,7 +2,7 @@
 /* global describe, it */
 
 import { expect } from "chai";
-import Utils from "../../../ClientCode/GameEngine/Utils.js";
+import Utils from "../../FrontEnd/GameEngine/Utils.js";
 
 describe("Test covarage of utils methods", () => {
   it("GIVEN that a Utils is initialized " +

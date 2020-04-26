@@ -43,11 +43,13 @@ jobs:
       displayName: Restore dependencies
       inputs:
         command: 'restore'
+        projects: '**/code.csproj'
         feedsToUse: 'select'
     - task: DotNetCoreCLI@2
       displayName: Build
       inputs:
         command: build
+        projects: '**/code.csproj'
         arguments: '--configuration $(BuildConfiguration)'
     - task: Npm@1
       displayName: Install npm

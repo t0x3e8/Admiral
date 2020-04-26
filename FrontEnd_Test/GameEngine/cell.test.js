@@ -4,8 +4,8 @@
 /* global describe, it */
 
 import { expect } from "chai";
-import Cell from "../../../ClientCode/GameEngine/cell.js";
-import GameBoard from "../../../ClientCode/GameEngine/gameboard.js";
+import Cell from "../../FrontEnd/GameEngine/cell.js";
+import GameBoard from "../../FrontEnd/GameEngine/gameboard.js";
 
 describe("CELL requirements", () => {
   it("GIVEN a Cell has been created THEN default settings should be set", () => {

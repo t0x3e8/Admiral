@@ -15,9 +15,9 @@
  */
 
 import { expect } from "chai";
-import PortBoard from "../../../ClientCode/GameEngine/portboard.js";
-import { CellType, PawnType } from "../../../ClientCode/GameEngine/gameEnums";
-import settings from "../../../ClientCode/GameEngine/settings.js";
+import PortBoard from "../../FrontEnd/GameEngine/portboard.js";
+import { CellType, PawnType } from "../../FrontEnd/GameEngine/gameEnums";
+import settings from "../../FrontEnd/GameEngine/settings.js";
 import _ from "underscore";
 
 describe("PORTBOARD requirements", () => {

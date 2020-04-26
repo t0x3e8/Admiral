@@ -4,9 +4,9 @@
 /* eslint-disable no-magic-numbers */
 /* global describe, it */
 
-import Pawn from "../../../ClientCode/GameEngine/pawn";
+import Pawn from "../../FrontEnd/GameEngine/pawn";
 import { expect } from "chai";
-import settings from "../../../ClientCode/GameEngine/settings";
+import settings from "../../FrontEnd/GameEngine/settings";
 import { createGameResponseData } from "./serverResponses";
 
 /*

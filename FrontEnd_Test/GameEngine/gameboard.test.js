@@ -18,12 +18,12 @@
  */
 
 import { createGameResponseData } from "./serverResponses.js";
-import { PawnType } from "../../../ClientCode/GameEngine/gameEnums";
+import { PawnType } from "../../FrontEnd/GameEngine/gameEnums";
 import { expect } from "chai";
-import GameBoard from "../../../ClientCode/GameEngine/gameboard.js";
-import Pawn from "../../../ClientCode/GameEngine/pawn.js";
+import GameBoard from "../../FrontEnd/GameEngine/gameboard.js";
+import Pawn from "../../FrontEnd/GameEngine/pawn.js";
 import _ from "underscore";
-import settings from "../../../ClientCode/GameEngine/settings.js";
+import settings from "../../FrontEnd/GameEngine/settings.js";
 
 describe("GAMEBOARD requirements", () => {
   it("GIVEN that a Board is created THEN it should have number of Row & Col matching Settings AND boardId to be null", () => {

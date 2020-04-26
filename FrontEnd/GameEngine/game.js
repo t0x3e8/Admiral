@@ -2,7 +2,7 @@
 /* eslint-disable max-statements */
 /* eslint-disable max-lines-per-function */
 
-import GameBoard from "./gameboard.js";
+import GameBoard from "./gameBoard.js";
 import History from "./history.js";
 import { HistoryType, GameState } from "./gameEnums.js";
 import Player from "./player.js";

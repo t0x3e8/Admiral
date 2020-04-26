@@ -13,7 +13,7 @@
         "--colors", 
         "--require",
         "@babel/register",
-        "Tests/Client/*/*.test.js"      ],
+        "FrontEnd_Test/*/*.test.js"      ],
       "internalConsoleOptions": "openOnSessionStart",
       "skipFiles": [
         "<node_internals>/**"
@@ -24,7 +24,7 @@
       "type": "coreclr",
       "request": "launch",
       "preLaunchTask": "build",
-      "program": "${workspaceFolder}/bin/Debug/netcoreapp3.1/code.dll",
+      "program": "${workspaceFolder}/BackEnd/bin/Debug/netcoreapp3.1/code.dll",
       "args": [],
       "cwd": "${workspaceFolder}",
       "stopAtEntry": false,
@@ -38,14 +38,6 @@
       "sourceFileMap": {
         "/Views": "${workspaceFolder}/Views"
       }
-    },
-    {
-      "type": "chrome",
-      "request": "launch",
-      "name": "Debug [Client] Vue.js",
-      "webRoot": "${workspaceFolder}",
-      "url": "https://localhost:5001"
     }
-
   ]
 }

@@ -4,10 +4,10 @@
 /* global describe, it */
 
 import { expect } from "chai";
-import Game from "./../../../ClientCode/GameEngine/game.js";
-import Player from "./../../../ClientCode/GameEngine/player.js";
+import Game from "./../../FrontEnd/GameEngine/game.js";
+import Player from "./../../FrontEnd/GameEngine/player.js";
 import { createGameResponseData } from "./serverResponses.js";
-import { GameState } from "../../../ClientCode/GameEngine/gameEnums.js";
+import { GameState } from "../../FrontEnd/GameEngine/gameEnums.js";
 
 describe("GAME requirements", () => {
   it("GIVEN I have created a new game THEN Game should have unique ID, History, and at least one player", () => {

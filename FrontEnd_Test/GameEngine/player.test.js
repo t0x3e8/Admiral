@@ -3,7 +3,7 @@
 /* global describe, it */
 
 import { expect } from "chai";
-import Player from "../../../ClientCode/GameEngine/player";
+import Player from "../../FrontEnd/GameEngine/player";
 import { createGameResponseData } from "./serverResponses.js";
 
 describe("PLAYER requirements", () => {

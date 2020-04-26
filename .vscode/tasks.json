@@ -7,7 +7,7 @@
             "type": "process",
             "args": [
                 "build",
-                "${workspaceFolder}/code.csproj"
+                "${workspaceFolder}/BackEnd/code.csproj"
             ],
             "problemMatcher": "$tsc"
         },
@@ -17,7 +17,7 @@
             "type": "process",
             "args": [
                 "publish",
-                "${workspaceFolder}/code.csproj"
+                "${workspaceFolder}/BackEnd/code.csproj"
             ],
             "problemMatcher": "$tsc"
         },
@@ -28,7 +28,7 @@
             "args": [
                 "watch",
                 "run",
-                "${workspaceFolder}/code.csproj"
+                "${workspaceFolder}/BackEnd/code.csproj"
             ],
             "problemMatcher": "$tsc"
         }

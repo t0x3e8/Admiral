@@ -3,7 +3,7 @@
 /* global describe, it */
 
 import { expect } from "chai";
-import History from "../../../ClientCode/GameEngine/history";
+import History from "../../FrontEnd/GameEngine/history";
 
 describe("History requirements", () => {
   it("GIVEN I have History created " +
