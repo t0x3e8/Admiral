@@ -96,6 +96,7 @@ jobs:
         displayName: Publish to zip
         inputs:
           command: publish
+          projects: "**/code.csproj"
           publishWebProjects: True
           arguments: "--configuration $(BuildConfiguration) --output $(Build.ArtifactStagingDirectory)\\BackEnd"
           zipAfterPublish: True
