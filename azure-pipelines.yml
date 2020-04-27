@@ -6,94 +6,121 @@ variables:
   BuildConfiguration: Release
 
 trigger:
-- master
+  - master
 
 jobs:
-- job: Run_client_tests
-  pool:
-    vmImage: 'windows-latest'
-  steps:
-    - task: Npm@1
-      displayName: Node install
-      inputs:
-        command: 'install'
+  - job: Run_FrontEnd_tests
+    pool:
+      vmImage: "windows-latest"
+    steps:
+      - task: Npm@1
+        displayName: Node install
+        inputs:
+          command: "install"
 
-    - task: Npm@1
-      displayName: Mocha install
-      inputs:    
-        command: 'custom'
-        customCommand: 'install mocha'
+      - task: Npm@1
+        displayName: Mocha install
+        inputs:
+          command: "custom"
+          customCommand: "install mocha"
 
-    - task: Npm@1
-      displayName: Mocha run tests
-      inputs:    
-        command: 'custom'
-        customCommand: 'test'
+      - task: Npm@1
+        displayName: Mocha run FrontEnd tests
+        inputs:
+          command: "custom"
+          customCommand: "test"
 
-- job: Build_application
-  dependsOn: Run_client_tests
-  pool:
-    vmImage: 'windows-latest'
-  steps:
-    - task: UseDotNet@2    
-      displayName: Install dotnet version 3.1.102
-      inputs:
-        version: '3.1.102'
-    - task: DotNetCoreCLI@2
-      displayName: Restore dependencies for BackEnd
-      inputs:
-        command: 'restore'
-        projects: '**/code.csproj'
-        feedsToUse: 'select'
-    - task: DotNetCoreCLI@2
-      displayName: Build BackEnd
-      inputs:
-        command: build
-        projects: '**/code.csproj'
-        arguments: '--configuration $(BuildConfiguration)'
-    - task: DotNetCoreCLI@2
-      displayName: Restore dependencies for BackEnd_Test
-      inputs:
-        command: 'restore'
-        projects: '**/Backend_Test.csproj'
-        feedsToUse: 'select'
-    - task: DotNetCoreCLI@2
-      displayName: Build BackEnd_Test
-      inputs:
-        command: build
-        projects: '**/BackEnd_Test.csproj'
-        arguments: '--configuration $(BuildConfiguration)'
-    - task: DotNetCoreCLI@2
-      displayName: Run BackEnd_Test
-      inputs:
-        command: test
-        projects: '**/BackEnd_Test.csproj'
-    - task: Npm@1
-      displayName: Install npm
-      inputs:
-        command: 'install'
-    - task: Npm@1
-      displayName: Install npm dependecies
-      inputs:    
-        command: 'custom'
-        customCommand: 'install'
-    - task: Npm@1
-      displayName: Run Build npm script with webpack
-      inputs:    
-        command: 'custom'
-        customCommand: 'run-script build'
-    - task: DotNetCoreCLI@2
-      displayName: Publish to zip
-      inputs:
-        command: publish
-        publishWebProjects: True
-        arguments: '--configuration $(BuildConfiguration) --output $(Build.ArtifactStagingDirectory)'
-        zipAfterPublish: True
-    
-    - task: AzureWebApp@1
-      displayName: Deploying Application to Azure
-      inputs:
-        azureSubscription: 'Visual Studio Ultimate with MSDN(71084930-69bf-47b7-8aa2-9ca0ead57c34)'
-        appType: 'webApp'
-        appName: 'admiralGame'
-        package: $(System.ArtifactsDirectory)/**/*.zip  
+  - job: Run_BackEnd_tests
+    dependsOn: Run_FrontEnd_tests, 
+    pool:
+      vmImage: "windows-latest"
+    steps:
+      - task: UseDotNet@2
+        displayName: Install dotnet version 3.1.102
+        inputs:
+          version: "3.1.102"
+      - task: DotNetCoreCLI@2
+        displayName: Restore dependencies for BackEnd_Test
+        inputs:
+          command: "restore"
+          projects: "**/Backend_Test.csproj"
+          feedsToUse: "select"
+      - task: DotNetCoreCLI@2
+        displayName: Build BackEnd_Test
+        inputs:
+          command: build
+          projects: "**/BackEnd_Test.csproj"
+          arguments: "--configuration $(BuildConfiguration)"
+      - task: DotNetCoreCLI@2
+        displayName: Run BackEnd_Test
+        inputs:
+          command: test
+          projects: "**/BackEnd_Test.csproj"
+
+  - job: Build_application
+    dependsOn: Run_BackEnd_tests
+    pool:
+      vmImage: "windows-latest"
+    steps:
+      - task: UseDotNet@2
+        displayName: Install dotnet version 3.1.102
+        inputs:
+          version: "3.1.102"
+      - task: DotNetCoreCLI@2
+        displayName: Restore dependencies for BackEnd
+        inputs:
+          command: "restore"
+          projects: "**/code.csproj"
+          feedsToUse: "select"
+      - task: DotNetCoreCLI@2
+        displayName: Build BackEnd
+        inputs:
+          command: build
+          projects: "**/code.csproj"
+          arguments: "--configuration $(BuildConfiguration)"
+      - task: DotNetCoreCLI@2
+        displayName: Restore dependencies for BackEnd_Test
+        inputs:
+          command: "restore"
+          projects: "**/Backend_Test.csproj"
+          feedsToUse: "select"
+      - task: DotNetCoreCLI@2
+        displayName: Build BackEnd_Test
+        inputs:
+          command: build
+          projects: "**/BackEnd_Test.csproj"
+          arguments: "--configuration $(BuildConfiguration)"
+      - task: DotNetCoreCLI@2
+        displayName: Run BackEnd_Test
+        inputs:
+          command: test
+          projects: "**/BackEnd_Test.csproj"
+      - task: Npm@1
+        displayName: Install npm
+        inputs:
+          command: "install"
+      - task: Npm@1
+        displayName: Install npm dependecies
+        inputs:
+          command: "custom"
+          customCommand: "install"
+      - task: Npm@1
+        displayName: Run Build npm script with webpack
+        inputs:
+          command: "custom"
+          customCommand: "run-script build"
+      - task: DotNetCoreCLI@2
+        displayName: Publish to zip
+        inputs:
+          command: publish
+          publishWebProjects: True
+          arguments: "--configuration $(BuildConfiguration) --output $(Build.ArtifactStagingDirectory)\BackEnd"
+          zipAfterPublish: True
+
+      - task: AzureWebApp@1
+        displayName: Deploying Application to Azure
+        inputs:
+          azureSubscription: "Visual Studio Ultimate with MSDN(71084930-69bf-47b7-8aa2-9ca0ead57c34)"
+          appType: "webApp"
+          appName: "admiralGame"
+          package: $(System.ArtifactsDirectory)/**/*.zip
