@@ -78,23 +78,6 @@ jobs:
           command: build
           projects: "**/code.csproj"
           arguments: "--configuration $(BuildConfiguration)"
-      - task: DotNetCoreCLI@2
-        displayName: Restore dependencies for BackEnd_Test
-        inputs:
-          command: "restore"
-          projects: "**/Backend_Test.csproj"
-          feedsToUse: "select"
-      - task: DotNetCoreCLI@2
-        displayName: Build BackEnd_Test
-        inputs:
-          command: build
-          projects: "**/BackEnd_Test.csproj"
-          arguments: "--configuration $(BuildConfiguration)"
-      - task: DotNetCoreCLI@2
-        displayName: Run BackEnd_Test
-        inputs:
-          command: test
-          projects: "**/BackEnd_Test.csproj"
       - task: Npm@1
         displayName: Install npm
         inputs:
