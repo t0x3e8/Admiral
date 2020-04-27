@@ -39,7 +39,7 @@ jobs:
       displayName: Install dotnet version 3.1.102
       inputs:
         version: '3.1.102'
-  - task: DotNetCoreCLI@2
+    - task: DotNetCoreCLI@2
       displayName: Restore dependencies for BackEnd
       inputs:
         command: 'restore'
