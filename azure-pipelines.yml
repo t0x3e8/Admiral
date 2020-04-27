@@ -31,7 +31,7 @@ jobs:
           customCommand: "test"
 
   - job: Run_BackEnd_tests
-    dependsOn: Run_FrontEnd_tests, 
+    dependsOn: Run_FrontEnd_tests
     pool:
       vmImage: "windows-latest"
     steps:
