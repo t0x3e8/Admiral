@@ -98,8 +98,9 @@ jobs:
           command: publish
           projects: "**/code.csproj"
           publishWebProjects: True
-          arguments: "--configuration $(BuildConfiguration) --output $(Build.ArtifactStagingDirectory)\\BackEnd"
+          arguments: "--configuration $(BuildConfiguration) --output $(Build.ArtifactStagingDirectory)"
           zipAfterPublish: True
+          modifyOutputPath: true
 
       - task: AzureWebApp@1
         displayName: Deploying Application to Azure
