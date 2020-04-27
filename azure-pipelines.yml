@@ -114,7 +114,7 @@ jobs:
         inputs:
           command: publish
           publishWebProjects: True
-          arguments: "--configuration $(BuildConfiguration) --output $(Build.ArtifactStagingDirectory)\BackEnd"
+          arguments: "--configuration $(BuildConfiguration) --output $(Build.ArtifactStagingDirectory)\\BackEnd"
           zipAfterPublish: True
 
       - task: AzureWebApp@1
