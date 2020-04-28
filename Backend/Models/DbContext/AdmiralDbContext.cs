@@ -14,6 +14,12 @@ public class AdmiralDbContext : DbContext
 
     }
 
+    public AdmiralDbContext()
+        : base()
+    {
+
+    }
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
