@@ -1,20 +1,31 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Text;
+using Microsoft.EntityFrameworkCore;
 using Moq;
 using NUnit.Framework;
 
 public class PlayerRepositoryTest
 {
+    private Mock<AdmiralDbContext> moqDbContext;
+
     public PlayerRepositoryTest()
     {
 
     }
 
+    [SetUp]
+    public void SetupDbContext()
+    {
+        var players = DatabaseTestService.GetTestPlayersList();
+        this.moqDbContext = new Mock<AdmiralDbContext>();
+    }
+
     [Test]
     public void GenerateTokenForNewPlayer()
     {
-        var moqDbContext = new Mock<AdmiralDbContext>();
-        IPlayersRepository playersRepository = new PlayersRepository(moqDbContext.Object);
+        IPlayersRepository playersRepository = new PlayersRepository(this.moqDbContext.Object);
         var testPlayer = new Player() { Id = Guid.NewGuid(), Name = "TestName" };
         var testKey = "The secret must be long";
 

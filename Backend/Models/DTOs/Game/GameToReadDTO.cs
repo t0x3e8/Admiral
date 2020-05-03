@@ -3,7 +3,6 @@ using System.Collections.Generic;
 
 public abstract class GameToReadDTO {
     
-    public List<PawnDTO> Pawns { get; private set; }
     public List<PlayerDTO> Players { get; private set; }
     public int GameStatus { get; private set; } 
     public int GameDuration { get; private set; }

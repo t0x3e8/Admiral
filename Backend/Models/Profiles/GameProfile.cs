@@ -19,18 +19,6 @@ public class GameProfile : AutoMapper.Profile
                 opt => opt.MapFrom(src => src.Players.Select(gp => gp.Player))
             );
 
-        this.CreateMap<GameToCreateDTO, Game>()
-            .ForMember(
-                dest => dest.Players,
-                opt => opt.MapFrom((src, dest) => new List<GamePlayer>() {
-                    new GamePlayer() {
-                        PlayerId = src.Players[0].Id.Value,
-                        GameId = dest.Id
-                    }
-                })
-            );
-
-        this.CreateMap<Game, GameToPatchDTO>();
-        this.CreateMap<GameToPatchDTO, Game>();
+        this.CreateMap<GameToCreateDTO, Game>().ReverseMap();
     }
 }

@@ -5,7 +5,7 @@ public class AdmiralDbContext : DbContext
 {
     public DbSet<Game> Games { get; set; }
     public DbSet<Pawn> Pawns { get; set; }
-    public DbSet<Player> Players { get; set; }
+    public virtual DbSet<Player> Players { get; set; }
 
     public DbSet<GamePlayer> GamesPlayers { get; set; }
     public AdmiralDbContext(DbContextOptions options)

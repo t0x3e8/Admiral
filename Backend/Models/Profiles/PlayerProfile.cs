@@ -9,6 +9,6 @@ public class PlayerProfile : AutoMapper.Profile
     this.CreateMap<PlayerToAuthenticateDTO, Player>();
     this.CreateMap<Player, PlayerAuthenticatedDTO>();
     this.CreateMap<Player, PlayerDTO>();
-    this.CreateMap<PlayerToCreateDTO, Player>();
+    this.CreateMap<PlayerToCreateDTO, Player>().ReverseMap();
   }
 }

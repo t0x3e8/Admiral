@@ -20,5 +20,7 @@ public class Game
     {
         this.Id = Guid.NewGuid();
         this.Created = DateTime.Now;
+        this.Players = new List<GamePlayer>();
+        this.Pawns = new List<Pawn>();
     }
 }

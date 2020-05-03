@@ -4,6 +4,7 @@ using System.Security.Claims;
 using System.Text;
 using Microsoft.IdentityModel.Tokens;
 using System.Linq;
+using System.Collections.Generic;
 
 public class PlayersRepository : IPlayersRepository
 {
@@ -14,17 +15,53 @@ public class PlayersRepository : IPlayersRepository
         this.dbContext = dbContext;
     }
 
-    public Player AddPlayer(Player player)
+    public IEnumerable<Player> GetPlayers(Guid gameId)
+    {
+        var query = from gp in this.dbContext.GamesPlayers
+                    where gp.GameId.Equals(gameId)
+                    select gp.Player;
+
+        return query;
+    }
+
+    public Player GetPlayer(Guid gameId, Guid playerId)
+    {
+        var query = from gp in this.dbContext.GamesPlayers
+                    where gp.GameId.Equals(gameId) && gp.PlayerId.Equals(playerId)
+                    select gp.Player;
+
+        return query.FirstOrDefault();
+    }
+
+    public Player AddPlayer(Guid gameId, Player player)
     {
         if (player == null)
             throw new ArgumentNullException(nameof(player));
 
-        var playerEntity = this.dbContext.Players.FirstOrDefault(p => p.Id.Equals(player.Id));
+        if (gameId.Equals(Guid.Empty))
+            throw new ArgumentException(nameof(gameId));
 
-        if (playerEntity == null)
-            playerEntity = this.dbContext.Players.Add(player).Entity;
+        // Checks whether guidId is linked to existing entity
+        var game = (from g in this.dbContext.Games
+                      where g.Id.Equals(gameId)
+                      select g).FirstOrDefault();
+        if (game == null)
+            return null;
 
-        return playerEntity;
+        // Checks whether player is already linked to gameid
+        var gpPlayer = (from gp in this.dbContext.GamesPlayers
+                        where gp.GameId.Equals(gameId) && gp.PlayerId.Equals(player.Id)
+                        select gp.Player).FirstOrDefault();
+        if (gpPlayer != null)
+            return gpPlayer;
+
+        // Stores in database            
+        var playerToReturn = this.dbContext.Players.FirstOrDefault(p => p.Id.Equals(player.Id));
+        if(playerToReturn == null)
+            playerToReturn = this.dbContext.Players.Add(player).Entity;
+        this.dbContext.GamesPlayers.Add(new GamePlayer() { PlayerId = playerToReturn.Id, GameId = gameId });
+
+        return playerToReturn;
     }
 
     public string GenerateToken(Player player, string secretKey)
@@ -49,18 +86,8 @@ public class PlayersRepository : IPlayersRepository
         return tokenText;
     }
 
-    public bool PlayerExist(Player player)
+    public int Save()
     {
-        if (player == null)
-            throw new ArgumentNullException(nameof(player));
-
-        return this.PlayerExist(player.Id);
-    }
-
-    public bool PlayerExist(Guid playerId)
-    {
-        var playerEntity = this.dbContext.Players.FirstOrDefault(p => p.Id.Equals(playerId));
-
-        return playerEntity != null;
+        return this.dbContext.SaveChanges();
     }
 }

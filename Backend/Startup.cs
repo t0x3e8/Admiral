@@ -56,7 +56,8 @@ namespace code
         options.UseSqlServer(Configuration.GetConnectionString("AdmiralContext"));
       });
       services.AddScoped<IPlayersRepository, PlayersRepository>();
-      services.AddScoped<IGameRepository, GameRepository>();
+      services.AddScoped<IGamesRepository, GamesRepository>();
+      services.AddScoped<IPawnsRepository, PawnsRepository>();
 
       // configure jwt authentication
       var appSettings = appSettingsSection.Get<AppSettings>();
