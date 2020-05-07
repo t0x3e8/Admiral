@@ -37,18 +37,21 @@ export default {
   },
   mounted() {
     this.$root.$on(CREATE_NEW_GAME, this.newGame);
-    this.$root.$on(JOIN_OPEN_GAME, this.joinGame);
+    this.$root.$on(JOIN_OPEN_GAME, this.joinOpenedGame);
     this.$root.$on(REFRESH_PORT_LAYOUT, this.refreshPortLayout);
   },
   beforeDestroy() {
     this.$root.$off(CREATE_NEW_GAME, this.newGame);
-    this.$root.$off(JOIN_OPEN_GAME, this.joinGame);
+    this.$root.$off(JOIN_OPEN_GAME, this.joinOpenedGame);
     this.$root.$off(REFRESH_PORT_LAYOUT, this.refreshPortLayout);
   },
   methods: {
-    ...mapActions(["createGame"]),
+    ...mapActions([
+      "createGame",
+      "joinGame"
+    ]),
     async newGame(payload) {
-      console.debug(`event-on: ${CREATE_NEW_GAME} with payload ${payload}`);
+      console.debug(`event-on: ${CREATE_NEW_GAME} with payload ${JSON.stringify(payload)}`);
 
       await this.createGame({
         gameName: payload.name,
@@ -57,8 +60,14 @@ export default {
 
       this.$router.push({ name: "game" });
     },
-    joinGame(payload) {
-      console.debug(`event-on: ${JOIN_OPEN_GAME} with payload ${payload}`);
+    async joinOpenedGame(payload) {
+      console.log(`event-on: ${JOIN_OPEN_GAME} with payload ${JSON.stringify(payload)}`);
+
+      await this.joinGame({
+        gameId: payload.gameId,
+        pawns: this.board.toRotatedPawnsArray()
+      });
+
       this.$router.push({ name: "game" });
     },
     refreshPortLayout() {

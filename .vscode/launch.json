@@ -9,15 +9,9 @@
       "request": "launch",
       "name": "Mocha Tests",
       "program": "${workspaceFolder}/node_modules/mocha/bin/_mocha",
-      "args": [
-        "--colors", 
-        "--require",
-        "@babel/register",
-        "FrontEnd_Test/*/*.test.js"      ],
+      "args": ["--colors", "--require", "@babel/register", "FrontEnd_Test/*/*.test.js"],
       "internalConsoleOptions": "openOnSessionStart",
-      "skipFiles": [
-        "<node_internals>/**"
-      ]
+      "skipFiles": ["<node_internals>/**"]
     },
     {
       "name": "Debug [Server] .NET Core",
@@ -38,6 +32,14 @@
       "sourceFileMap": {
         "/Views": "${workspaceFolder}/Views"
       }
-    }
+    },
+    {
+      "name": "Attach to url with files served from ./out",
+      "type": "chrome",
+      "request": "attach",
+      "port": 9222,
+      "url": "https://localhost:5001",
+      "webRoot": "${workspaceFolder}/wwwroot/js"
+  }
   ]
 }

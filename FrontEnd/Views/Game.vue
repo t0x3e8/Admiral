@@ -15,9 +15,7 @@
 <script>
   import Board from "./../Components/BoardComponent.vue";
   import History from "./../Components/HistoryComponent.vue";
-  import Game from "./../GameEngine/game";
   import { mapState } from "vuex";
-  import Player from "../GameEngine/player";
 
   export default {
     name: "GameView",
@@ -36,8 +34,7 @@
       "player"
     ]),
     created() {
-      this.game = new Game(this.activeGame.id);
-      this.game.join(new Player(this.player), this.activeGame.pawns);
+        this.game = this.activeGame;
     }
   };
 </script>

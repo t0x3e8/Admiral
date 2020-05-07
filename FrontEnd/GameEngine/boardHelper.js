@@ -1,7 +1,7 @@
 /* eslint-disable no-magic-numbers */
-import settings from "./../settings.js";
+import settings from "./settings.js";
 import _ from "underscore";
-import Pawn from "./../pawn.js";
+import Pawn from "./pawn.js";
 
 class BoardHelper {
   /**

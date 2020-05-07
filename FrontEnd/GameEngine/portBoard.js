@@ -1,6 +1,6 @@
 import _ from "underscore";
 import { CellType, PawnType } from "./gameEnums.js";
-import BoardHelper from "./Utils/BoardHelper.js";
+import BoardHelper from "./boardHelper.js";
 import Pawn from "./pawn.js";
 import Board from "./board.js";
 

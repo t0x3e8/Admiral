@@ -70,6 +70,23 @@ class Board {
 
     return _.map(cellsWithPawns, (cell) => cell.pawn);
   }
+
+  /**
+   * Function returns the array of all board pawns misplaced (rotated) by 180 degrees
+   * @returns {[pawn]} An array of rotated pawns on the board
+   */
+  toRotatedPawnsArray() {
+    const pawns = this.toPawnArray(),
+      { numberOfColumns, numberOfRows } = settings.board,
+      lengthToIndex = 1;
+
+    return _.map(pawns, (pawn) => {
+      pawn.col = numberOfColumns - lengthToIndex - pawn.col;
+      pawn.row = numberOfRows - lengthToIndex - pawn.row;
+
+      return pawn;
+    });
+  }
 }
 
 export default Board;

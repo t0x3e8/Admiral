@@ -1,9 +1,6 @@
-import {
-  SET_PLAYER,
-  GET_ALL_GAMES,
-  CREATE_NEW_GAME
-} from "./mutationsTypes.js";
+import { SET_PLAYER, GET_ALL_GAMES, UPDATE_ACTIVE_GAME } from "./mutationsTypes.js";
 import dataSvc from "./dataService.js";
+import _ from "underscore";
 
 export default {
   async setPlayer({ commit }, payload) {
@@ -28,15 +25,27 @@ export default {
     }
   },
 
-  async createGame({ commit, state }, payload) {
-    const responseData = await dataSvc.addGame(
-      payload.gameName,
-      payload.pawns,
-      state.player
-    );
+  async createGame({ dispatch, state }, payload) {
+    const responseData = await dataSvc.addGame(payload.gameName, payload.pawns, state.player);
 
     if (responseData !== null) {
-      commit(CREATE_NEW_GAME, responseData);
+      await dispatch("setGame", { gameId: responseData.game.id });
+    }
+  },
+
+  async joinGame({ dispatch, state }, payload) {
+    const responseData = await dataSvc.joinGame(payload.gameId, payload.pawns, state.player);
+
+    if (responseData !== null) {
+      await dispatch("setGame", { gameId: payload.gameId });
+    }
+  },
+
+  async setGame({ commit }, payload) {
+    const responseData = await dataSvc.getGame(payload.gameId);
+
+    if (!_.isEmpty(responseData)) {
+      commit(UPDATE_ACTIVE_GAME, responseData);
     }
   }
 };

@@ -199,4 +199,27 @@ describe("GAMEBOARD requirements", () => {
     board.setPawns(pawns);
     expect(board.toPawnArray().length).to.be.equal(pawns.length);
   });
+
+
+  it(
+    "Given arranged Pawns (ships) in the port " +
+      "THEN Board should return the list of all Pawns which are rotated by 180 degrees",
+    () => {
+      const board = new GameBoard(),
+        pawn1 = new Pawn(PawnType.SUBMARINE),
+        pawn2 = new Pawn(PawnType.BATTLESHIP);
+
+      let pawnsOnBoard = [];
+
+      board.assignPawn(board.cells[1][1], pawn1);
+      board.assignPawn(board.cells[5][5], pawn2);
+      pawnsOnBoard = board.toRotatedPawnsArray();
+
+      expect(pawnsOnBoard.length).to.be.equal(2);
+      expect(pawnsOnBoard[0].col).to.be.equal(10);
+      expect(pawnsOnBoard[0].row).to.be.equal(16);
+      expect(pawnsOnBoard[1].col).to.be.equal(6);
+      expect(pawnsOnBoard[1].row).to.be.equal(12);
+    }
+  );
 });
