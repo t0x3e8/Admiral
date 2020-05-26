@@ -98,7 +98,7 @@ jobs:
           command: publish
           projects: "**/code.csproj"
           publishWebProjects: True
-          arguments: "--configuration $(BuildConfiguration) --output $(Build.ArtifactStagingDirectory)"
+          arguments: "--configuration $(BuildConfiguration) --output $(Build.DefaultWorkingDirectory)"
           zipAfterPublish: True
           modifyOutputPath: true
 
@@ -108,4 +108,4 @@ jobs:
           azureSubscription: "Visual Studio Ultimate with MSDN(71084930-69bf-47b7-8aa2-9ca0ead57c34)"
           appType: "webApp"
           appName: "admiralGame"
-          package: $(System.ArtifactsDirectory)/**/*.zip
+          package: $(System.DefaultWorkingDirectory)/**/*.zip
