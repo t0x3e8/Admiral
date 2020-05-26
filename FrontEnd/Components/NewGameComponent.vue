@@ -20,7 +20,7 @@
           <b-button
             size="sm"
             text="Start new game"
-            variant="success"
+            variant="primary"
             type="submit"
             :disabled="!isGameNameValid"
             >Start new game</b-button

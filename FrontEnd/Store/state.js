@@ -1,5 +1,20 @@
-export default {
+/**
+ * Reset the state
+ * @return {object} Initial state
+ */
+const initialState = function() {
+  return {
     player: {},
     games: [],
-    activeGame: {}
-}
+    activeGame: {},
+    recentOpenedGameId: null
+  };
+};
+
+export default {
+  initialState,
+  player: {},
+  games: [],
+  activeGame: {},
+  recentOpenedGameId: null
+};

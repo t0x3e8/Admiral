@@ -17,12 +17,11 @@ export default {
     this.$root.$on("join-player", this.joinPlayer);
   },
   methods: {
-    // eslint-disable-next-line dot-notation
-    ...mapActions(["setPlayer"]),
+    ...mapActions(["signUpPlayer"]),
     async joinPlayer(payload) {
       console.debug("event-on: join-player");
 
-      await this.setPlayer(payload);
+      await this.signUpPlayer(payload);
       this.$router.push({ name: "setup" });
     }
   }

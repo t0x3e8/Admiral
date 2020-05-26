@@ -63,12 +63,12 @@ class Board {
    * @returns {[pawn]} An array of pawns on the board
    */
   toPawnArray() {
-    const cellsWithPawns = _.filter(
-      _.flatten(this.cells),
-      (cell) => cell.pawn !== null
-    );
+    const cellsWithPawns = _.filter(_.flatten(this.cells), (cell) => cell.pawn !== null),
+      pawns = _.map(cellsWithPawns, (cell) => cell.pawn);
 
-    return _.map(cellsWithPawns, (cell) => cell.pawn);
+    console.warn(`cellsWithPawns: ${JSON.stringify(pawns)}`);
+
+    return pawns;
   }
 
   /**
@@ -78,14 +78,17 @@ class Board {
   toRotatedPawnsArray() {
     const pawns = this.toPawnArray(),
       { numberOfColumns, numberOfRows } = settings.board,
-      lengthToIndex = 1;
+      lengthToIndex = 1,
+      pawnsRotated = _.map(pawns, (pawn) => {
+        pawn.col = numberOfColumns - lengthToIndex - pawn.col;
+        pawn.row = numberOfRows - lengthToIndex - pawn.row;
 
-    return _.map(pawns, (pawn) => {
-      pawn.col = numberOfColumns - lengthToIndex - pawn.col;
-      pawn.row = numberOfRows - lengthToIndex - pawn.row;
+        return pawn;
+      });
 
-      return pawn;
-    });
+    console.warn(`Pawns rotated: ${JSON.stringify(pawnsRotated)}`);
+
+    return pawnsRotated;
   }
 }
 

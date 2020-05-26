@@ -1,7 +1,7 @@
 <template>
   <b-container id="port" class="my-2">
     <b-row align-h="end" no-gutters>
-      <b-button align-v="end" variant="outline-success" @click="refreshPortSetup">
+      <b-button align-v="end" variant="outline-primary" @click="refreshPortSetup">
         <b-icon icon="arrow-repeat"></b-icon> New port layout
       </b-button>
     </b-row>

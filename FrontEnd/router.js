@@ -25,7 +25,8 @@ const router = new VueRouter({
     {
       path: "/signup",
       component: SignUp,
-      name: "signup"
+      name: "signup",
+      meta: { hideNavigation: true }
     },
     {
       path: "/",

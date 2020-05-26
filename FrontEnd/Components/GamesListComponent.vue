@@ -1,6 +1,6 @@
 <template>
   <b-form novalidate @submit.stop.prevent="onNewGame">
-    <b-form-group label-for="gameSearchInput" label="List of active games" label-size="lg">
+    <b-form-group label-for="gameSearchInput" label="List of games" label-size="lg">
       <b-list-group class="pl-3">
         <b-input-group>
           <b-form-input
@@ -11,22 +11,13 @@
             trim
           ></b-form-input>
         </b-input-group>
+        <GamesListRefresh />
         <b-list-group-item
-          v-for="(game, gameIndex) in games"
+          v-for="(game, gameIndex) in gamesFiltred"
           :key="`${gameIndex}`"
           class="flex-column align-items-start"
         >
-          <div class="d-flex w-100 justify-content-between">
-            {{ game.name }}
-            <small>{{ game.gameDuration }}h ago</small>
-          </div>
-
-          <div class="d-flex w-100 justify-content-between">
-            <p class="mb-1">
-              <b-badge variant="info" pill>{{ game.players.length }}/2</b-badge>
-            </p>
-            <b-button size="sm" text="Join" variant="outline-success" @click="join(game.id)">join</b-button>
-          </div>
+          <game-list-item :game="game" :max-players="maxPlayers" />
         </b-list-group-item>
       </b-list-group>
     </b-form-group>
@@ -34,40 +25,51 @@
 </template>
 
 <script>
-import { mapActions, mapState } from "vuex";
-import { JOIN_OPEN_GAME } from "./../eventsTypes.js";
+  import { mapActions, mapState } from "vuex";
+  import GameListItem from "./GameListItemComponent.vue";
+  import GamesListRefresh from "./GamesListRefreshComponent.vue";
+  import _ from "underscore";
+  import { REFRESH_GAMES_LIST } from "./../eventsTypes.js";
 
-export default {
-  name: "GamesListComponent",
-  data() {
-    return {
-      gameSearchText: "",
-      timer: "",
-      timerInterval: 60000
-    };
-  },
-  computed: {
-    ...mapState(["games"])
-  },
-  created() {
-    this.getGames();
-    this.timer = setInterval(this.getGames, this.timerInterval);
-  },
-  beforeDestroy() {
-    clearInterval(this.timer);
-  },
-  methods: {
-    ...mapActions(["getGames"]),
-
-    join(gameId) {
-      console.debug(`event-emit: ${JOIN_OPEN_GAME}`);
-
-      this.$root.$emit(JOIN_OPEN_GAME, { gameId });
+  export default {
+    name: "GamesListComponent",
+    components: {
+      GameListItem,
+      GamesListRefresh
     },
+    data() {
+      return {
+        gameSearchText: "",
+        maxPlayers: 2
+      };
+    },
+    computed: {
+      ...mapState(["games", "player"]),
+      gamesFiltred() {
+        const gamesIncludingState = _.map(this.games, (g) => {
+          g.canJoin = g.players.length < this.maxPlayers;
+          g.hasJoined = _.some(g.players, (p) => p.id === this.player.id);
 
-    cancelAutoUpdate() {
-      clearInterval(this.timer);
+          return g;
+        });
+
+        return _.filter(gamesIncludingState, (g) => g.name.toLowerCase().includes(this.gameSearchText));
+      }
+    },
+    created() {
+      this.refreshList();
+    },
+    mounted() {
+      this.$root.$on(REFRESH_GAMES_LIST, this.refreshList);
+    },
+    beforeDestroy() {
+      this.$root.$off(REFRESH_GAMES_LIST, this.refreshList);
+    },
+    methods: {
+      ...mapActions(["getGames"]),
+      refreshList() {
+        this.getGames();
+      }
     }
-  }
-};
+  };
 </script>

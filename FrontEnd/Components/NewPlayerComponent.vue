@@ -21,7 +21,7 @@
             <b-button
               size="sm"
               text="Join"
-              variant="success"
+              variant="primary"
               type="submit"
               :disabled="!isPlayerNameValid"
               >Join</b-button

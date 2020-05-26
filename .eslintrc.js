@@ -19,7 +19,7 @@ module.exports = {
     "array-bracket-newline": "error",
     "array-bracket-spacing": "error",
     "array-callback-return": "error",
-    "array-element-newline": "error",
+    "array-element-newline": ["error", "consistent"],
     "arrow-body-style": "error",
     "arrow-parens": "error",
     "arrow-spacing": [
@@ -148,7 +148,7 @@ module.exports = {
     "no-octal-escape": "error",
     "no-param-reassign": "error",
     "no-path-concat": "error",
-    "no-plusplus": "error",
+    "no-plusplus": ["error", { allowForLoopAfterthoughts: true }],
     "no-process-env": "error",
     "no-process-exit": "error",
     "no-proto": "error",

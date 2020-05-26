@@ -3,16 +3,240 @@
 import axios from "axios";
 import store from "./index.js";
 
-export default {
-  getAxiosConfig() {
-    return {
-      headers: {
-        Authorization: `Bearer ${store.state.player.token}`
-      }
-    };
-  },
+class DataService {
+  constructor() {
+    this.okPostStatus = 201;
+    this.okGetStatus = 200;
+    this.getAxiosInstance = () => {
+      const instance = axios.create({
+        headers: { Authorization: `Bearer ${store.state.player.token}` }
+      });
 
-  async authenticatePlayer(playerName) {
+      instance.interceptors.request.use((request) => {
+        console.log(request);
+
+        return request;
+      });
+
+      instance.interceptors.response.use((response) => {
+        console.log(response);
+
+        return response;
+      });
+
+      return instance;
+    };
+  }
+
+  async getAllGames() {
+    try {
+      const axiosInstance = this.getAxiosInstance(),
+        response = await axiosInstance.get("/api/games");
+
+      if (response.status === this.okGetStatus) {
+        return response.data;
+      }
+
+      return null;
+    } catch (error) {
+      const errMessage = `Get games error: ${error}`;
+
+      console.error(errMessage);
+
+      return null;
+    }
+  }
+
+  async addPlayer(gameId, playerData) {
+    try {
+      const axiosInstance = this.getAxiosInstance(),
+        response = await axiosInstance.post(`/api/games/${gameId}/players`, playerData);
+
+      if (response.status === this.okPostStatus) {
+        return response.data;
+      }
+
+      return null;
+    } catch (error) {
+      const errMessage = `Add player error: ${error}`;
+
+      console.error(errMessage);
+
+      return null;
+    }
+  }
+
+  async addPawns(gameId, playerId, pawns) {
+    try {
+      const axiosInstance = this.getAxiosInstance(),
+        response = await axiosInstance.post(`/api/games/${gameId}/players/${playerId}/pawns`, pawns);
+
+      if (response.status === this.okPostStatus) {
+        return response.data;
+      }
+
+      return null;
+    } catch (error) {
+      const errMessage = `Add pawns error: ${error}`;
+
+      console.error(errMessage);
+
+      return null;
+    }
+  }
+
+  async addGame(name, pawnsData, playerData) {
+    try {
+      const axiosInstance = this.getAxiosInstance(),
+        responseNewGame = await axiosInstance.post("/api/games", { name });
+
+      if (responseNewGame.status === this.okPostStatus) {
+        const gameId = responseNewGame.data.id,
+          player = await this.addPlayer(gameId, playerData);
+
+        if (player !== null) {
+          const pawns = await this.addPawns(gameId, player.id, pawnsData);
+
+          if (pawns !== null) {
+            return {
+              game: responseNewGame.data,
+              player,
+              pawns
+            };
+          }
+        }
+      }
+
+      return null;
+    } catch (error) {
+      // TODO: must find better way to log these
+      const errMessage = `Add new game error: ${error}`;
+
+      console.error(errMessage);
+
+      return null;
+    }
+  }
+
+  async getGame(gameId) {
+    try {
+      const axiosInstance = this.getAxiosInstance(),
+        response = await axiosInstance.get(`/api/games/${gameId}`);
+
+      if (response.status === this.okGetStatus) {
+        return response.data;
+      }
+
+      return null;
+    } catch (error) {
+      // TODO: must find better way to log these
+      const errMessage = `Get game error: ${error}`;
+
+      console.error(errMessage);
+
+      return null;
+    }
+  }
+
+  async getGameIncludingPawns(gameId) {
+    try {
+      const game = await this.getGame(gameId);
+
+      if (game !== null) {
+        // for (const player of game.players) {
+        for (let i = 0; i < game.players.length; i++) {
+          // eslint-disable-next-line no-await-in-loop
+          const pawns = await this.getPlayerPawns(game.id, game.players[i].id);
+
+          game.players[i].pawns = pawns;
+        }
+
+        /*
+         *const promises = [];
+         *
+         *for (let i = 0; i < game.players.length; i++) {
+         *  const newPromise = new Promise((resolve) => {
+         *    const pawns = this.getPlayerPawns(game.id, game.players[i].id);
+         *
+         *    resolve(pawns);
+         *  });
+         *
+         *  promises.push(newPromise);
+         *}
+         *
+         *await Promise.all(promises).then((results) => {
+         *  for (let i = 0; i < game.players.length; i++) {
+         *    game.players[i].pawns = results[i];
+         *  }
+         *});
+         */
+
+        return game;
+      }
+
+      return null;
+    } catch (error) {
+      // TODO: must find better way to log these
+      const errMessage = `Get game including pawns error: ${error}`;
+
+      console.error(errMessage);
+
+      return null;
+    }
+  }
+
+  async getPlayerPawns(gameId, playerId) {
+    try {
+      const axiosInstance = this.getAxiosInstance(),
+        response = await axiosInstance.get(`/api/games/${gameId}/players/${playerId}/pawns`);
+
+      if (response !== null) {
+        return response.data;
+      }
+
+      return null;
+    } catch (error) {
+      // TODO: must find better way to log these
+      const errMessage = `Get pawns error: ${error}`;
+
+      console.error(errMessage);
+
+      return null;
+    }
+  }
+
+  async joinGame(gameId, pawnsData, playerData) {
+    try {
+      const game = await this.getGame(gameId);
+
+      if (game !== null) {
+        const player = await this.addPlayer(gameId, playerData);
+
+        if (player !== null) {
+          const pawns = await this.addPawns(gameId, player.id, pawnsData);
+
+          if (pawns !== null) {
+            return {
+              game,
+              player,
+              pawns
+            };
+          }
+        }
+      }
+
+      return null;
+    } catch (error) {
+      // TODO: must find better way to log these
+      const errMessage = `Join game error: ${error}`;
+
+      console.error(errMessage);
+
+      return null;
+    }
+  }
+
+  static async authenticatePlayer(playerName) {
     try {
       const response = await axios.post("/api/players/authenticate", {
         name: playerName
@@ -20,199 +244,13 @@ export default {
 
       return response;
     } catch (error) {
-      // TODO: must find better way to log these
       const errMessage = `Player authentication error: ${error}`;
 
       console.error(errMessage);
 
       return null;
     }
-  },
-
-  async getAllGames() {
-    try {
-      const response = await axios.get("/api/games", this.getAxiosConfig());
-
-      return response.data;
-    } catch (error) {
-      // TODO: must find better way to log these
-      const errMessage = `Getting all games error: ${error}`;
-
-      console.error(errMessage);
-
-      return null;
-    }
-  },
-
-  async addGame(gameName, pawns, player) {
-    axios.interceptors.request.use((request) => {
-      console.log(request);
-
-      return request;
-    });
-    axios.interceptors.response.use((response) => {
-      console.log(response);
-
-      return response;
-    });
-
-    try {
-      const okStatus = 201,
-        responseNewGame = await axios.post(
-          "/api/games",
-          {
-            name: gameName
-          },
-          this.getAxiosConfig()
-        );
-
-      if (responseNewGame.status === okStatus) {
-        const responseNewPlayer = await axios.post(
-          `/api/games/${responseNewGame.data.id}/players`,
-          {
-            id: player.id,
-            name: player.name
-          },
-          this.getAxiosConfig()
-        );
-
-        if (responseNewPlayer.status === okStatus) {
-          const responseNewPawns = await axios.post(
-            `/api/games/${responseNewGame.data.id}/players/${responseNewPlayer.data.id}/pawns`,
-            pawns,
-            this.getAxiosConfig()
-          );
-
-          if (responseNewPawns.status === okStatus) {
-            return {
-              game: responseNewGame.data,
-              player: responseNewPlayer.data,
-              pawns: responseNewPawns.data
-            };
-          }
-        }
-      }
-
-      return null;
-    } catch (error) {
-      // TODO: must find better way to log these
-      const errMessage = `Posting new game error: ${error}`;
-
-      console.error(errMessage);
-
-      return null;
-    }
-  },
-
-  async joinGame(gameId, pawns, player) {
-    axios.interceptors.request.use((request) => {
-      console.log(request);
-
-      return request;
-    });
-    axios.interceptors.response.use((response) => {
-      console.log(response);
-
-      return response;
-    });
-
-    try {
-      const okGetStatus = 200,
-        okPostStatus = 201,
-        responseNewGame = await axios.get(`/api/games/${gameId}`, this.getAxiosConfig());
-
-      if (responseNewGame.status === okGetStatus) {
-        const responseNewPlayer = await axios.post(
-          `/api/games/${responseNewGame.data.id}/players`,
-          {
-            id: player.id,
-            name: player.name
-          },
-          this.getAxiosConfig()
-        );
-
-        if (responseNewPlayer.status === okPostStatus) {
-          const responseNewPawns = await axios.post(
-            `/api/games/${responseNewGame.data.id}/players/${responseNewPlayer.data.id}/pawns`,
-            pawns,
-            this.getAxiosConfig()
-          );
-
-          if (responseNewPawns.status === okPostStatus) {
-            return {
-              game: responseNewGame.data,
-              player: responseNewPlayer.data,
-              pawns: responseNewPawns.data
-            };
-          }
-        }
-      }
-
-      return null;
-    } catch (error) {
-      // TODO: must find better way to log these
-      const errMessage = `Posting new game error: ${error}`;
-
-      console.error(errMessage);
-
-      return null;
-    }
-  },
-
-  async getGame(gameId) {
-    axios.interceptors.request.use((request) => {
-      console.log(request);
-
-      return request;
-    });
-    axios.interceptors.response.use((response) => {
-      console.log(response);
-
-      return response;
-    });
-
-    console.log("getGame");
-
-    try {
-      const gameData = {},
-            okGetStatus = 200,
-            resGame = await axios.get(`/api/games/${gameId}`, this.getAxiosConfig());
-
-      if (resGame.status === okGetStatus) {
-        gameData.gameId = gameId;
-        gameData.players = [];
-
-        for (const player of resGame.data.players) {
-          // eslint-disable-next-line no-await-in-loop
-          const pawns = await this.getPlayerPawns(gameId, player.id);
-
-          gameData.players.push({
-            id: player.id,
-            name: player.name,
-            pawns
-          })
-        };
-      }
-
-      return gameData;
-    } catch (error) {
-      // TODO: must find better way to log these
-      const errMessage = `Getting new game error: ${error}`;
-
-      console.error(errMessage);
-
-      return null;
-    }
-  },
-
-  async getPlayerPawns(gameId, playerId) {
-    const okGetStatus = 200,
-      resPawns = await axios.get(`/api/games/${gameId}/players/${playerId}/pawns`, this.getAxiosConfig());
-
-    if (resPawns.status === okGetStatus) {
-      return resPawns.data;
-    }
-
-    return null;
   }
-};
+}
+
+export default DataService;

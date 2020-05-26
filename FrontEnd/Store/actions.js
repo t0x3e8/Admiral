@@ -1,10 +1,9 @@
-import { SET_PLAYER, GET_ALL_GAMES, UPDATE_ACTIVE_GAME } from "./mutationsTypes.js";
-import dataSvc from "./dataService.js";
-import _ from "underscore";
+import { SIGN_UP_PLAYER, SIGN_OUT_PLAYER, GET_ALL_GAMES, UPDATE_ACTIVE_GAME } from "./mutationsTypes.js";
+import DataService from "./dataService.js";
 
 export default {
-  async setPlayer({ commit }, payload) {
-    const response = await dataSvc.authenticatePlayer(payload.playerName);
+  async signUpPlayer({ commit }, payload) {
+    const response = await DataService.authenticatePlayer(payload.playerName);
 
     if (response !== null) {
       const authenticatedPlayer = {
@@ -13,12 +12,17 @@ export default {
         token: response.data.token
       };
 
-      commit(SET_PLAYER, authenticatedPlayer);
+      commit(SIGN_UP_PLAYER, authenticatedPlayer);
     }
   },
 
+  signOutPlayer({commit}) {
+    commit(SIGN_OUT_PLAYER);
+  },
+
   async getGames({ commit }) {
-    const responseData = await dataSvc.getAllGames();
+    const dataService = new DataService(),
+      responseData = await dataService.getAllGames();
 
     if (responseData !== null) {
       commit(GET_ALL_GAMES, responseData);
@@ -26,26 +30,29 @@ export default {
   },
 
   async createGame({ dispatch, state }, payload) {
-    const responseData = await dataSvc.addGame(payload.gameName, payload.pawns, state.player);
+    const dataService = new DataService(),
+    gameData = await dataService.addGame(payload.gameName, payload.pawns, state.player);
 
-    if (responseData !== null) {
-      await dispatch("setGame", { gameId: responseData.game.id });
+    if (gameData !== null) {
+      await dispatch("openGame", { gameId: gameData.game.id });
     }
   },
 
   async joinGame({ dispatch, state }, payload) {
-    const responseData = await dataSvc.joinGame(payload.gameId, payload.pawns, state.player);
+    const dataService = new DataService(),
+      gameData = await dataService.joinGame(payload.gameId, payload.pawns, state.player);
 
-    if (responseData !== null) {
-      await dispatch("setGame", { gameId: payload.gameId });
+    if (gameData !== null) {
+      await dispatch("openGame", { gameId: gameData.game.id });
     }
   },
 
-  async setGame({ commit }, payload) {
-    const responseData = await dataSvc.getGame(payload.gameId);
+  async openGame({ commit, state }, payload) {
+    const dataService = new DataService(),
+      gameData = await dataService.getGameIncludingPawns(payload?.gameId ?? state.recentOpenedGameId);
 
-    if (!_.isEmpty(responseData)) {
-      commit(UPDATE_ACTIVE_GAME, responseData);
+    if (gameData !== null) {
+      commit(UPDATE_ACTIVE_GAME, gameData);
     }
   }
 };

@@ -21,16 +21,18 @@ class GameBoard extends Board {
    * @returns {void}
    */
   setPawns(pawnsData) {
-    _.forEach(pawnsData, (pawnData) => {
-        const pawn = new Pawn(pawnData.type);
+    // _.forEach(pawnsData, (pawnData) => {
+    for (const pawnData of pawnsData) {
+      const pawn = new Pawn(pawnData.type);
 
-        if (this.cells[pawn.row][pawn.col].pawn !== null) {
-          throw new Error("Pawn already exist")
-        }
+      pawn.update(pawnData);
 
-        pawn.update(pawnData);
-        this.assignPawn(this.cells[pawn.row][pawn.col], pawn);
-    })
+      if (this.cells[pawn.row][pawn.col].pawn !== null) {
+        throw new Error("Pawn already exist");
+      }
+
+      this.assignPawn(this.cells[pawn.row][pawn.col], pawn);
+    }
   }
 
   /**
@@ -82,10 +84,7 @@ class GameBoard extends Board {
    */
   getSelected() {
     const allCells = _.flatten(this.cells),
-      selectedCell = _.find(
-        allCells,
-        (cell) => cell.pawn && cell.pawn.selected
-      );
+      selectedCell = _.find(allCells, (cell) => cell.pawn && cell.pawn.selected);
 
     if (selectedCell) {
       return selectedCell.pawn;
