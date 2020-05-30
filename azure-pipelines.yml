@@ -54,7 +54,6 @@ jobs:
           Contents: |
             wwwroot/**
             appsettings.json
-            bin/Release/**
           TargetFolder: '$(Build.ArtifactStagingDirectory)'
 
       - task: PublishBuildArtifacts@1
@@ -62,20 +61,13 @@ jobs:
           pathtoPublish: $(Build.ArtifactStagingDirectory)
           ArtifactName: 'www'
 
-      # - task: DotNetCoreCLI@2
-      #   displayName: Publish to zip
-      #   inputs:
-      #     command: publish
-      #     projects: "**/code.csproj"
-      #     publishWebProjects: True
-      #     arguments: "--configuration $(BuildConfiguration) --output $(Build.DefaultWorkingDirectory)"
-      #     zipAfterPublish: True
-
-      # - task: PublishBuildArtifacts@1
-      #   displayName: Publish to Artifact
-      #   inputs:
-      #     pathtoPublish: '$(Build.ArtifactStagingDirectory)' 
-      #     artifactName: 'admiralWebsite'
+      - task: DotNetCoreCLI@2
+        displayName: Publish to zip
+        inputs:
+          command: publish
+          projects: "**/code.csproj"
+          publishWebProjects: True
+          arguments: "--configuration $(BuildConfiguration) --output $(Build.ArtifactStagingDirectory)"
 
       - task: AzureWebApp@1
         displayName: Deploying Application to Azure
