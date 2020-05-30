@@ -55,9 +55,14 @@ jobs:
           command: publish
           projects: "**/code.csproj"
           publishWebProjects: True
-          arguments: "--configuration $(BuildConfiguration) --output $(System.DefaultWorkingDirectory)"
+          arguments: "--configuration $(BuildConfiguration) --output $(Build.DefaultWorkingDirectory)"
           zipAfterPublish: True
-          modifyOutputPath: true
+
+      - task: PublishBuildArtifacts@1
+        displayName: Publish to Artifact
+        inputs:
+          pathtoPublish: '$(Build.ArtifactStagingDirectory)' 
+          artifactName: 'admiralWebsite'
 
       - task: AzureWebApp@1
         displayName: Deploying Application to Azure
