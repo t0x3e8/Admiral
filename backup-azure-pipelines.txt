@@ -9,7 +9,29 @@ trigger:
   - master
 
 jobs:
-  - job: Build_application
+  - job: Run_FrontEnd_tests
+    pool:
+      vmImage: "windows-latest"
+    steps:
+      - task: Npm@1
+        displayName: Node install
+        inputs:
+          command: "install"
+
+      - task: Npm@1
+        displayName: Mocha install
+        inputs:
+          command: "custom"
+          customCommand: "install mocha"
+
+      - task: Npm@1
+        displayName: Mocha run FrontEnd tests
+        inputs:
+          command: "custom"
+          customCommand: "test"
+
+  - job: Run_BackEnd_tests
+    dependsOn: Run_FrontEnd_tests
     pool:
       vmImage: "windows-latest"
     steps:
@@ -17,45 +39,66 @@ jobs:
         displayName: Install dotnet version 3.1.102
         inputs:
           version: "3.1.102"
+      - task: DotNetCoreCLI@2
+        displayName: Restore dependencies for BackEnd_Test
+        inputs:
+          command: "restore"
+          projects: "**/Backend_Test.csproj"
+          feedsToUse: "select"
+      - task: DotNetCoreCLI@2
+        displayName: Build BackEnd_Test
+        inputs:
+          command: build
+          projects: "**/BackEnd_Test.csproj"
+          arguments: "--configuration $(BuildConfiguration)"
+      - task: DotNetCoreCLI@2
+        displayName: Run BackEnd_Test
+        inputs:
+          command: test
+          projects: "**/BackEnd_Test.csproj"
 
+  - job: Build_application
+    dependsOn: Run_BackEnd_tests
+    pool:
+      vmImage: "windows-latest"
+    steps:
+      - task: UseDotNet@2
+        displayName: Install dotnet version 3.1.102
+        inputs:
+          version: "3.1.102"
       - task: DotNetCoreCLI@2
         displayName: Restore dependencies for BackEnd
         inputs:
           command: "restore"
           projects: "**/code.csproj"
           feedsToUse: "select"
-
       - task: DotNetCoreCLI@2
         displayName: Build BackEnd
         inputs:
           command: build
           projects: "**/code.csproj"
           arguments: "--configuration $(BuildConfiguration)"
-
       - task: Npm@1
         displayName: Install npm
         inputs:
           command: "install"
-
       - task: Npm@1
         displayName: Install npm dependecies
         inputs:
           command: "custom"
-          customCommand: "install --only=dev"
-          
+          customCommand: "install"
       - task: Npm@1
         displayName: Run Build npm script with webpack
         inputs:
           command: "custom"
           customCommand: "run-script build"
-
       - task: DotNetCoreCLI@2
         displayName: Publish to zip
         inputs:
           command: publish
           projects: "**/code.csproj"
           publishWebProjects: True
-          arguments: "--configuration $(BuildConfiguration) --output $(System.DefaultWorkingDirectory)"
+          arguments: "--configuration $(BuildConfiguration) --output $(Build.DefaultWorkingDirectory)"
           zipAfterPublish: True
           modifyOutputPath: true
 
