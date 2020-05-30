@@ -51,7 +51,10 @@ jobs:
       
       - task: CopyFiles@2
         inputs:
-          Contents: '*/**'
+          Contents: |
+            wwwroot/**
+            appsettings.json
+            bin/Release/**
           TargetFolder: '$(Build.ArtifactStagingDirectory)'
 
       - task: PublishBuildArtifacts@1
