@@ -53,13 +53,13 @@ jobs:
         inputs:
           Contents: |
             wwwroot/**
-            appsettings.json
-          TargetFolder: '$(Build.ArtifactStagingDirectory)'
+            favicon.ico
+          TargetFolder: '$(System.DefaultWorkingDirectory)'
 
-      - task: PublishBuildArtifacts@1
-        inputs: 
-          pathtoPublish: $(Build.ArtifactStagingDirectory)
-          ArtifactName: 'www'
+      # - task: PublishBuildArtifacts@1
+      #   inputs: 
+      #     pathtoPublish: $(Build.ArtifactStagingDirectory)
+      #     ArtifactName: 'www'
 
       - task: DotNetCoreCLI@2
         displayName: Publish
@@ -67,7 +67,7 @@ jobs:
           command: publish
           projects: "**/code.csproj"
           publishWebProjects: True
-          arguments: "--configuration $(BuildConfiguration) --output $(Build.ArtifactStagingDirectory)"
+          arguments: "--configuration $(BuildConfiguration) --output $(System.DefaultWorkingDirectory)"
           zipAfterPublish: False
 
       - task: AzureWebApp@1
@@ -76,4 +76,4 @@ jobs:
           azureSubscription: "Visual Studio Ultimate with MSDN(71084930-69bf-47b7-8aa2-9ca0ead57c34)"
           appType: "webApp"
           appName: "admiralGame"
-          package: $(Build.ArtifactStagingDirectory)
+          package: $(System.DefaultWorkingDirectory)
