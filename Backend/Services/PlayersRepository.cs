@@ -64,15 +64,14 @@ public class PlayersRepository : IPlayersRepository
         return playerToReturn;
     }
 
-    public string GenerateToken(Player player, string secretKey)
+    public string GenerateToken(Player player, byte [] secretKey)
     {
         var claims = new[] {
             new Claim(ClaimTypes.Name, player.Name),
             new Claim(ClaimTypes.NameIdentifier, player.Id.ToString())
         };
 
-        byte[] key = Encoding.UTF8.GetBytes(secretKey);
-        SymmetricSecurityKey symmetricSecurityKey = new SymmetricSecurityKey(key);
+        SymmetricSecurityKey symmetricSecurityKey = new SymmetricSecurityKey(secretKey);
         SigningCredentials credentials = new SigningCredentials(symmetricSecurityKey, SecurityAlgorithms.HmacSha256);
 
         JwtSecurityToken token = new JwtSecurityToken(

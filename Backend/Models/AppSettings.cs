@@ -1,5 +1,5 @@
 namespace code.Models {
     public class AppSettings {
-        public string Secret { get; set; }
+        public byte [] JWT_SECRET_KEY { get; set; }
     }
 }

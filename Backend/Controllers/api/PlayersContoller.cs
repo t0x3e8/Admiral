@@ -13,14 +13,14 @@ namespace code.api.Controllers
     [Authorize]
     public class PlayersController : ControllerBase
     {
-        private readonly AppSettings appSettings;
         private readonly IPlayersRepository playersRepository;
+        private readonly AppSettings appSettings;
         private readonly IMapper mapper;
 
-        public PlayersController(IPlayersRepository playersRepository, IMapper mapper, IOptions<AppSettings> options)
+        public PlayersController(IPlayersRepository playersRepository, IMapper mapper, AppSettings appSettings)
         {
             this.playersRepository = playersRepository;
-            this.appSettings = options?.Value;
+            this.appSettings = appSettings;
             this.mapper = mapper;
         }
 
@@ -29,13 +29,12 @@ namespace code.api.Controllers
         public ActionResult<PlayerAuthenticatedDTO> Authorize([FromBody]PlayerToAuthenticateDTO playerToAuthenticate)
         {
             var player = this.mapper.Map<Player>(playerToAuthenticate);
-            var token = this.playersRepository.GenerateToken(player, this.appSettings.Secret);
+            var token = this.playersRepository.GenerateToken(player, this.appSettings.JWT_SECRET_KEY);
 
             var playerToReturn = this.mapper.Map<PlayerAuthenticatedDTO>(player);
             playerToReturn.Token = token;
 
             return Ok(playerToReturn);
-
         }
 
         [HttpGet]

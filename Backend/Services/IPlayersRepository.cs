@@ -4,7 +4,7 @@ using System.IdentityModel.Tokens.Jwt;
 
 public interface IPlayersRepository
  {
-    string GenerateToken(Player player, string securityKey);
+    string GenerateToken(Player player, byte [] securityKey);
     IEnumerable<Player> GetPlayers(Guid gameId);
     Player GetPlayer(Guid gameId, Guid playerId);
     int Save();

@@ -27,7 +27,7 @@ public class PlayerRepositoryTest
     {
         IPlayersRepository playersRepository = new PlayersRepository(this.moqDbContext.Object);
         var testPlayer = new Player() { Id = Guid.NewGuid(), Name = "TestName" };
-        var testKey = "The secret must be long";
+        var testKey = Encoding.ASCII.GetBytes("The secret must be long");
 
         string token = playersRepository.GenerateToken(testPlayer, testKey);
 
