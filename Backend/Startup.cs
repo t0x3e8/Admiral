@@ -60,7 +60,7 @@ namespace code
       services.AddScoped<IPawnsRepository, PawnsRepository>();
 
       // configure jwt authentication
-      var key = Encoding.ASCII.GetBytes(appSettingsSection.GetValue<String>("Secret"));
+      var key = Encoding.ASCII.GetBytes(Configuration["Secret"]);
       services.AddAuthentication(x =>
       {
         x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
