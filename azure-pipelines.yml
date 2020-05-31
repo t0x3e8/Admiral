@@ -69,7 +69,7 @@ jobs:
           publishWebProjects: True
           arguments: "--configuration $(BuildConfiguration) --output $(Build.ArtifactStagingDirectory)"
           zipAfterPublish: False
-          modifyOutputPath: True
+          modifyOutputPath: False
 
       - task: AzureWebApp@1
         displayName: Deploying Application to Azure
