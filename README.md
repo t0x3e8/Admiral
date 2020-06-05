@@ -10,7 +10,7 @@ The web application is based on the mix of technologies which ddivide the applic
 ## Client
 Technology stack: JavaScript, Vue, Vuetify, Axios,  
 Testing setup: Mocha, Chai, Sinon, babel  
-[![Tests status](https://t0x3e8.visualstudio.com/AdmiralGame/_apis/build/status/t0x3e8.Admiral?branchName=master&jobName=Run_client_tests)](https://t0x3e8.visualstudio.com/AdmiralGame/_build/latest?definitionId=1&branchName=master)
+[![Tests status](https://t0x3e8.visualstudio.com/AdmiralGame/_apis/build/status/t0x3e8.Admiral?branchName=master)](https://t0x3e8.visualstudio.com/AdmiralGame/_build/latest?definitionId=1&branchName=master)
 
 
 ## Server
