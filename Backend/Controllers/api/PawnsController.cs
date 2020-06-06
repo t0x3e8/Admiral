@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 
 namespace code.api.Controllers
@@ -48,6 +49,26 @@ namespace code.api.Controllers
             var pawnsToReturn = this.mapper.Map<IEnumerable<PawnDTO>>(pawns);
 
             return CreatedAtRoute("GetPawns", new { gameId, playerId }, pawnsToReturn);
+        }
+   
+        [HttpPatch]
+        [Route("api/games/{gameid}/players/{playerid}/pawns/{pawnid}")]
+        public ActionResult UpdatePawn(Guid gameId, Guid playerId, Guid pawnid, JsonPatchDocument<PawnToPatchDTO> patchDocument) {
+            var pawn = this.pawnsRepository.GetPawn(gameId, playerId, pawnid);
+
+            if (pawn == null) 
+                return NotFound();
+
+            var pawnToPatch = this.mapper.Map<PawnToPatchDTO>(pawn);
+            patchDocument.ApplyTo(pawnToPatch, ModelState);
+
+            if (!this.TryValidateModel(pawnToPatch))
+                return ValidationProblem(ModelState);
+
+            this.mapper.Map(pawnToPatch, pawn);
+            this.pawnsRepository.Save();
+
+            return NoContent();
         }
     }
 }
