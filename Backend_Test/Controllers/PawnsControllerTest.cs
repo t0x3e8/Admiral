@@ -122,6 +122,7 @@ public class PawnsControllerTest
     [Description("GIVEN PawnsController WHEN UpdatePawn() with Add operation on Col THEN return status of 404 and Col to have a new value")]
     public void UpdatePawnWithAddOperationTest()
     {
+        // [{"op": "add", "path": "row", "value": "6"}]
         int newColValue = 100;
         var pawn = RepositoryTestService.GetPawn(Guid.NewGuid());
         this.moqPawnsRepository.Setup(m => m.GetPawn(It.IsAny<Guid>(), It.IsAny<Guid>(), It.IsAny<Guid>())).Returns(pawn);
@@ -142,6 +143,7 @@ public class PawnsControllerTest
     [Description("GIVEN PawnsController WHEN UpdatePawn() with Remove operation on Col THEN return status of 404 and Col value to be 0")]
     public void UpdatePawnWithRemoveOperationTest()
     {
+        // [{"op": "remove", "path": "row"}]
         var pawn = RepositoryTestService.GetPawn(Guid.NewGuid());
         pawn.Col = 100;
         this.moqPawnsRepository.Setup(m => m.GetPawn(It.IsAny<Guid>(), It.IsAny<Guid>(), It.IsAny<Guid>())).Returns(pawn);
@@ -162,6 +164,7 @@ public class PawnsControllerTest
     [Description("GIVEN PawnsController WHEN UpdatePawn() with Replace operation on Col THEN return status of 404 and Col value to have a new value")]
     public void UpdatePawnWithReplaceOperationTest()
     {
+        // [{"op": "replace", "path": "row", "value": "6"}]
         int newColValue = 100;
         var pawn = RepositoryTestService.GetPawn(Guid.NewGuid());
         this.moqPawnsRepository.Setup(m => m.GetPawn(It.IsAny<Guid>(), It.IsAny<Guid>(), It.IsAny<Guid>())).Returns(pawn);
@@ -179,33 +182,33 @@ public class PawnsControllerTest
     }
 
     [Test]
-    [Description("GIVEN PawnsController WHEN UpdatePawn() with Move and Add operations on Col THEN return status of 404 and Col and OldCol values to be upated")]
+    [Description("GIVEN PawnsController WHEN UpdatePawn() with Move on Col THEN return status of 404 and Col and OldCol values to be upated")]
     public void UpdatePawnWithMoveandAddOperationsTest()
     {
-        int newColValue = 100;
-        int oldColValue = 50;
+        // [{"op": "move", from: "oldRow", "path": "row"}]
+        int colValue = 100;
         var pawn = RepositoryTestService.GetPawn(Guid.NewGuid());
-        pawn.Col = oldColValue;
+        pawn.Col = colValue;
         this.moqPawnsRepository.Setup(m => m.GetPawn(It.IsAny<Guid>(), It.IsAny<Guid>(), It.IsAny<Guid>())).Returns(pawn);
         PawnsController pawnsController = new PawnsController(this.moqPawnsRepository.Object, this.autoMapper);
         pawnsController = RepositoryTestService.AssignMockObjectValidatorToController<PawnsController>(pawnsController);
         JsonPatchDocument<PawnToPatchDTO> patchDocument = new JsonPatchDocument<PawnToPatchDTO>();
         patchDocument.Move(p => p.Col, p => p.OldCol);
-        patchDocument.Replace(p => p.Col, newColValue);
 
         var result = pawnsController.UpdatePawn(Guid.NewGuid(), Guid.NewGuid(), Guid.NewGuid(), patchDocument);
 
         Assert.IsNotNull(result);
         Assert.That(result, Is.InstanceOf(typeof(ActionResult)));
         Assert.AreEqual(0, pawnsController.ModelState.ErrorCount);
-        Assert.AreEqual(oldColValue, pawn.OldCol);
-        Assert.AreEqual(newColValue, pawn.Col);
+        Assert.AreEqual(colValue, pawn.OldCol);
+        Assert.AreEqual(0, pawn.Col);
     }
 
     [Test]
     [Description("GIVEN PawnsController WHEN UpdatePawn() with Copy operation on Col THEN return status of 404 and Col and OldCol values to be the same")]
     public void UpdatePawnWithCopyOperationsTest()
     {
+        // [{"op": "copy", from: "oldRow", "path": "row"}]
         int colValue = 50;
         var pawn = RepositoryTestService.GetPawn(Guid.NewGuid());
         pawn.Col = colValue;
@@ -228,6 +231,7 @@ public class PawnsControllerTest
     [Description("GIVEN PawnsController WHEN UpdatePawn() with Test operation on Col THEN return status of 404")]
     public void UpdatePawnWithTestOperationsTest()
     {
+        // [{"op": "test", "path": "row", "value": "50"}]
         int colValue = 50;
         var pawn = RepositoryTestService.GetPawn(Guid.NewGuid());
         pawn.Col = colValue;
@@ -248,6 +252,7 @@ public class PawnsControllerTest
     [Description("GIVEN PawnsController WHEN UpdatePawn() with Test operation on Col where data are NOT equal THEN return status ValidationProblem")]
     public void UpdatePawnWithTestOperationsCausingValidationProblemTest()
     {
+        // [{"op": "test", "path": "row", "value": "4567"}]
         var pawn = RepositoryTestService.GetPawn(Guid.NewGuid());
         this.moqPawnsRepository.Setup(m => m.GetPawn(It.IsAny<Guid>(), It.IsAny<Guid>(), It.IsAny<Guid>())).Returns(pawn);
         PawnsController pawnsController = new PawnsController(this.moqPawnsRepository.Object, this.autoMapper);
