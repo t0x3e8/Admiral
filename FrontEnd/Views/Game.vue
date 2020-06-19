@@ -19,7 +19,7 @@
   import History from "./../Components/HistoryComponent.vue";
   import GameControlPanel from "./../Components/GameControlPanelComponent.vue";
   import { mapState, mapActions } from "vuex";
-  import { REFRESH_ACTIVE_GAME } from "./../eventsTypes.js";
+  import { REFRESH_ACTIVE_GAME, COMMIT_TURN } from "./../eventsTypes.js";
 
   export default {
     name: "GameView",
@@ -38,18 +38,27 @@
     computed: mapState(["activeGame"]),
     async mounted() {
       this.$root.$on(REFRESH_ACTIVE_GAME, this.setGame);
+      this.$root.$on(COMMIT_TURN, this.commitGameTurn);
 
       await this.setGame();
       this.loading = false;
     },
     beforeDestroy() {
       this.$root.$off(REFRESH_ACTIVE_GAME, this.setGame);
+      this.$root.$off(COMMIT_TURN, this.commitGameTurn);
     },
     methods: {
-      ...mapActions(["openGame"]),
+      ...mapActions(["openGame", "commitTurn"]),
       async setGame() {
         await this.openGame();
         this.game = this.activeGame;
+      },
+      async commitGameTurn() {
+        await this.commitTurn({
+          gameId: this.game.gameId,
+          // eslint-disable-next-line no-magic-numbers
+          pawn: this.game.board.movedPawns[0]
+        });
       }
     }
   };

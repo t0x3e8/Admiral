@@ -25,7 +25,7 @@
 <script>
   import { REFRESH_ACTIVE_GAME, COMMIT_TURN } from "./../eventsTypes.js";
   export default {
-    name: "GameControlPanelComponent",
+    name: "GameMovesComponent",
     props: {},
     data() {
       return {

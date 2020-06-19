@@ -20,6 +20,7 @@ class Game {
 
     this.gameId = gameId;
     this.board = new GameBoard();
+    this.board.game = this;
     this.history = new History();
     this.history.record({
       type: HistoryType.GAME_CREATED
@@ -45,6 +46,8 @@ class Game {
         playerId: Player.playerId
       });
     }
+
+    this.updateState();
   }
 
   /**
@@ -62,6 +65,12 @@ class Game {
       type: HistoryType.PLAYER_LEAVES,
       playerId: player.getPlayerId()
     });
+  }
+
+  updateState() {
+    if (this.players.length === 2) {
+      this.state = GameState.STARTED;
+    }
   }
 }
 

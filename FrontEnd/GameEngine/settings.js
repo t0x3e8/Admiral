@@ -8,6 +8,7 @@ export default {
   board: {
     numberOfColumns: 12,
     numberOfRows: 18,
+    movesPerTurn: 1,
     map: [
       [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
       [1, 1, 3, 5, 1, 1, 1, 1, 1, 1, 1, 1],

@@ -7,6 +7,7 @@ class DataService {
   constructor() {
     this.okPostStatus = 201;
     this.okGetStatus = 200;
+    this.okPatchStatus = 204;
     this.getAxiosInstance = () => {
       const instance = axios.create({
         headers: { Authorization: `Bearer ${store.state.player.token}` }
@@ -234,6 +235,32 @@ class DataService {
 
       return null;
     }
+  }
+
+  async commitTurn(gameId, playerData, pawn) {
+    try {
+      const url = `/api/games/${gameId}/players/${playerData.id}/pawns/${pawn.pawnId}`,
+                  axiosInstance = this.getAxiosInstance(),
+                  response = await axiosInstance.patch(url,
+                    [
+                      {
+                        "op": "add",
+                        "path": "row",
+                        "value": `${pawn.row}`
+                      }
+                    ]);
+
+      if (response.status === this.okPatchStatus) {
+        return true;
+      }
+    } catch (error) {
+      // TODO: must find better way to log these
+      const errMessage = `Patch Pawn error: ${error}`;
+
+      console.error(errMessage);
+    }
+
+    return false;
   }
 
   static async authenticatePlayer(playerName) {

@@ -8,6 +8,7 @@ import _ from "underscore";
 import Board from "./board.js";
 import Pawn from "./pawn.js";
 import settings from "./settings.js";
+import { GameState } from "./gameEnums.js";
 
 /**
  * The Board object represents the structure of the board, including characteristics  of board eg.
@@ -15,6 +16,19 @@ import settings from "./settings.js";
  * @returns {void}
  */
 class GameBoard extends Board {
+  constructor() {
+    super();
+
+    const { movesPerTurn } = settings.board;
+
+    this.movedPawns = [];
+    this.movesPerTurn = movesPerTurn;
+    this.game = null;
+
+    this.canMove = () => this.movedPawns.length < this.movesPerTurn &&
+                         this.game && this.game.state === GameState.STARTED;
+  }
+
   /**
    * Each pawn is assigned to a representative cell by its col and row properties.
    * @param {*} pawnsData Array of pawns with col and row set
@@ -44,8 +58,7 @@ class GameBoard extends Board {
     const pawnToSelect = this.cells[payload.row][payload.col].pawn;
 
     this.unselectAny();
-
-    if (pawnToSelect) {
+    if (this.canMove() && pawnToSelect) {
       pawnToSelect.selected = true;
     }
   }
@@ -181,6 +194,8 @@ class GameBoard extends Board {
 
     originCell.pawn = null;
     this.assignPawn(destinationCell, pawn);
+
+    this.movedPawns.push(pawn);
   }
 }
 

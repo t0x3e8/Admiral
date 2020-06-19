@@ -54,5 +54,14 @@ export default {
     if (gameData !== null) {
       commit(UPDATE_ACTIVE_GAME, gameData);
     }
+  },
+  async commitTurn({ dispatch, state }, payload) {
+    console.log(payload);
+    const dataService = new DataService(),
+      result = await dataService.commitTurn(payload.gameId, state.player, payload.pawn);
+
+    if (result) {
+      await dispatch("openGame", { gameId: payload.gameId });
+    }
   }
 };
