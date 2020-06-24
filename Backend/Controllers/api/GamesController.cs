@@ -1,14 +1,9 @@
 
 using System;
 using System.Collections.Generic;
-using System.Security.Claims;
-using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
-using System.Linq;
 
 namespace code.api.Controllers
 {
@@ -72,18 +67,3 @@ namespace code.api.Controllers
         }
     }
 }
-        // private Player GetPlayerFromRequest(ClaimsPrincipal user)
-        // {
-        //     try
-        //     {
-        //         var playerName = user.FindFirst(ClaimTypes.Name)?.Value;
-        //         var playerId = Guid.Parse(user.FindFirst(ClaimTypes.NameIdentifier)?.Value);
-
-        //         return new Player() { Id = playerId, Name = playerName };
-        //     }
-        //     catch (Exception ex)
-        //     {
-        //         Console.Error.WriteLine(ex);
-        //         return null;
-        //     }
-        // }

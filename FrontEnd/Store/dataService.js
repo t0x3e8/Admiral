@@ -245,8 +245,23 @@ class DataService {
                     [
                       {
                         "op": "add",
+                        "path": "oldrow",
+                        "value": `${pawn.oldRow}`
+                      },
+                      {
+                        "op": "add",
+                        "path": "oldcol",
+                        "value": `${pawn.oldCol}`
+                      },
+                      {
+                        "op": "add",
                         "path": "row",
                         "value": `${pawn.row}`
+                      },
+                      {
+                        "op": "add",
+                        "path": "col",
+                        "value": `${pawn.col}`
                       }
                     ]);
 

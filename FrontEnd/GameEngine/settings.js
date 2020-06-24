@@ -32,6 +32,15 @@ export default {
   },
   pawns: [
     {
+      typeId: PawnType.ENEMY,
+      name: "Enemy ship",
+      svgName: "none.svg",
+      range: 0,
+      destroys: [],
+      destroyed: [],
+      fleetSize: 0
+    },
+    {
       typeId: PawnType.BATTLESHIP,
       name: "Battleship",
       svgName: "battleship.svg",

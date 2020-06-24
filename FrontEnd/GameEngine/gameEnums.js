@@ -22,6 +22,7 @@ export const CombatResult = {
     HIDDEN: 666
   },
   PawnType = {
+    ENEMY: 99,
     BATTLESHIP: 1,
     MISSILE: 2,
     CRUISER: 3,
