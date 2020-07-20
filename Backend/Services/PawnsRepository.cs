@@ -23,8 +23,15 @@ public class PawnsRepository : IPawnsRepository
 
         return query;
     }
-
     
+    public Pawn GetPawn(Guid gameId, Guid playerId, Guid pawnId) {
+        var query = from p in this.dbContext.Pawns
+                    where p.GameId.Equals(gameId) && p.PlayerId.Equals(playerId) && p.Id.Equals(pawnId)
+                    select p;
+
+        return query.SingleOrDefault();
+    }
+
     public IEnumerable<Pawn> AddPawns(Guid gameId, Guid playerId, IEnumerable<Pawn> pawns) {
         if (gameId.Equals(Guid.Empty))
             throw new ArgumentException(nameof(gameId));

@@ -55,7 +55,7 @@
 
         const selectedPawn = this.board.getSelected();
 
-        if (selectedPawn) {
+        if (selectedPawn && selectedPawn.selected) {
           this.board.rangeCells(selectedPawn);
         }
       },

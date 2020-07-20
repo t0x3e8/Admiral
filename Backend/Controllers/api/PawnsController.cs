@@ -1,8 +1,11 @@
 using System;
 using System.Collections.Generic;
+using System.Security.Claims;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
+using System.Linq;
 
 namespace code.api.Controllers
 {
@@ -24,7 +27,16 @@ namespace code.api.Controllers
         public ActionResult<IEnumerable<PawnDTO>> GetPawns(Guid gameId, Guid playerId)
         {
             var pawns = this.pawnsRepository.GetPawns(gameId, playerId);
-            return Ok(this.mapper.Map<IEnumerable<PawnDTO>>(pawns));
+            var playerFromRequest = this.GetPlayerFromRequest(this.User);
+            IEnumerable<PawnDTO> pawnsToReturn = pawnsToReturn = this.mapper.Map<IEnumerable<PawnDTO>>(pawns);
+
+            if (!playerFromRequest.Id.Equals(playerId))
+                pawnsToReturn = pawnsToReturn.Select((p, i) => {
+                    p.Type = 99;
+                    return p;
+                });
+
+            return Ok(pawnsToReturn);
         }
 
         [HttpPost]
@@ -48,6 +60,42 @@ namespace code.api.Controllers
             var pawnsToReturn = this.mapper.Map<IEnumerable<PawnDTO>>(pawns);
 
             return CreatedAtRoute("GetPawns", new { gameId, playerId }, pawnsToReturn);
+        }
+   
+        [HttpPatch]
+        [Route("api/games/{gameid}/players/{playerid}/pawns/{pawnid}")]
+        public ActionResult UpdatePawn(Guid gameId, Guid playerId, Guid pawnid, JsonPatchDocument<PawnToPatchDTO> patchDocument) {
+            var pawn = this.pawnsRepository.GetPawn(gameId, playerId, pawnid);
+
+            if (pawn == null) 
+                return NotFound();
+
+            var pawnToPatch = this.mapper.Map<PawnToPatchDTO>(pawn);
+            patchDocument.ApplyTo(pawnToPatch, ModelState);
+
+            if (!this.TryValidateModel(pawnToPatch))
+                return ValidationProblem(ModelState);
+
+            this.mapper.Map(pawnToPatch, pawn);
+            this.pawnsRepository.Save();
+
+            return NoContent();
+        }
+   
+        private Player GetPlayerFromRequest(ClaimsPrincipal user)
+        {
+            try
+            {
+                var playerName = user.FindFirst(ClaimTypes.Name)?.Value;
+                var playerId = Guid.Parse(user.FindFirst(ClaimTypes.NameIdentifier)?.Value);
+
+                return new Player() { Id = playerId, Name = playerName };
+            }
+            catch (Exception ex)
+            {
+                Console.Error.WriteLine(ex);
+                return null;
+            }
         }
     }
 }

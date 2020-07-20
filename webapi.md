@@ -12,5 +12,5 @@
 | api/games/gameId/players/playerId/pawns        | GET     | Returns collection of all Pawn-s                                     | 200        | Yes/Yes          |
 | api/games/gameId/players/playerId/pawns        | POST    | Creates new Pawn's collection                                        | 204        | Yes/Yes          |
 | api/games/gameId/players/playerId/pawns/pawnId | GET     | Returns a Pawn specified by Id                                       | 200        | No               |
-| api/games/gameId/players/playerId/pawns/pawnId | PATCH   | Updates the Pawn entity                                              | 204        | No               |
+| api/games/gameId/players/playerId/pawns/pawnId | PATCH   | Updates the Pawn entity                                              | 204        | Yes/Yes          |
 | api/players/authenticate                       | POST    | Returns Player with authorization Token                              | 200        | Yes/No           |

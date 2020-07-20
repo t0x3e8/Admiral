@@ -8,6 +8,7 @@ export default {
   board: {
     numberOfColumns: 12,
     numberOfRows: 18,
+    movesPerTurn: 1,
     map: [
       [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
       [1, 1, 3, 5, 1, 1, 1, 1, 1, 1, 1, 1],
@@ -30,6 +31,15 @@ export default {
     ]
   },
   pawns: [
+    {
+      typeId: PawnType.ENEMY,
+      name: "Enemy ship",
+      svgName: "none.svg",
+      range: 0,
+      destroys: [],
+      destroyed: [],
+      fleetSize: 0
+    },
     {
       typeId: PawnType.BATTLESHIP,
       name: "Battleship",

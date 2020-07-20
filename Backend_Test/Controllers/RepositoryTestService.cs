@@ -37,6 +37,7 @@ internal static class RepositoryTestService
 
     internal static IList<Pawn> GetPawns(Guid playerId, int numberOfPawns)
     {
+        var gameId = Guid.NewGuid();
         IList<Pawn> pawns = new List<Pawn>();
 
         for (int i = 0; i < numberOfPawns; i++)
@@ -49,11 +50,17 @@ internal static class RepositoryTestService
             pawn.Type = 4;
             pawn.Id = Guid.NewGuid();
             pawn.PlayerId = playerId;
+            pawn.GameId = gameId;
 
             pawns.Add(pawn);
         }
 
         return pawns;
+    }
+
+    internal static Pawn GetPawn(Guid playerId)
+    {
+        return RepositoryTestService.GetPawns(playerId, 1)[0];
     }
 
     internal static Player GetRandomPlayer(string name)
@@ -123,84 +130,17 @@ internal static class RepositoryTestService
 
         return controller;
     }
+
+    internal static T AssignMockObjectValidatorToController<T>(T controller) where T : ControllerBase
+    {
+        var moqObjectValidator = new Mock<IObjectModelValidator>();
+        moqObjectValidator.Setup(m => m.Validate(It.IsAny<ActionContext>(),
+                                                It.IsAny<ValidationStateDictionary>(),
+                                                It.IsAny<string>(),
+                                                It.IsAny<object>()));
+
+        controller.ObjectValidator = moqObjectValidator.Object;
+
+        return controller;
+    }
 }
-
-
-
-// internal static GameToCreateDTO GetGameToCreate(Game game)
-// {
-//     var gameToCreateDTO = new GameToCreateDTO();
-//     gameToCreateDTO.Name = game.Name;
-//     gameToCreateDTO.Pawns = new List<PawnToCreateDTO>();
-//     game.Pawns.ForEach(p => gameToCreateDTO.Pawns.Add(new PawnToCreateDTO()
-//     {
-//         Col = p.Col,
-//         Row = p.Row,
-//         OldCol = p.OldCol,
-//         OldRow = p.OldRow,
-//         Type = p.Type
-//     }));
-//     gameToCreateDTO.Players = new List<PlayerToCreateDTO>();
-//     game.Players.ForEach(p => gameToCreateDTO.Players.Add(new PlayerToCreateDTO()
-//     {
-//         Id = p.PlayerId,
-//         Name = p.Player?.Name
-//     }));
-
-//     return gameToCreateDTO;
-// }
-
-// internal static T AssignUserToController<T>(T controller, Player player) where T : ControllerBase
-// {
-//     var claims = new[] {
-//         new Claim(ClaimTypes.Name, player.Name),
-//         new Claim(ClaimTypes.NameIdentifier, player.Id.ToString())
-//     };
-
-//     var identity = new ClaimsIdentity(claims, "TestAuthType");
-//     var claimsPrincipal = new ClaimsPrincipal(identity);
-
-//     controller.ControllerContext = new ControllerContext()
-//     {
-//         HttpContext = new DefaultHttpContext() { User = claimsPrincipal }
-//     };
-
-//     return controller;
-// }
-
-// internal static T AssignMockObjectValidatorToController<T>(T controller) where T : ControllerBase
-// {
-//     var moqObjectValidator = new Mock<IObjectModelValidator>();
-//     moqObjectValidator.Setup(m => m.Validate(It.IsAny<ActionContext>(),
-//                                             It.IsAny<ValidationStateDictionary>(),
-//                                             It.IsAny<string>(),
-//                                             It.IsAny<object>()));
-
-//     controller.ObjectValidator = moqObjectValidator.Object;
-
-//     return controller;
-// }
-
-
-
-// internal static JsonPatchDocument<GameToPatchDTO> GetPatchDocumentWithAddPawn()
-// {
-//     var patchDocument = new JsonPatchDocument<GameToPatchDTO>();
-//     var pawnToPatch = new PawnToPatchDTO()
-//     {
-//         Col = 1,
-//         Row = 3,
-//         Type = 5
-//     };
-//     patchDocument.Add(p => p.Pawns, pawnToPatch);
-
-//     return patchDocument;
-// }
-
-// internal static JsonPatchDocument<GameToPatchDTO> GetPatchDocumentWithRemovePawn()
-// {
-//     var patchDocument = new JsonPatchDocument<GameToPatchDTO>();
-//     patchDocument.Remove(p => p.Pawns);
-
-//     return patchDocument;
-// }

@@ -5,6 +5,6 @@ public class PawnProfile : AutoMapper.Profile {
     {
       this.CreateMap<PawnToCreateDTO, Pawn>().ReverseMap();
       this.CreateMap<Pawn, PawnDTO>();
-      this.CreateMap<PawnToPatchDTO, Pawn>();
+      this.CreateMap<PawnToPatchDTO, Pawn>().ReverseMap();
     }
 }
