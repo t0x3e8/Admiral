@@ -33,6 +33,8 @@ public class PawnsControllerTest
         var pawns = RepositoryTestService.GetPawns(playerId, 10);
         this.moqPawnsRepository.Setup(m => m.GetPawns(gameId, playerId)).Returns(pawns);
         PawnsController pawnsController = new PawnsController(this.moqPawnsRepository.Object, this.autoMapper);
+        pawnsController = RepositoryTestService.AssignUserToController(pawnsController, playerId.ToString(), "TestPlayer");
+;
         var result = pawnsController.GetPawns(gameId, playerId);
 
         Assert.IsNotNull(result);

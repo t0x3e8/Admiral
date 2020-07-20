@@ -143,4 +143,16 @@ internal static class RepositoryTestService
 
         return controller;
     }
+
+    internal static T AssignUserToController<T>(T controller, string playerId, string playerName) where T : ControllerBase
+    {
+        var user = new ClaimsPrincipal(new ClaimsIdentity(new Claim[] {
+                                        new Claim(ClaimTypes.NameIdentifier, playerId),
+                                        new Claim(ClaimTypes.Name, playerName)
+                                   }));
+
+        controller.ControllerContext = new ControllerContext();
+        controller.ControllerContext.HttpContext = new DefaultHttpContext { User = user };
+        return controller;
+    }
 }
