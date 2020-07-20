@@ -106,6 +106,9 @@ describe("GAMEBOARD requirements", () => {
 
       let selectedPawn = null;
 
+      // mock of function, when game is not initialized
+      board.canMove = () => true;
+
       board.assignPawn(board.cells[5][5], pawnSubmarine);
       board.select({
         col: 5,
