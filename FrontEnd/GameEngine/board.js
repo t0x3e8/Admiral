@@ -66,8 +66,6 @@ class Board {
     const cellsWithPawns = _.filter(_.flatten(this.cells), (cell) => cell.pawn !== null),
       pawns = _.map(cellsWithPawns, (cell) => cell.pawn);
 
-    console.warn(`cellsWithPawns: ${JSON.stringify(pawns)}`);
-
     return pawns;
   }
 
@@ -85,8 +83,6 @@ class Board {
 
         return pawn;
       });
-
-    console.warn(`Pawns rotated: ${JSON.stringify(pawnsRotated)}`);
 
     return pawnsRotated;
   }
