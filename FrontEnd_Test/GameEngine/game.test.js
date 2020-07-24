@@ -11,10 +11,13 @@ import { GameState } from "../../FrontEnd/GameEngine/gameEnums.js";
 
 describe("GAME requirements", () => {
   it("GIVEN I have created a new game THEN Game should have unique ID, History, and at least one player", () => {
-    const gameId = "6eea7a6d-ffda-4038-aea4-6b72f701f17f",
-      game = new Game(gameId);
+    const gameData = {
+        id: "6eea7a6d-ffda-4038-aea4-6b72f701f17f",
+        gameStatus: GameState.NOT_STARTED
+      },
+      game = new Game(gameData);
 
-    expect(game.gameId, "Unique ID must be generated").to.be.equal(gameId);
+    expect(game.gameId, "Unique ID must be generated").to.be.equal(gameData.id);
     expect(game.history, "The History must be initiated").to.not.be.null;
     expect(game.history.records.length, "The History must record Game-Created event").to.be.equal(1);
     expect(game.board, "The Board must be initiated").to.not.be.null;
@@ -26,7 +29,7 @@ describe("GAME requirements", () => {
     "GIVEN a new game WHEN the first Player joins " +
       "THEN Game should reflect that in the state of board, game and history",
     () => {
-      const game = new Game(createGameResponseData.id),
+      const game = new Game({ id: createGameResponseData.id }),
         player = new Player(createGameResponseData.players),
         pawnsData = createGameResponseData.pawns;
 
@@ -41,10 +44,7 @@ describe("GAME requirements", () => {
     }
   );
 
-  it(
-    "GIVEN a new Game without gameId THEN an error should be thrown",
-    () => {
-      expect(() => new Game()).to.throw("gameId must be specified");
-    }
-  );
+  it("GIVEN a new Game without gameId THEN an error should be thrown", () => {
+    expect(() => new Game()).to.throw("gameData.Id must be specified");
+  });
 });

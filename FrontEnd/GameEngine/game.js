@@ -14,7 +14,7 @@ import _ from "underscore";
  */
 class Game {
   constructor(gameData) {
-    if (_.isNull(gameData) || _.isNull(gameData.id) || _.isUndefined(gameData.id)) {
+    if (_.isNull(gameData) || _.isUndefined(gameData) || _.isNull(gameData.id) || _.isUndefined(gameData.id)) {
       throw new Error("gameData.Id must be specified")
     }
 
