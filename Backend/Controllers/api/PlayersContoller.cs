@@ -14,14 +14,16 @@ namespace code.api.Controllers
     public class PlayersController : ControllerBase
     {
         private readonly IPlayersRepository playersRepository;
+        private readonly IGameStateManager gameStateManager;
         private readonly AppSettings appSettings;
         private readonly IMapper mapper;
 
-        public PlayersController(IPlayersRepository playersRepository, IMapper mapper, AppSettings appSettings)
+        public PlayersController(IPlayersRepository playersRepository, IMapper mapper, IGameStateManager gameStateManager, AppSettings appSettings)
         {
             this.playersRepository = playersRepository;
             this.appSettings = appSettings;
             this.mapper = mapper;
+            this.gameStateManager = gameStateManager;
         }
 
         [AllowAnonymous]
@@ -70,6 +72,7 @@ namespace code.api.Controllers
                     return NotFound();
                     
                 this.playersRepository.Save();
+                this.gameStateManager.UpdateOnJoin(gameId, player.Id);
             }
             catch
             {

@@ -15,11 +15,13 @@ namespace code.api.Controllers
     {
         private readonly IPawnsRepository pawnsRepository;
         private readonly IMapper mapper;
+        private readonly IGameStateManager gameStateManager;
 
-        public PawnsController(IPawnsRepository pawnsRepository, IMapper mapper)
+        public PawnsController(IPawnsRepository pawnsRepository, IMapper mapper, IGameStateManager gameStateManager)
         {
             this.pawnsRepository = pawnsRepository;
             this.mapper = mapper;
+            this.gameStateManager = gameStateManager;
         }
 
         [HttpGet]
@@ -78,6 +80,7 @@ namespace code.api.Controllers
 
             this.mapper.Map(pawnToPatch, pawn);
             this.pawnsRepository.Save();
+            this.gameStateManager.UpdateOnTurnCommit(gameId, playerId);
 
             return NoContent();
         }

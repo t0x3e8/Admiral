@@ -11,6 +11,7 @@ public class PlayersControllerTest
 
   Mock<IPlayersRepository> moqPlayersRepository;
   IMapper autoMapper;
+  Mock<IGameStateManager> moqGameStateManager;
 
   [SetUp]
   public void SetupTests()
@@ -20,6 +21,7 @@ public class PlayersControllerTest
     {
       opts.AddProfile(new PlayerProfile());
     }).CreateMapper();
+    this.moqGameStateManager = new Mock<IGameStateManager>();
   }
 
   #region Get Players
@@ -30,7 +32,7 @@ public class PlayersControllerTest
     var player1 = RepositoryTestService.GetRandomPlayer("Player 1");
     var player2 = RepositoryTestService.GetRandomPlayer("Player 2");
     this.moqPlayersRepository.Setup(m => m.GetPlayers(It.IsAny<Guid>())).Returns(new Player[] { player1, player2 });
-    PlayersController playersController = new PlayersController(this.moqPlayersRepository.Object, this.autoMapper, null);
+    PlayersController playersController = new PlayersController(this.moqPlayersRepository.Object, this.autoMapper, this.moqGameStateManager.Object, null);
     var result = playersController.GetPlayers(Guid.NewGuid());
 
     Assert.IsNotNull(result);
@@ -50,7 +52,7 @@ public class PlayersControllerTest
     var playerToCreate = this.autoMapper.Map<PlayerToCreateDTO>(player);
     this.moqPlayersRepository.Setup(m => m.AddPlayer(It.IsAny<Guid>(), It.IsAny<Player>())).Returns(player);
     this.moqPlayersRepository.Setup(m => m.Save()).Returns(1);
-    PlayersController playersController = new PlayersController(this.moqPlayersRepository.Object, this.autoMapper, null);
+    PlayersController playersController = new PlayersController(this.moqPlayersRepository.Object, this.autoMapper, this.moqGameStateManager.Object, null);
 
     var result = playersController.AddPlayer(Guid.NewGuid(), playerToCreate);
 
@@ -69,7 +71,7 @@ public class PlayersControllerTest
     var player = RepositoryTestService.GetRandomPlayer("Test Player");
     var playerToCreate = this.autoMapper.Map<PlayerToCreateDTO>(player);
     this.moqPlayersRepository.Setup(m => m.AddPlayer(It.IsAny<Guid>(), It.IsAny<Player>())).Throws(new Exception());
-    PlayersController playersController = new PlayersController(this.moqPlayersRepository.Object, this.autoMapper, null);
+    PlayersController playersController = new PlayersController(this.moqPlayersRepository.Object, this.autoMapper, this.moqGameStateManager.Object, null);
     playersController = RepositoryTestService.AssignMockProblemDetailsFactoryToController<PlayersController>(playersController);
 
     var result = playersController.AddPlayer(Guid.NewGuid(), playerToCreate);
@@ -87,7 +89,7 @@ public class PlayersControllerTest
     var player = RepositoryTestService.GetRandomPlayer("Test Player");
     var playerToCreate = this.autoMapper.Map<PlayerToCreateDTO>(player);
     this.moqPlayersRepository.Setup(m => m.AddPlayer(It.IsAny<Guid>(), It.IsAny<Player>())).Returns(() => null);
-    PlayersController playersController = new PlayersController(this.moqPlayersRepository.Object, this.autoMapper, null);
+    PlayersController playersController = new PlayersController(this.moqPlayersRepository.Object, this.autoMapper, this.moqGameStateManager.Object, null);
     playersController = RepositoryTestService.AssignMockProblemDetailsFactoryToController<PlayersController>(playersController);
 
     var result = playersController.AddPlayer(Guid.NewGuid(), playerToCreate);
@@ -105,7 +107,7 @@ public class PlayersControllerTest
     var player = new Player() { Name = "TestPlayer", Id = Guid.NewGuid() };
     var gameId = Guid.NewGuid();
     this.moqPlayersRepository.Setup(m => m.GetPlayer(It.IsAny<Guid>(), It.IsAny<Guid>())).Returns(player);
-    PlayersController playersController = new PlayersController(this.moqPlayersRepository.Object, this.autoMapper, null);
+    PlayersController playersController = new PlayersController(this.moqPlayersRepository.Object, this.autoMapper, this.moqGameStateManager.Object, null);
 
     var result = playersController.GetPlayer(gameId, player.Id);
 
@@ -124,7 +126,7 @@ public class PlayersControllerTest
     var playerId = Guid.NewGuid();
     var gameId = Guid.NewGuid();
     this.moqPlayersRepository.Setup(m => m.GetPlayer(It.IsAny<Guid>(), It.IsAny<Guid>())).Returns(() => null);
-    PlayersController playersController = new PlayersController(this.moqPlayersRepository.Object, this.autoMapper, null);
+    PlayersController playersController = new PlayersController(this.moqPlayersRepository.Object, this.autoMapper, this.moqGameStateManager.Object, null);
 
     var result = playersController.GetPlayer(gameId, playerId);
 

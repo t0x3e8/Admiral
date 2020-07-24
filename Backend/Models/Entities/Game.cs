@@ -9,6 +9,7 @@ public class Game
     public DateTime Created { get; set; }
     public List<Pawn> Pawns { get; set; }
     public List<GamePlayer> Players { get; set; }
+    public Guid? ActivePlayer { get; set; }
     [Required]
     public int Status { get; set; }
     [MinLength(3, ErrorMessage="Game name is too short. Min is 3 letters.")]

@@ -20,7 +20,7 @@ export default {
   [UPDATE_ACTIVE_GAME](state, gameData) {
     console.log(gameData);
     if (!_.isEmpty(gameData)) {
-      const game = new Game(gameData.id);
+      const game = new Game(gameData);
 
       _.forEach(gameData.players, (playerData) => {
         const player = new Player(playerData);
