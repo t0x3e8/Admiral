@@ -43,8 +43,8 @@ public class PlayersRepository : IPlayersRepository
 
         // Checks whether guidId is linked to existing entity
         var game = (from g in this.dbContext.Games
-                      where g.Id.Equals(gameId)
-                      select g).FirstOrDefault();
+                    where g.Id.Equals(gameId)
+                    select g).FirstOrDefault();
         if (game == null)
             return null;
 
@@ -57,14 +57,14 @@ public class PlayersRepository : IPlayersRepository
 
         // Stores in database            
         var playerToReturn = this.dbContext.Players.FirstOrDefault(p => p.Id.Equals(player.Id));
-        if(playerToReturn == null)
+        if (playerToReturn == null)
             playerToReturn = this.dbContext.Players.Add(player).Entity;
         this.dbContext.GamesPlayers.Add(new GamePlayer() { PlayerId = playerToReturn.Id, GameId = gameId });
 
         return playerToReturn;
     }
 
-    public string GenerateToken(Player player, byte [] secretKey)
+    public string GenerateToken(Player player, byte[] secretKey)
     {
         var claims = new[] {
             new Claim(ClaimTypes.Name, player.Name),

@@ -2,7 +2,7 @@
   <b-container v-if="!loading" fluid class="mt-1">
     <b-row no-gutters>
       <b-col cols="2">
-        <game-control-panel :is-turn-ready="isTurnReady" />
+        <game-control-panel :is-turn-ready="isTurnReady" :is-turn-open="isTurnOpen" />
       </b-col>
       <b-col cols="8">
         <board v-if="game !== null" :board="game.board" />
@@ -20,6 +20,7 @@
   import GameControlPanel from "./../Components/GameControlPanelComponent.vue";
   import { mapState, mapActions } from "vuex";
   import { REFRESH_ACTIVE_GAME, COMMIT_TURN } from "./../eventsTypes.js";
+  import { GameState } from "./../GameEngine/gameEnums.js";
 
   export default {
     name: "GameView",
@@ -36,10 +37,17 @@
       };
     },
     computed: {
-      ...mapState(["activeGame"]),
+      ...mapState(["activeGame", "player"]),
+      // The method indicates whether the turn has been completed
       isTurnReady () {
         // eslint-disable-next-line no-magic-numbers
         return this.game.board.movedPawns.length > 0;
+      },
+      // The method indicates whether the turn is open, so the player can move pawns
+      isTurnOpen () {
+        const isPlayerActive = this.game.activePlayer === this.player.id;
+
+        return this.game.state === GameState.STARTED && isPlayerActive;
       }
     },
     async mounted() {

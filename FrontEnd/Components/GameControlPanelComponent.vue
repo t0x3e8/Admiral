@@ -3,11 +3,11 @@
     <b-row>
       <b-col>
         <b-button-group vertical class="w-75" size="sm">
-          <b-button v-show="false" variant="primary" @click="refresh">
+          <b-button v-if="isTurnOpen" variant="primary" @click="refresh">
             Waiting ({{ value }})
             <b-progress :value="value" :max="maxValue" height="5px" animated variant="white"></b-progress>
           </b-button>
-          <b-button :disabled="!isTurnReady" variant="outline-primary" @click="commitTurn">
+          <b-button v-if="!isTurnOpen" :disabled="!isTurnReady" variant="outline-primary" @click="commitTurn">
             Commit Turn
           </b-button>
           <b-button variant="outline-primary" @click="returnToList">
@@ -28,6 +28,10 @@
     name: "GameControlPanelComponent",
     props: {
       isTurnReady: {
+        type: Boolean,
+        default: false
+      },
+      isTurnOpen: {
         type: Boolean,
         default: false
       }

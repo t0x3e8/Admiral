@@ -4,7 +4,7 @@
 
 import GameBoard from "./gameBoard.js";
 import History from "./history.js";
-import { HistoryType, GameState } from "./gameEnums.js";
+import { HistoryType } from "./gameEnums.js";
 import Player from "./player.js";
 import _ from "underscore";
 
@@ -13,12 +13,12 @@ import _ from "underscore";
  * @returns {void}
  */
 class Game {
-  constructor(gameId) {
-    if (_.isNull(gameId) || _.isUndefined(gameId)) {
-      throw new Error("gameId must be specified")
+  constructor(gameData) {
+    if (_.isNull(gameData) || _.isUndefined(gameData) || _.isNull(gameData.id) || _.isUndefined(gameData.id)) {
+      throw new Error("gameData.Id must be specified")
     }
 
-    this.gameId = gameId;
+    this.gameId = gameData.id;
     this.board = new GameBoard();
     this.board.game = this;
     this.history = new History();
@@ -26,7 +26,8 @@ class Game {
       type: HistoryType.GAME_CREATED
     });
     this.players = [];
-    this.state = GameState.NOT_STARTED;
+    this.state = gameData.gameStatus;
+    this.activePlayer = gameData.activePlayer;
   }
 
   /**
@@ -36,8 +37,6 @@ class Game {
    * @return {void}
    */
   join(player, pawnsData) {
-    if (this.state === GameState.NOT_STARTED) {
-
       this.players.push(player);
       this.board.setPawns(pawnsData);
 
@@ -45,9 +44,6 @@ class Game {
         type: HistoryType.PLAYER_JOINS,
         playerId: Player.playerId
       });
-    }
-
-    this.updateState();
   }
 
   /**
@@ -65,12 +61,6 @@ class Game {
       type: HistoryType.PLAYER_LEAVES,
       playerId: player.getPlayerId()
     });
-  }
-
-  updateState() {
-    if (this.players.length === 2) {
-      this.state = GameState.STARTED;
-    }
   }
 }
 
