@@ -2,7 +2,7 @@
   <b-container v-if="!loading" fluid class="mt-1">
     <b-row no-gutters>
       <b-col cols="2">
-        <game-control-panel :is-turn-completed="isTurnCompleted" :is-turn-open="isTurnOpen" />
+        <game-control-panel :is-turn-ready="isTurnReady" :is-turn-open="isTurnOpen" />
       </b-col>
       <b-col cols="8">
         <board v-if="game !== null" :board="game.board" />
@@ -39,7 +39,7 @@
     computed: {
       ...mapState(["activeGame", "player"]),
       // The method indicates whether the turn has been completed
-      isTurnCompleted () {
+      isTurnReady () {
         // eslint-disable-next-line no-magic-numbers
         return this.game.board.movedPawns.length > 0;
       },
