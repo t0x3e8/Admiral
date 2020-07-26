@@ -7,7 +7,7 @@
             Waiting ({{ value }})
             <b-progress :value="value" :max="maxValue" height="5px" animated variant="white"></b-progress>
           </b-button>
-          <b-button v-if="!isTurnOpen" :disabled="!isTurnReady" variant="outline-primary" @click="commitTurn">
+          <b-button v-if="!isTurnOpen" :disabled="!isTurnCompleted" variant="outline-primary" @click="commitTurn">
             Commit Turn
           </b-button>
           <b-button variant="outline-primary" @click="returnToList">
@@ -27,7 +27,7 @@
   export default {
     name: "GameControlPanelComponent",
     props: {
-      isTurnReady: {
+      isTurnCompleted: {
         type: Boolean,
         default: false
       },
