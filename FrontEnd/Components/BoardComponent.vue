@@ -18,11 +18,12 @@
     components: { Cell },
     props: {
       board: {
-        type: [
-          GameBoard,
-          Board
-        ],
+        type: [GameBoard, Board],
         default: null
+      },
+      isTurnOpen: {
+        type: Boolean,
+        default: false
       }
     },
     created() {
@@ -34,6 +35,10 @@
     methods: {
       onCellClick(payload) {
         console.debug("event-on: cell-click");
+
+        if (this.isTurnOpen !== false) {
+          return;
+        }
 
         const cell = this.board.cells[payload.row][payload.col];
 

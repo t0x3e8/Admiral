@@ -5,7 +5,7 @@
         <game-control-panel :is-turn-completed="isTurnCompleted" :is-turn-open="isTurnOpen" />
       </b-col>
       <b-col cols="8">
-        <board v-if="game !== null" :board="game.board" />
+        <board v-if="game !== null" :board="game.board" :is-turn-open="isTurnOpen" />
       </b-col>
       <b-col cols="2">
         <history v-if="showHistory" :history="game.history" />
