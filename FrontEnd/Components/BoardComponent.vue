@@ -36,7 +36,7 @@
       onCellClick(payload) {
         console.debug("event-on: cell-click");
 
-        if (this.isTurnOpen !== false) {
+        if (this.isTurnOpen === false) {
           return;
         }
 

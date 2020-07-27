@@ -3,12 +3,12 @@
     <b-row>
       <b-col>
         <b-button-group vertical class="w-75" size="sm">
-          <b-button v-if="isTurnOpen" variant="primary" @click="refresh">
+          <b-button v-if="isTurnOpen" :disabled="!isTurnCompleted" variant="outline-primary" @click="commitTurn">
+            Commit Turn
+          </b-button>
+          <b-button v-else variant="primary" @click="refresh">
             Waiting ({{ value }})
             <b-progress :value="value" :max="maxValue" height="5px" animated variant="white"></b-progress>
-          </b-button>
-          <b-button v-if="!isTurnOpen" :disabled="!isTurnCompleted" variant="outline-primary" @click="commitTurn">
-            Commit Turn
           </b-button>
           <b-button variant="outline-primary" @click="returnToList">
             Exit
@@ -24,6 +24,7 @@
 
 <script>
   import { REFRESH_ACTIVE_GAME, COMMIT_TURN } from "./../eventsTypes.js";
+
   export default {
     name: "GameControlPanelComponent",
     props: {
@@ -40,23 +41,30 @@
       return {
         maxValue: 5,
         value: 5,
-        timer: null,
+        timerId: null,
         interval: 1000
       };
     },
-    mounted() {
-      this.timer = setInterval(() => {
-        if (this.value) {
-          this.value -= 1;
-        } else {
-          this.increaseMaxValue();
-          this.refresh();
+    watch: {
+      isTurnOpen(newVal, oldVal) {
+        if (newVal === oldVal) {
+          return;
         }
-      }, this.interval);
+
+        if (newVal) {
+          this.stopTimer();
+        } else {
+          this.startTimer();
+        }
+      }
+    },
+    mounted() {
+      if (!this.isTurnOpen) {
+        this.startTimer();
+      }
     },
     beforeDestroy() {
-      clearInterval(this.timer);
-      this.timer = null;
+      this.stopTimer();
     },
     methods: {
       increaseMaxValue() {
@@ -72,11 +80,22 @@
         console.debug(`event-emit: ${COMMIT_TURN}`);
 
         this.$root.$emit(COMMIT_TURN);
-        this.restartTimer();
       },
-      restartTimer() {
+      startTimer() {
         this.maxValue = 5;
         this.value = 5;
+
+        this.timerId = setInterval(() => {
+          if (this.value) {
+            this.value -= 1;
+          } else {
+            this.increaseMaxValue();
+            this.refresh();
+          }
+        }, this.interval);
+      },
+      stopTimer() {
+        clearInterval(this.timerId);
       },
       returnToList() {
         this.$router.push({ name: "setup" });

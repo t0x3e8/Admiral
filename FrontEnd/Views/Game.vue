@@ -45,9 +45,10 @@
       },
       // The method indicates whether the turn is open, so the player can move pawns
       isTurnOpen () {
-        const isPlayerActive = this.game.activePlayer === this.player.id;
+        const isPlayerActive = this.game.activePlayer === this.player.id,
+              isGameStarted = this.game.state === GameState.STARTED;
 
-        return this.game.state === GameState.STARTED && isPlayerActive;
+        return isGameStarted && isPlayerActive;
       }
     },
     async mounted() {
