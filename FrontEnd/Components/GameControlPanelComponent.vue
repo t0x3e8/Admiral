@@ -41,8 +41,7 @@
         maxValue: 5,
         value: 5,
         timer: null,
-        interval: 1000,
-        counter: 1
+        interval: 1000
       };
     },
     mounted() {
@@ -51,11 +50,7 @@
           this.value -= 1;
         } else {
           this.increaseMaxValue();
-
-          /*
-           * TODO:
-           * this.refresh();
-           */
+          this.refresh();
         }
       }, this.interval);
     },
@@ -65,8 +60,7 @@
     },
     methods: {
       increaseMaxValue() {
-        this.counter += 1;
-        this.maxValue += this.counter;
+        this.maxValue += 1;
       },
       refresh() {
         console.debug(`event-emit: ${REFRESH_ACTIVE_GAME}`);
@@ -78,6 +72,11 @@
         console.debug(`event-emit: ${COMMIT_TURN}`);
 
         this.$root.$emit(COMMIT_TURN);
+        this.restartTimer();
+      },
+      restartTimer() {
+        this.maxValue = 5;
+        this.value = 5;
       },
       returnToList() {
         this.$router.push({ name: "setup" });
