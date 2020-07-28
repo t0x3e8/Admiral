@@ -3,6 +3,7 @@
     <b-row no-gutters>
       <b-col cols="2">
         <game-control-panel :is-turn-completed="isTurnCompleted" :is-turn-open="isTurnOpen" />
+        <pawn-card v-if="showPawnCard" :pawn="game.board.getSelected()" />
       </b-col>
       <b-col cols="8">
         <board v-if="game !== null" :board="game.board" :is-turn-open="isTurnOpen" />
@@ -18,6 +19,7 @@
   import Board from "./../Components/BoardComponent.vue";
   import History from "./../Components/HistoryComponent.vue";
   import GameControlPanel from "./../Components/GameControlPanelComponent.vue";
+  import PawnCard from "./../Components/PawnCardComponent.vue";
   import { mapState, mapActions } from "vuex";
   import { REFRESH_ACTIVE_GAME, COMMIT_TURN } from "./../eventsTypes.js";
   import { GameState } from "./../GameEngine/gameEnums.js";
@@ -27,12 +29,14 @@
     components: {
       Board,
       History,
-      GameControlPanel
+      GameControlPanel,
+      PawnCard
     },
     data() {
       return {
         game: null,
         showHistory: false,
+        showPawnCard: true,
         loading: true
       };
     },

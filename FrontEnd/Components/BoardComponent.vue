@@ -12,6 +12,7 @@
   import GameBoard from "../GameEngine/gameBoard.js";
   import Cell from "./CellComponent.vue";
   import Board from "../GameEngine/board";
+  import { BOARD_CELL_CLICKED } from "./../eventsTypes.js";
 
   export default {
     name: "BoardComponent",
@@ -27,14 +28,14 @@
       }
     },
     created() {
-      this.$root.$on("cell-click", this.onCellClick);
+      this.$root.$on(BOARD_CELL_CLICKED, this.onCellClick);
     },
     beforeDestroy() {
-      this.$root.$off("cell-click", this.onCellClick);
+      this.$root.$off(BOARD_CELL_CLICKED, this.onCellClick);
     },
     methods: {
       onCellClick(payload) {
-        console.debug("event-on: cell-click");
+        console.debug(`event-on: ${BOARD_CELL_CLICKED}`);
 
         if (this.isTurnOpen === false) {
           return;

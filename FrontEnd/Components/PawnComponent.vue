@@ -8,42 +8,44 @@
 </template>
 
 <script>
-export default {
-  name: "PawnComponent",
-  props: {
-    pawnData: {
-      type: Object,
-      default: null
-    }
-  },
-  data() {
-    return {};
-  },
-  computed: {
-    dynamicPawnIcon() {
-      return () => import(
+  import { BOARD_CELL_CLICKED } from "./../eventsTypes.js";
 
-          /* webpackMode: "eager" */
-          `./pawns/${this.pawnData.svgName}`
-        );
-    }
-  },
-  methods: {
-    pawnClicked() {
-      console.debug("event-emit: cell-click");
+  export default {
+    name: "PawnComponent",
+    props: {
+      pawnData: {
+        type: Object,
+        default: null
+      }
+    },
+    data() {
+      return {};
+    },
+    computed: {
+      dynamicPawnIcon() {
+        return () =>
+          import(
+            /* webpackMode: "eager" */
+            `./pawns/${this.pawnData.svgName}`
+          );
+      }
+    },
+    methods: {
+      pawnClicked() {
+        console.debug(`event-emit: ${BOARD_CELL_CLICKED}`);
 
-      this.$root.$emit("cell-click", {
-        col: this.pawnData.col,
-        row: this.pawnData.row
-      });
+        this.$root.$emit(BOARD_CELL_CLICKED, {
+          col: this.pawnData.col,
+          row: this.pawnData.row
+        });
+      }
     }
-  }
-};
+  };
 </script>
 
 <style module>
-.pawnIcon {
-  position: absolute;
-  display: block;
-}
+  .pawnIcon {
+    position: absolute;
+    display: block;
+  }
 </style>
