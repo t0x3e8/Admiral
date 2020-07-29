@@ -21,28 +21,41 @@
 </template>
 
 <script>
+  import { BOARD_PAWN_SELECTED } from "./../eventsTypes.js";
+  import _ from "underscore";
+
   export default {
     name: "PawnCardComponent",
-    props: {
-      pawn: {
-        type: Object,
-        default: null
-      }
+    data() {
+      return {
+        pawn: {}
+      };
+    },
+    created() {
+      this.$root.$on(BOARD_PAWN_SELECTED, this.onPawnSelected);
+    },
+    beforeDestroy() {
+      this.$root.$off(BOARD_PAWN_SELECTED, this.onPawnSelected);
     },
     computed: {
       dynamicPawnIcon() {
-        return () =>
-          import(
-            /* webpackMode: "eager" */
-            `./pawns/${this.pawn.svgName}`
-          );
+        if (_.isNull(this.pawn.svgName) || _.isUndefined(this.pawn.svgName)) {
+          return null;
+        } else {
+          return () =>
+            import(
+              /* webpackMode: "eager" */
+              `./pawns/${this.pawn.svgName}`
+            );
+        }
       }
     },
-    data() {
-      return {};
+    methods: {
+      onPawnSelected(selectedPawn) {
+        this.pawn = selectedPawn;
+      }
     }
   };
 </script>
 
-<style scoped>
-</style>
+<style scoped></style>

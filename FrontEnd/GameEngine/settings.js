@@ -176,7 +176,7 @@ export default {
     },
     {
       typeId: PawnType.MINESWEEPER,
-      name: "Minesweeper (places / removes mines)",
+      name: "Minesweeper",
       svgName: "minesweeper.svg",
       range: 2,
       destroys: [PawnType.MINESWEEPER, PawnType.LANDINGSHIP],

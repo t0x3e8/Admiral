@@ -6,4 +6,5 @@ export const
   REFRESH_ACTIVE_GAME = "refresh-active-game",
   COMMIT_TURN = "commit_turn",
   OPEN_GAME = "open-game",
-  BOARD_CELL_CLICKED = "board-cell-clicked"
+  BOARD_CELL_CLICKED = "board-cell-clicked",
+  BOARD_PAWN_SELECTED = "board-pawn-selected"

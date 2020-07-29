@@ -4,7 +4,7 @@
 | 12 | Embrace GameControlPanel and PawnCard within Card group                              |   ToDo    |            |
 | 11 | Turn GameControlPanel into card                                                      |   ToDo    |            |
 | 10 | Add "Destroys" and "Is destroyed" icons to the pawn card                             |   ToDo    |            |
-| 9  | Ensure that the SVG icon on Pawn card is updated, when pawn selection changes        |   ToDo    |            |
+| 9  | Ensure that the SVG icon on Pawn card is updated, when pawn selection changes        |   Done    | 29/07/2020 |
 | 8  | Add Pawn card. When Pawn is selected then card will display range, name, col and Row |   DOne    | 28/07/2020 |
 | 7  | Add RESET TURN button, so the pawn is not moved, and returned to starting posiiton.  |   ToDo    |            |
 | 6  | Switch "Commit Turn" into "Waiting" when only one player is available.               |   Done    | 27/07/2020 |

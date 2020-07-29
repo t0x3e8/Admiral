@@ -12,7 +12,7 @@
   import GameBoard from "../GameEngine/gameBoard.js";
   import Cell from "./CellComponent.vue";
   import Board from "../GameEngine/board";
-  import { BOARD_CELL_CLICKED } from "./../eventsTypes.js";
+  import { BOARD_CELL_CLICKED, BOARD_PAWN_SELECTED } from "./../eventsTypes.js";
 
   export default {
     name: "BoardComponent",
@@ -63,6 +63,10 @@
 
         if (selectedPawn && selectedPawn.selected) {
           this.board.rangeCells(selectedPawn);
+
+          console.debug(`event-emit: ${BOARD_PAWN_SELECTED}`);
+
+          this.$root.$emit(BOARD_PAWN_SELECTED, selectedPawn);
         }
       },
       moveOrAttack(destCell) {
