@@ -6,6 +6,9 @@
           <b-button v-if="isTurnOpen" :disabled="!isTurnCompleted" variant="outline-primary" @click="commitTurn">
             Commit Turn
           </b-button>
+          <b-button v-if="isTurnOpen" :disabled="!isTurnCompleted" variant="outline-primary" @click="rollbackTurn">
+            Rollback
+          </b-button>
           <b-button v-else variant="primary" @click="refresh">
             Waiting ({{ value }})
             <b-progress :value="value" :max="maxValue" height="5px" animated variant="white"></b-progress>
@@ -23,7 +26,7 @@
 </template>
 
 <script>
-  import { REFRESH_ACTIVE_GAME, COMMIT_TURN } from "./../eventsTypes.js";
+  import { REFRESH_ACTIVE_GAME, COMMIT_TURN, ROLLBACK_TURN } from "./../eventsTypes.js";
 
   export default {
     name: "GameControlPanelComponent",
@@ -80,6 +83,11 @@
         console.debug(`event-emit: ${COMMIT_TURN}`);
 
         this.$root.$emit(COMMIT_TURN);
+      },
+      rollbackTurn() {
+        console.debug(`event-emit: ${ROLLBACK_TURN}`);
+
+        this.$root.$emit(ROLLBACK_TURN);
       },
       startTimer() {
         this.maxValue = 5;

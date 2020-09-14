@@ -63,11 +63,10 @@
 
         if (selectedPawn && selectedPawn.selected) {
           this.board.rangeCells(selectedPawn);
-
-          console.debug(`event-emit: ${BOARD_PAWN_SELECTED}`);
-
-          this.$root.$emit(BOARD_PAWN_SELECTED, selectedPawn);
         }
+
+        console.debug(`event-emit: ${BOARD_PAWN_SELECTED}`);
+        this.$root.$emit(BOARD_PAWN_SELECTED, selectedPawn);
       },
       moveOrAttack(destCell) {
         const selectedPawn = this.board.getSelected(),

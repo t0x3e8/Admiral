@@ -1,43 +1,34 @@
 <template>
-  <b-card id="pawncontrol" header="Selected pawn" class="text-center">
-    <b-card-title
-      ><b>{{ pawn.name }}</b></b-card-title
-    >
-    <b-container>
-      <b-row>
-        <b-col>
-          <component :is="selectedPawnIcon" class="selectedPawnIcon"></component>
-        </b-col>
-        <b-col>
-          <b-list-group flush>
-            <b-list-group-item>Range: {{ pawn.range }}</b-list-group-item>
-            <b-list-group-item>Row: {{ pawn.row }}</b-list-group-item>
-            <b-list-group-item>Col: {{ pawn.col }}</b-list-group-item>
-            <b-list-group-item>
-              <b-container>
-                <b-row>
-                  Be affraid of:
-                  <ul>
-                    <li v-for="(icon, index) in winnigPawnsIcons" :key="`3${index}`">
-                      <component :is="icon"></component>
-                    </li>
-                  </ul>
-                </b-row>
-                <b-row>
-                  You ar better:
-                  <ul>
-                    <li v-for="(icon, index) in defeatingPawnsIcons" :key="`4${index}`">
-                      <component :is="icon"></component>
-                    </li>
-                  </ul>
-                </b-row>
-              </b-container>
-            </b-list-group-item>
-          </b-list-group>
-        </b-col>
-      </b-row>
-    </b-container>
-  </b-card>
+  <b-container>
+    <b-row>
+      <b-col cols="4">
+        <component :is="selectedPawnIcon" class="selectedPawnIcon"></component>
+      </b-col>
+      <b-col>
+        <b-container class="text-center">
+          <b-row>
+            <span>
+              <h3 class="align-middle">{{ pawn.name }}</h3>
+            </span>
+          </b-row>
+          <b-row>
+            <h5>Range: {{ pawn.range }}</h5>
+          </b-row>
+          <b-row id="strongerThanPawns">
+            <div style="width: 32px; height: 32px" v-for="(icon, index) in strongerThanPawnsIcons" :key="`3${index}`">
+              <component :is="icon"></component>
+            </div>
+            <hr />
+          </b-row>
+          <b-row id="weakerThanPawns">
+            <div style="width: 32px; height: 32px" v-for="(icon, index) in weakerThanPawnsIcons" :key="`4${index}`">
+              <component :is="icon"></component>
+            </div>
+          </b-row>
+        </b-container>
+      </b-col>
+    </b-row>
+  </b-container>
 </template>
 
 <script>
@@ -49,10 +40,10 @@
     name: "PawnCardComponent",
     data() {
       return {
-        pawn: {},
+        pawn: null,
         selectedPawnIcon: null,
-        winnigPawnsIcons: [],
-        defeatingPawnsIcons: []
+        strongerThanPawnsIcons: [],
+        weakerThanPawnsIcons: []
       };
     },
     created() {
@@ -69,15 +60,15 @@
       },
       refreshIcons() {
         this.selectedPawnIcon = this.getPawnIcon(this.pawn.svgName);
-        this.winnigPawnsIcons = [];
-        this.defeatingPawnsIcons = [];
+        this.strongerThanPawnsIcons = [];
+        this.weakerThanPawnsIcons = [];
 
         _.forEach(settingsHelper.pawnsWinAgainst(this.pawn.type), (winningPawn) => {
-          this.winnigPawnsIcons.push(this.getPawnIcon(winningPawn.svgName));
+          this.strongerThanPawnsIcons.push(this.getPawnIcon(winningPawn.svgName));
         });
 
         _.forEach(settingsHelper.pawnsDefeatedBy(this.pawn.type), (defeatedPawn) => {
-          this.defeatingPawnsIcons.push(this.getPawnIcon(defeatedPawn.svgName));
+          this.weakerThanPawnsIcons.push(this.getPawnIcon(defeatedPawn.svgName));
         });
       },
       getPawnIcon(svgName) {
@@ -95,4 +86,20 @@
   };
 </script>
 
-<style scoped></style>
+<style scoped>
+  #strongerThanPawns svg circle {
+    stroke: black;
+    fill: lightgreen;
+  }
+  #strongerThanPawns svg g {
+    fill: black;
+  }
+
+  #weakerThanPawns svg circle {
+    stroke: black;
+    fill:#FF8882;
+  }
+  #weakerThanPawns svg g {
+    fill: black;
+  }
+</style>
