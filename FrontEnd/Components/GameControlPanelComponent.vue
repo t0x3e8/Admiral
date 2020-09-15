@@ -2,18 +2,18 @@
   <b-container id="gamecontrol">
     <b-row>
       <b-col>
-        <b-button-group vertical class="w-75" size="sm">
-          <b-button v-if="isTurnOpen" :disabled="!isTurnCompleted" variant="outline-primary" @click="commitTurn">
+        <b-button-group vertical class="w-100">
+          <b-button v-if="isTurnOpen" :disabled="!isTurnCompleted" block variant="outline-success" @click="commitTurn">
             Commit Turn
           </b-button>
-          <b-button v-if="isTurnOpen" :disabled="!isTurnCompleted" variant="outline-primary" @click="rollbackTurn">
+          <b-button v-if="isTurnOpen" variant="outline-secondary" :disabled="!isTurnCompleted" @click="rollbackTurn">
             Rollback
           </b-button>
-          <b-button v-else variant="primary" @click="refresh">
+          <b-button v-else variant="outline-secondary" @click="refresh">
             Waiting ({{ value }})
-            <b-progress :value="value" :max="maxValue" height="5px" animated variant="white"></b-progress>
+            <b-progress :value="value" :max="maxValue"  height="5px" animated variant="secondary"></b-progress>
           </b-button>
-          <b-button variant="outline-primary" @click="returnToList">
+          <b-button variant="outline-danger" @click="returnToList">
             Exit
           </b-button>
         </b-button-group>

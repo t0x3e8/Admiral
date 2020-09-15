@@ -87,6 +87,7 @@
           pawn: this.game.board.movedPawns[0]
         });
 
+        this.selectedPawn = null;
         await this.setGame();
       },
       async rollbackGameTurn() {
