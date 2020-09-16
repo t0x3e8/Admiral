@@ -48,4 +48,8 @@
     position: absolute;
     display: block;
   }
+
+  .selected circle  {
+    fill: white;
+  }
 </style>

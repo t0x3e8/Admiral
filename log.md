@@ -1,6 +1,8 @@
 | #  | Desc                                                                                 |  Status   |    Date    |
 |:--:|--------------------------------------------------------------------------------------|:---------:|:----------:|
-| 14 | Color pawn when it becomes selected                                                  |   ToDo    |            |
+| 16 | Display 2 Pawns in one cell | ToDo | 
+| 15 | Enable posibility to display 2 pawns when one attacks another                        |   ToDo    |            |
+| 14 | Color pawn when it becomes selected                                                  |   Done    | 16/09/2020 |
 | 13 | Use Pawn card to display battle result, when 2 ships battle.                         |   ToDo    |            |
 | 12 | Embrace GameControlPanel and PawnCard within Card group                              |   Done    | 14/09/2020 |
 | 11 | Turn GameControlPanel into card                                                      |   Done    | 14/09/2020 |
