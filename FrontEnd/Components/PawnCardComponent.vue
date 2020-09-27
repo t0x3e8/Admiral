@@ -56,7 +56,10 @@
     methods: {
       onPawnSelected(selectedPawn) {
         this.pawn = selectedPawn;
-        this.refreshIcons();
+
+        if (this.pawn) {
+          this.refreshIcons();
+        }
       },
       refreshIcons() {
         this.selectedPawnIcon = this.getPawnIcon(this.pawn.svgName);
@@ -97,7 +100,7 @@
 
   #weakerThanPawns svg circle {
     stroke: black;
-    fill:#FF8882;
+    fill: #ff8882;
   }
   #weakerThanPawns svg g {
     fill: black;
