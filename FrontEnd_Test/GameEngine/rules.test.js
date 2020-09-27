@@ -73,14 +73,24 @@ describe("RULES to calculate cell's range requirements", () => {
   it(
     "GIVEN a Pawn needs to determine its range " +
       "WHEN Cell has a Pawn assigned to it " +
-      "THEN Rule should return negative result",
+      "THEN Rule should return tru or false depending on the pawn presence",
     () => {
-      const board = new Board(),
-        pawn = new Pawn(PawnType.BATTERY);
+      const board = new Board();
 
-      expect(Rules.hasCellAssignedPawn(board.cells[0][0])).to.be.false;
-      board.assignPawn(board.cells[0][0], pawn);
-      expect(Rules.hasCellAssignedPawn(board.cells[0][0])).to.be.true;
+      expect(Rules.isEnemyPawnInCell(board.cells[0][0])).to.be.false;
+      expect(Rules.isPawnInCell(board.cells[0][0])).to.be.false;
+
+      board.assignPawn(board.cells[0][0], new Pawn(PawnType.BATTLESHIP));
+      expect(Rules.isEnemyPawnInCell(board.cells[0][0])).to.be.false;
+      expect(Rules.isPawnInCell(board.cells[0][0])).to.be.true;
+
+      board.assignPawn(board.cells[0][0], new Pawn(PawnType.SUBMARINE));
+      expect(Rules.isEnemyPawnInCell(board.cells[0][0])).to.be.false;
+      expect(Rules.isPawnInCell(board.cells[0][0])).to.be.true;
+
+      board.assignPawn(board.cells[0][0], new Pawn(PawnType.ENEMY));
+      expect(Rules.isEnemyPawnInCell(board.cells[0][0])).to.be.true;
+      expect(Rules.isPawnInCell(board.cells[0][0])).to.be.true;
     }
   );
 });

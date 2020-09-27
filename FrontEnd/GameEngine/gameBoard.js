@@ -141,12 +141,13 @@ class GameBoard extends Board {
 
         /*
          * Adjacent Cell cannot be alredy "inRange" meaning not being already visited,
-         * Adjacent Cell cannot have a Pawn assigned
+         * Adjacent Cell cannot have a Pawn assigned unless it's enemy Pawn
          * Adjacent Cell and Main Cell cannot be pair of Sea and Port
          */
         if (
           Rules.isCellInRange(adjacentCell) ||
-          Rules.hasCellAssignedPawn(adjacentCell) ||
+          // eslint-disable-next-line no-extra-parens
+          (Rules.isPawnInCell(adjacentCell) && !Rules.isEnemyPawnInCell(adjacentCell)) ||
           Rules.isPairOfSeaAndPort(adjacentCell, cell)
         ) {
           nextElementsToDepthIncrease -= 1;
