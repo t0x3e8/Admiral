@@ -1,5 +1,5 @@
 <template>
-  <b-container>
+  <b-container v-if="pawn">
     <b-row>
       <b-col cols="4">
         <component :is="selectedPawnIcon" class="selectedPawnIcon"></component>
@@ -62,17 +62,19 @@
         }
       },
       refreshIcons() {
-        this.selectedPawnIcon = this.getPawnIcon(this.pawn.svgName);
-        this.strongerThanPawnsIcons = [];
-        this.weakerThanPawnsIcons = [];
+        if (this.pawn) {
+          this.selectedPawnIcon = this.getPawnIcon(this.pawn.svgName);
+          this.strongerThanPawnsIcons = [];
+          this.weakerThanPawnsIcons = [];
 
-        _.forEach(settingsHelper.pawnsWinAgainst(this.pawn.type), (winningPawn) => {
-          this.strongerThanPawnsIcons.push(this.getPawnIcon(winningPawn.svgName));
-        });
+          _.forEach(settingsHelper.pawnsWinAgainst(this.pawn.type), (winningPawn) => {
+            this.strongerThanPawnsIcons.push(this.getPawnIcon(winningPawn.svgName));
+          });
 
-        _.forEach(settingsHelper.pawnsDefeatedBy(this.pawn.type), (defeatedPawn) => {
-          this.weakerThanPawnsIcons.push(this.getPawnIcon(defeatedPawn.svgName));
-        });
+          _.forEach(settingsHelper.pawnsDefeatedBy(this.pawn.type), (defeatedPawn) => {
+            this.weakerThanPawnsIcons.push(this.getPawnIcon(defeatedPawn.svgName));
+          });
+        }
       },
       getPawnIcon(svgName) {
         if (_.isNull(svgName) || _.isUndefined(svgName)) {
