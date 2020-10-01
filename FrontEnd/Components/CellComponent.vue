@@ -1,5 +1,9 @@
 <template>
-  <div class="boardCell" :class="classObject" @click="cellClicked">
+  <div v-if="cellData.pawn && cellData.enemyPawn" class="boardCell splitCell" :class="classObject" @click="cellClicked">
+    <pawn :pawn-data="cellData.pawn" class="w-50 h-50" />
+    <pawn :pawn-data="cellData.enemyPawn" class="w-50 h-50" style="margin-top: 50%; margin-left: 50%" />
+  </div>
+  <div v-else class="boardCell" :class="classObject" @click="cellClicked">
     <pawn v-if="cellData.pawn" :pawn-data="cellData.pawn" />
   </div>
 </template>
@@ -88,6 +92,10 @@
 
   .boardCell {
     border-radius: 0%;
+  }
+
+  .splitCell {
+    background-image: linear-gradient(to bottom right, transparent calc(50% - 1px), White, transparent calc(50% + 1px));
   }
 
   .port1,

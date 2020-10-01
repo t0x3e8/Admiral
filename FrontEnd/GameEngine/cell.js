@@ -11,6 +11,7 @@ class Cell {
     this.col = cellData.colIndex;
     this.row = cellData.rowIndex;
     this.pawn = null;
+    this.enemyPawn = null;
     this.inRange = false;
     this.board = cellData.board;
   }
