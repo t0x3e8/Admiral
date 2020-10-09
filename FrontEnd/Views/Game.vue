@@ -10,6 +10,12 @@
             </div>
           </b-list-group-item>
           <b-list-group-item>
+            <div v-if="!isAnyShipDestroyer" class="text-center">
+              <b-alert show variant="light">No destroyed ships yet</b-alert>
+            </div>
+            <pawns-destroyed-card v-else :inactive-pawns="game.inactivePawns" />
+          </b-list-group-item>
+          <b-list-group-item>
             <game-control-panel :is-turn-completed="isTurnCompleted" :is-turn-open="isTurnOpen" />
           </b-list-group-item>
         </b-list-group>
@@ -26,6 +32,7 @@
   import Board from "./../Components/BoardComponent.vue";
   import GameControlPanel from "./../Components/GameControlPanelComponent.vue";
   import PawnCard from "./../Components/PawnCardComponent.vue";
+  import PawnsDestroyedCard from "./../Components/PawnsDestroyedCardComponent.vue";
   import { mapState, mapActions } from "vuex";
   import { REFRESH_ACTIVE_GAME, COMMIT_TURN, BOARD_PAWN_SELECTED, ROLLBACK_TURN } from "./../eventsTypes.js";
   import { GameState } from "./../GameEngine/gameEnums.js";
@@ -35,7 +42,8 @@
     components: {
       Board,
       GameControlPanel,
-      PawnCard
+      PawnCard,
+      PawnsDestroyedCard
     },
     data() {
       return {
@@ -57,6 +65,11 @@
           isGameStarted = this.game.state === GameState.STARTED;
 
         return isGameStarted && isPlayerActive;
+      },
+      // The method indicates whether any ships have been destroyed
+      isAnyShipDestroyer() {
+        // eslint-disable-next-line no-magic-numbers
+        return this.game.inactivePawns !== null && this.game.inactivePawns.length > 0;
       }
     },
     async mounted() {

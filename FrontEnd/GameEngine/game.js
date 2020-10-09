@@ -28,6 +28,7 @@ class Game {
     this.players = [];
     this.state = gameData.gameStatus;
     this.activePlayer = gameData.activePlayer;
+    this.inactivePawns = [];
   }
 
   /**
@@ -37,8 +38,13 @@ class Game {
    * @return {void}
    */
   join(player, pawnsData) {
+      const pawnsDataInParts = _.partition(pawnsData, (pd) => pd.damageLevel === 0);
+
       this.players.push(player);
-      this.board.setPawns(pawnsData);
+      this.board.setPawns(pawnsDataInParts[0]);
+      this.inactivePawns.push(pawnsDataInParts[1]);
+
+      console.log(pawnsDataInParts[1]);
 
       this.history.record({
         type: HistoryType.PLAYER_JOINS,

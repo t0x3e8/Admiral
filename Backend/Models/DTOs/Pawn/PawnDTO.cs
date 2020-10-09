@@ -9,4 +9,5 @@ public class PawnDTO
   public int OldRow { get; set; }
   public int Type { get; set; }
   public Guid PlayerId { get; set; }
+  public int DamageLevel { get; set; }
 }

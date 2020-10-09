@@ -29,6 +29,7 @@ class Pawn {
     this.name = pawnSetting.name;
     this.svgName = pawnSetting.svgName;
     this.pawnId = null;
+    this.damageLevel = 0;
   }
 
   update(pawnData) {
@@ -46,6 +47,7 @@ class Pawn {
     this.row = pawnData.row;
     this.oldRow = pawnData.oldRow;
     this.playerId = pawnData.playerId;
+    this.damageLevel = pawnData.damageLevel;
   }
 
   updatePosition(newCol, newRow) {

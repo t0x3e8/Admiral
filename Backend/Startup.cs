@@ -57,6 +57,7 @@ namespace code
             services.AddScoped<IGamesRepository, GamesRepository>();
             services.AddScoped<IPawnsRepository, PawnsRepository>();
             services.AddScoped<IGameStateManager, GameStateManager>();
+            services.AddScoped<IBattleActionSimulator, BattleActionSimulator>();
 
             // configure jwt authentication
             var jwtKey = Encoding.ASCII.GetBytes(Configuration["JWT_SECRET_KEY"]);
