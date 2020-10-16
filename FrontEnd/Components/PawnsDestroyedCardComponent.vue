@@ -4,8 +4,10 @@
       <b-col>
         <b-container class="text-center">
           <b-row>
-            <div v-for="(pawn, index) in inactivePawns" :key="`7${index}`" style="width: 32px; height: 32px">
-              {{ pawn }}
+            <div v-for="(player, index) in inactivePawns" :key="`7${index}`" style="width: 32px; height: 32px">
+              <div v-for="(pawn, index2) in player" :key="`${index2}`">
+                {{ pawn.type }}
+              </div>
             </div>
             <hr />
           </b-row>

@@ -11,7 +11,7 @@
           </b-list-group-item>
           <b-list-group-item>
             <div v-if="!isAnyShipDestroyer" class="text-center">
-              <b-alert show variant="light">No destroyed ships yet</b-alert>
+              <b-alert show variant="light">No destroyed ships</b-alert>
             </div>
             <pawns-destroyed-card v-else :inactive-pawns="game.inactivePawns" />
           </b-list-group-item>
@@ -69,7 +69,7 @@
       // The method indicates whether any ships have been destroyed
       isAnyShipDestroyer() {
         // eslint-disable-next-line no-magic-numbers
-        return this.game.inactivePawns !== null && this.game.inactivePawns.length > 0;
+        return this.game.inactivePawns !== null && this.game.inactivePawns.length !== [];
       }
     },
     async mounted() {
