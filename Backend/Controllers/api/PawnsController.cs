@@ -34,10 +34,10 @@ namespace code.api.Controllers
             var playerFromRequest = this.GetPlayerFromRequest(this.User);
             IEnumerable<PawnDTO> pawnsToReturn = pawnsToReturn = this.mapper.Map<IEnumerable<PawnDTO>>(pawns);
 
-            // Hide the type of pawn for all enemy pawns
+            // If PlayerFromRequest is diffrent from the Player in Pawns set
             if (playerFromRequest.Id.Equals(playerId) == false)
+                // than change the Pawn.Type to EnemyType (99) is the ship is not damaged
                 pawnsToReturn = pawnsToReturn.Select((p, i) => {
-                    // Don't hide the pawn type for destroyed pawns
                     if (p.DamageLevel == 0) {
                         p.Type = 99;
                     }

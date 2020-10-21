@@ -57,19 +57,19 @@
       // The method indicates whether the turn has been completed
       isTurnCompleted() {
         // eslint-disable-next-line no-magic-numbers
-        return this.game.board.movedPawns.length > 0;
+        return this.game && this.game.board.movedPawns.length > 0;
       },
       // The method indicates whether the turn is open, so the player can move pawns
       isTurnOpen() {
-        const isPlayerActive = this.game.activePlayer === this.player.id,
-          isGameStarted = this.game.state === GameState.STARTED;
+        const isPlayerActive = this.game && this.game.activePlayer === this.player.id,
+          isGameStarted = this.game && this.game.state === GameState.STARTED;
 
         return isGameStarted && isPlayerActive;
       },
       // The method indicates whether any ships have been destroyed
       isAnyShipDestroyer() {
         // eslint-disable-next-line no-magic-numbers
-        return this.game.inactivePawns !== null && this.game.inactivePawns.length !== [];
+        return this.game && this.game.inactivePawns && this.game.inactivePawns !== [];
       }
     },
     async mounted() {
