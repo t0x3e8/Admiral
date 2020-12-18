@@ -119,10 +119,10 @@ jobs:
           zipAfterPublish: False
           modifyOutputPath: False
 
-      # - task: AzureWebApp@1
-      #   displayName: Deploying Application to Azure
-      #   inputs:
-      #     azureSubscription: "Visual Studio Ultimate with MSDN(71084930-69bf-47b7-8aa2-9ca0ead57c34)"
-      #     appType: "webApp"
-      #     appName: "admiralGame"
-      #     package: $(Build.ArtifactStagingDirectory)
+      - task: AzureWebApp@1
+        displayName: Deploying Application to Azure
+        inputs:
+          azureSubscription: "Visual Studio Ultimate with MSDN(71084930-69bf-47b7-8aa2-9ca0ead57c34)"
+          appType: "webApp"
+          appName: "admiralGame"
+          package: $(Build.ArtifactStagingDirectory)

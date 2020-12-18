@@ -1,9 +1,13 @@
-import { CellType } from "./../gameEnums"
+import { CellType, PawnType } from "./../gameEnums"
 
 class Rules {
 
-  static hasCellAssignedPawn(cell) {
-    return cell.pawn !== null;
+  static isEnemyPawnInCell(cell) {
+    return cell?.pawn?.type === PawnType.ENEMY;
+  }
+
+  static isPawnInCell(cell) {
+    return cell?.pawn !== null;
   }
 
   static isCellInRange(cell) {

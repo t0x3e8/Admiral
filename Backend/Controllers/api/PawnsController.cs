@@ -16,12 +16,14 @@ namespace code.api.Controllers
         private readonly IPawnsRepository pawnsRepository;
         private readonly IMapper mapper;
         private readonly IGameStateManager gameStateManager;
+        private readonly IBattleActionSimulator battleActionSimulator;
 
-        public PawnsController(IPawnsRepository pawnsRepository, IMapper mapper, IGameStateManager gameStateManager)
+        public PawnsController(IPawnsRepository pawnsRepository, IMapper mapper, IGameStateManager gameStateManager, IBattleActionSimulator battleActionSimulator)
         {
             this.pawnsRepository = pawnsRepository;
             this.mapper = mapper;
             this.gameStateManager = gameStateManager;
+            this.battleActionSimulator = battleActionSimulator;
         }
 
         [HttpGet]
@@ -32,9 +34,13 @@ namespace code.api.Controllers
             var playerFromRequest = this.GetPlayerFromRequest(this.User);
             IEnumerable<PawnDTO> pawnsToReturn = pawnsToReturn = this.mapper.Map<IEnumerable<PawnDTO>>(pawns);
 
-            if (!playerFromRequest.Id.Equals(playerId))
+            // If PlayerFromRequest is diffrent from the Player in Pawns set
+            if (playerFromRequest.Id.Equals(playerId) == false)
+                // than change the Pawn.Type to EnemyType (99) is the ship is not damaged
                 pawnsToReturn = pawnsToReturn.Select((p, i) => {
-                    p.Type = 99;
+                    if (p.DamageLevel == 0) {
+                        p.Type = 99;
+                    }
                     return p;
                 });
 
@@ -71,14 +77,29 @@ namespace code.api.Controllers
 
             if (pawn == null) 
                 return NotFound();
-
+            
+            // Fetch pawn to patch from repository, and patch it 
             var pawnToPatch = this.mapper.Map<PawnToPatchDTO>(pawn);
             patchDocument.ApplyTo(pawnToPatch, ModelState);
 
+            // Validate whether the patch does not break any rules, if not the case then map it
             if (!this.TryValidateModel(pawnToPatch))
                 return ValidationProblem(ModelState);
-
             this.mapper.Map(pawnToPatch, pawn);
+
+            // Test, whether the patch is just a move or an attack
+            var enemyPawn = this.pawnsRepository.GetPawnsByPosition(gameId, pawn.Col, pawn.Row).FirstOrDefault<Pawn>();
+            if (enemyPawn != null) {
+                bool hasAttackerWon = this.battleActionSimulator.Attack(pawn, enemyPawn);
+
+                if (hasAttackerWon) {
+                    enemyPawn.DamageLevel = 1;
+                } else {
+                    pawn.DamageLevel = 1;
+                }
+            }
+
+            // Save the state & update Game turn
             this.pawnsRepository.Save();
             this.gameStateManager.UpdateOnTurnCommit(gameId, playerId);
 

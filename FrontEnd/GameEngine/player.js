@@ -7,6 +7,7 @@ class Player {
   constructor(playerData) {
     this.name = playerData.name;
     this.playerId = playerData.id;
+    this.lostPawns = [];
   }
 }
 

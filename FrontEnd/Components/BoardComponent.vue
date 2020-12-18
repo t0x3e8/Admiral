@@ -72,8 +72,13 @@
         const selectedPawn = this.board.getSelected(),
           originCell = this.board.cells[selectedPawn.row][selectedPawn.col];
 
-        if (originCell && destCell.pawn === null) {
-          this.board.move(originCell, destCell);
+        if (originCell) {
+          if (destCell.pawn === null) {
+            this.board.move(originCell, destCell);
+          } else {
+            this.board.attack(originCell, destCell);
+          }
+
           this.board.cleanRange();
         }
       }

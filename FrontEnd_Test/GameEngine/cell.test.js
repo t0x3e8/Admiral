@@ -22,6 +22,7 @@ describe("CELL requirements", () => {
     expect(cell.col).to.be.equal(cellData.colIndex);
     expect(cell.row).to.be.equal(cellData.rowIndex);
     expect(cell.pawn).to.be.null;
+    expect(cell.enemyPawn).to.be.null;
     expect(cell.inRange).to.be.false
     expect(cell.board).to.be.equal(cellData.board);
   });

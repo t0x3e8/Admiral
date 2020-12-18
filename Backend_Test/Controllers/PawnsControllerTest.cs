@@ -12,6 +12,7 @@ public class PawnsControllerTest
 
     Mock<IPawnsRepository> moqPawnsRepository;
     Mock<IGameStateManager> moqGameStateManager;
+    Mock<IBattleActionSimulator> moqBattleActionSimulator;
     IMapper autoMapper;
 
     [SetUp]
@@ -23,6 +24,7 @@ public class PawnsControllerTest
             opts.AddProfile(new PawnProfile());
         }).CreateMapper();
         this.moqGameStateManager = new Mock<IGameStateManager>();
+        this.moqBattleActionSimulator = new Mock<IBattleActionSimulator>();
     }
 
     #region Get Pawns
@@ -34,7 +36,7 @@ public class PawnsControllerTest
         var gameId = Guid.NewGuid();
         var pawns = RepositoryTestService.GetPawns(playerId, 10);
         this.moqPawnsRepository.Setup(m => m.GetPawns(gameId, playerId)).Returns(pawns);
-        PawnsController pawnsController = new PawnsController(this.moqPawnsRepository.Object, this.autoMapper, this.moqGameStateManager.Object);
+        PawnsController pawnsController = new PawnsController(this.moqPawnsRepository.Object, this.autoMapper, this.moqGameStateManager.Object, this.moqBattleActionSimulator.Object);
         pawnsController = RepositoryTestService.AssignUserToController(pawnsController, playerId.ToString(), "TestPlayer");
         ;
         var result = pawnsController.GetPawns(gameId, playerId);
@@ -57,7 +59,7 @@ public class PawnsControllerTest
         var pawnsToCreate = this.autoMapper.Map<IEnumerable<PawnToCreateDTO>>(pawns);
         this.moqPawnsRepository.Setup(m => m.AddPawns(It.IsAny<Guid>(), It.IsAny<Guid>(), It.IsAny<IEnumerable<Pawn>>())).Returns(pawns);
         this.moqPawnsRepository.Setup(m => m.Save()).Returns(1);
-        PawnsController pawnsController = new PawnsController(this.moqPawnsRepository.Object, this.autoMapper, this.moqGameStateManager.Object);
+        PawnsController pawnsController = new PawnsController(this.moqPawnsRepository.Object, this.autoMapper, this.moqGameStateManager.Object, this.moqBattleActionSimulator.Object);
 
         var result = pawnsController.AddPawns(Guid.NewGuid(), playerId, pawnsToCreate);
 
@@ -77,7 +79,7 @@ public class PawnsControllerTest
         IEnumerable<Pawn> pawns = RepositoryTestService.GetPawns(playerId, 5);
         var pawnsToCreate = this.autoMapper.Map<IEnumerable<PawnToCreateDTO>>(pawns);
         this.moqPawnsRepository.Setup(m => m.AddPawns(It.IsAny<Guid>(), It.IsAny<Guid>(), It.IsAny<IEnumerable<Pawn>>())).Throws(new Exception());
-        PawnsController pawnsController = new PawnsController(this.moqPawnsRepository.Object, this.autoMapper, this.moqGameStateManager.Object);
+        PawnsController pawnsController = new PawnsController(this.moqPawnsRepository.Object, this.autoMapper, this.moqGameStateManager.Object, this.moqBattleActionSimulator.Object);
         pawnsController = RepositoryTestService.AssignMockProblemDetailsFactoryToController<PawnsController>(pawnsController);
 
         var result = pawnsController.AddPawns(Guid.NewGuid(), playerId, pawnsToCreate);
@@ -96,7 +98,7 @@ public class PawnsControllerTest
         IEnumerable<Pawn> pawns = RepositoryTestService.GetPawns(playerId, 5);
         var pawnsToCreate = this.autoMapper.Map<IEnumerable<PawnToCreateDTO>>(pawns);
         this.moqPawnsRepository.Setup(m => m.AddPawns(It.IsAny<Guid>(), It.IsAny<Guid>(), It.IsAny<IEnumerable<Pawn>>())).Returns(() => null);
-        PawnsController pawnsController = new PawnsController(this.moqPawnsRepository.Object, this.autoMapper, this.moqGameStateManager.Object);
+        PawnsController pawnsController = new PawnsController(this.moqPawnsRepository.Object, this.autoMapper, this.moqGameStateManager.Object, this.moqBattleActionSimulator.Object);
         pawnsController = RepositoryTestService.AssignMockProblemDetailsFactoryToController<PawnsController>(pawnsController);
 
         var result = pawnsController.AddPawns(Guid.NewGuid(), playerId, pawnsToCreate);
@@ -112,7 +114,7 @@ public class PawnsControllerTest
     public void UpdatePawnWithNotFoundTest()
     {
         this.moqPawnsRepository.Setup(m => m.GetPawn(It.IsAny<Guid>(), It.IsAny<Guid>(), It.IsAny<Guid>())).Returns(() => null);
-        PawnsController pawnsController = new PawnsController(this.moqPawnsRepository.Object, this.autoMapper, this.moqGameStateManager.Object);
+        PawnsController pawnsController = new PawnsController(this.moqPawnsRepository.Object, this.autoMapper, this.moqGameStateManager.Object, this.moqBattleActionSimulator.Object);
         JsonPatchDocument<PawnToPatchDTO> patchDocument = new JsonPatchDocument<PawnToPatchDTO>();
         patchDocument.Add(p => p.Col, 100);
 
@@ -130,7 +132,7 @@ public class PawnsControllerTest
         int newColValue = 100;
         var pawn = RepositoryTestService.GetPawn(Guid.NewGuid());
         this.moqPawnsRepository.Setup(m => m.GetPawn(It.IsAny<Guid>(), It.IsAny<Guid>(), It.IsAny<Guid>())).Returns(pawn);
-        PawnsController pawnsController = new PawnsController(this.moqPawnsRepository.Object, this.autoMapper, this.moqGameStateManager.Object);
+        PawnsController pawnsController = new PawnsController(this.moqPawnsRepository.Object, this.autoMapper, this.moqGameStateManager.Object, this.moqBattleActionSimulator.Object);
         pawnsController = RepositoryTestService.AssignMockObjectValidatorToController<PawnsController>(pawnsController);
         JsonPatchDocument<PawnToPatchDTO> patchDocument = new JsonPatchDocument<PawnToPatchDTO>();
         patchDocument.Add(p => p.Col, newColValue);
@@ -151,7 +153,7 @@ public class PawnsControllerTest
         var pawn = RepositoryTestService.GetPawn(Guid.NewGuid());
         pawn.Col = 100;
         this.moqPawnsRepository.Setup(m => m.GetPawn(It.IsAny<Guid>(), It.IsAny<Guid>(), It.IsAny<Guid>())).Returns(pawn);
-        PawnsController pawnsController = new PawnsController(this.moqPawnsRepository.Object, this.autoMapper, this.moqGameStateManager.Object);
+        PawnsController pawnsController = new PawnsController(this.moqPawnsRepository.Object, this.autoMapper, this.moqGameStateManager.Object, this.moqBattleActionSimulator.Object);
         pawnsController = RepositoryTestService.AssignMockObjectValidatorToController<PawnsController>(pawnsController);
         JsonPatchDocument<PawnToPatchDTO> patchDocument = new JsonPatchDocument<PawnToPatchDTO>();
         patchDocument.Remove(p => p.Col);
@@ -172,7 +174,7 @@ public class PawnsControllerTest
         int newColValue = 100;
         var pawn = RepositoryTestService.GetPawn(Guid.NewGuid());
         this.moqPawnsRepository.Setup(m => m.GetPawn(It.IsAny<Guid>(), It.IsAny<Guid>(), It.IsAny<Guid>())).Returns(pawn);
-        PawnsController pawnsController = new PawnsController(this.moqPawnsRepository.Object, this.autoMapper, this.moqGameStateManager.Object);
+        PawnsController pawnsController = new PawnsController(this.moqPawnsRepository.Object, this.autoMapper, this.moqGameStateManager.Object, this.moqBattleActionSimulator.Object);
         pawnsController = RepositoryTestService.AssignMockObjectValidatorToController<PawnsController>(pawnsController);
         JsonPatchDocument<PawnToPatchDTO> patchDocument = new JsonPatchDocument<PawnToPatchDTO>();
         patchDocument.Replace(p => p.Col, newColValue);
@@ -194,7 +196,7 @@ public class PawnsControllerTest
         var pawn = RepositoryTestService.GetPawn(Guid.NewGuid());
         pawn.Col = colValue;
         this.moqPawnsRepository.Setup(m => m.GetPawn(It.IsAny<Guid>(), It.IsAny<Guid>(), It.IsAny<Guid>())).Returns(pawn);
-        PawnsController pawnsController = new PawnsController(this.moqPawnsRepository.Object, this.autoMapper, this.moqGameStateManager.Object);
+        PawnsController pawnsController = new PawnsController(this.moqPawnsRepository.Object, this.autoMapper, this.moqGameStateManager.Object, this.moqBattleActionSimulator.Object);
         pawnsController = RepositoryTestService.AssignMockObjectValidatorToController<PawnsController>(pawnsController);
         JsonPatchDocument<PawnToPatchDTO> patchDocument = new JsonPatchDocument<PawnToPatchDTO>();
         patchDocument.Move(p => p.Col, p => p.OldCol);
@@ -217,7 +219,7 @@ public class PawnsControllerTest
         var pawn = RepositoryTestService.GetPawn(Guid.NewGuid());
         pawn.Col = colValue;
         this.moqPawnsRepository.Setup(m => m.GetPawn(It.IsAny<Guid>(), It.IsAny<Guid>(), It.IsAny<Guid>())).Returns(pawn);
-        PawnsController pawnsController = new PawnsController(this.moqPawnsRepository.Object, this.autoMapper, this.moqGameStateManager.Object);
+        PawnsController pawnsController = new PawnsController(this.moqPawnsRepository.Object, this.autoMapper, this.moqGameStateManager.Object, this.moqBattleActionSimulator.Object);
         pawnsController = RepositoryTestService.AssignMockObjectValidatorToController<PawnsController>(pawnsController);
         JsonPatchDocument<PawnToPatchDTO> patchDocument = new JsonPatchDocument<PawnToPatchDTO>();
         patchDocument.Copy(p => p.Col, p => p.OldCol);
@@ -240,7 +242,7 @@ public class PawnsControllerTest
         var pawn = RepositoryTestService.GetPawn(Guid.NewGuid());
         pawn.Col = colValue;
         this.moqPawnsRepository.Setup(m => m.GetPawn(It.IsAny<Guid>(), It.IsAny<Guid>(), It.IsAny<Guid>())).Returns(pawn);
-        PawnsController pawnsController = new PawnsController(this.moqPawnsRepository.Object, this.autoMapper,this.moqGameStateManager.Object);
+        PawnsController pawnsController = new PawnsController(this.moqPawnsRepository.Object, this.autoMapper,this.moqGameStateManager.Object, this.moqBattleActionSimulator.Object);
         pawnsController = RepositoryTestService.AssignMockObjectValidatorToController<PawnsController>(pawnsController);
         JsonPatchDocument<PawnToPatchDTO> patchDocument = new JsonPatchDocument<PawnToPatchDTO>();
         patchDocument.Test(p => p.Col, colValue);
@@ -259,7 +261,7 @@ public class PawnsControllerTest
         // [{"op": "test", "path": "row", "value": "4567"}]
         var pawn = RepositoryTestService.GetPawn(Guid.NewGuid());
         this.moqPawnsRepository.Setup(m => m.GetPawn(It.IsAny<Guid>(), It.IsAny<Guid>(), It.IsAny<Guid>())).Returns(pawn);
-        PawnsController pawnsController = new PawnsController(this.moqPawnsRepository.Object, this.autoMapper, this.moqGameStateManager.Object);
+        PawnsController pawnsController = new PawnsController(this.moqPawnsRepository.Object, this.autoMapper, this.moqGameStateManager.Object, this.moqBattleActionSimulator.Object);
         pawnsController = RepositoryTestService.AssignMockObjectValidatorToController<PawnsController>(pawnsController);
         pawnsController = RepositoryTestService.AssignMockProblemDetailsFactoryToController<PawnsController>(pawnsController);
         JsonPatchDocument<PawnToPatchDTO> patchDocument = new JsonPatchDocument<PawnToPatchDTO>();

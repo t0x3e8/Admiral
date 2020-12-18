@@ -51,11 +51,22 @@ class Board {
    * Function assigned a specified pawn to the cell
    * @param {Cell} cell to which the pawn will be assigned
    * @param {Pawn} pawn which represents the ship
+   * @param {Pawn} enemyPawn optional argument, represents enemyPawn
    */
   // eslint-disable-next-line class-methods-use-this
-  assignPawn(cell, pawn) {
+  assignPawn(cell, pawn, enemyPawn = null) {
     cell.pawn = pawn;
-    pawn.updatePosition(cell.col, cell.row);
+    cell.enemyPawn = enemyPawn;
+
+    // Updates the pawn position only if changes
+    if (pawn && (pawn.col !== cell.col || pawn.row !== cell.row)) {
+      pawn.updatePosition(cell.col, cell.row);
+    }
+
+    // updates the enemy pawn position only if changes
+    if (enemyPawn && (enemyPawn.col !== cell.col || enemyPawn.row !== cell.row)) {
+      enemyPawn.updatePosition(cell.col, cell.row);
+    }
   }
 
   /**

@@ -67,6 +67,12 @@ describe("GAMEBOARD requirements", () => {
       expect(pawn.row).to.be.equal(boardCell.row);
       expect(pawn.oldCol).to.be.equal(0);
       expect(pawn.oldRow).to.be.equal(0);
+
+      board.assignPawn(boardCell, pawn);
+      expect(pawn.col).to.be.equal(boardCell.col);
+      expect(pawn.row).to.be.equal(boardCell.row);
+      expect(pawn.oldCol).to.be.equal(0);
+      expect(pawn.oldRow).to.be.equal(0);
     }
   );
 
@@ -190,6 +196,41 @@ describe("GAMEBOARD requirements", () => {
       board.move(board.cells[1][1], board.cells[1][2]);
       expect(board.cells[1][1].pawn).to.be.null;
       expect(board.cells[1][2].pawn).to.not.be.null;
+      expect(board.movedPawns.length).to.be.equal(1);
+    }
+  );
+
+  it(
+    "GIVEN a Board two pawns " +
+      "WHEN Submarine attacks enemy ship " +
+      "THEN target cells should have two pawns and its positions updated",
+    () => {
+      const board = new GameBoard(),
+        pawnSubmarine = new Pawn(PawnType.SUBMARINE),
+        pawnEnemy = new Pawn(PawnType.ENEMY);
+
+      board.assignPawn(board.cells[1][1], pawnSubmarine);
+      board.assignPawn(board.cells[2][2], pawnEnemy);
+      expect(board.cells[1][1].pawn).to.not.be.null;
+      expect(board.cells[1][1].enemyPawn).to.be.null;
+      expect(board.cells[2][2].pawn).to.not.be.null;
+      expect(board.cells[2][2].enemyPawn).to.be.null;
+
+      board.attack(board.cells[1][1], board.cells[2][2]);
+      expect(board.cells[1][1].pawn).to.be.null;
+      expect(board.cells[2][2].pawn).to.not.be.null;
+      expect(board.cells[2][2].pawn.col).to.be.equal(2);
+      expect(board.cells[2][2].pawn.row).to.be.equal(2);
+      expect(board.cells[2][2].pawn.oldCol).to.be.equal(0);
+      expect(board.cells[2][2].pawn.oldRow).to.be.equal(0);
+      expect(board.cells[2][2].enemyPawn).to.not.be.null;
+      expect(board.cells[2][2].enemyPawn.col).to.be.equal(2);
+      expect(board.cells[2][2].enemyPawn.row).to.be.equal(2);
+      expect(board.cells[2][2].enemyPawn.oldCol).to.be.equal(1);
+      expect(board.cells[2][2].enemyPawn.oldRow).to.be.equal(1);
+
+      expect(board.movedPawns.length).to.be.equal(1);
+
     }
   );
 

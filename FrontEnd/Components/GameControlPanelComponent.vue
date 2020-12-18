@@ -19,9 +19,6 @@
         </b-button-group>
       </b-col>
     </b-row>
-    <b-row>
-      <b-col> </b-col>
-    </b-row>
   </b-container>
 </template>
 

@@ -23,8 +23,9 @@ public class PawnsRepository : IPawnsRepository
 
         return query;
     }
-    
-    public Pawn GetPawn(Guid gameId, Guid playerId, Guid pawnId) {
+
+    public Pawn GetPawn(Guid gameId, Guid playerId, Guid pawnId)
+    {
         var query = from p in this.dbContext.Pawns
                     where p.GameId.Equals(gameId) && p.PlayerId.Equals(playerId) && p.Id.Equals(pawnId)
                     select p;
@@ -32,13 +33,14 @@ public class PawnsRepository : IPawnsRepository
         return query.SingleOrDefault();
     }
 
-    public IEnumerable<Pawn> AddPawns(Guid gameId, Guid playerId, IEnumerable<Pawn> pawns) {
+    public IEnumerable<Pawn> AddPawns(Guid gameId, Guid playerId, IEnumerable<Pawn> pawns)
+    {
         if (gameId.Equals(Guid.Empty))
             throw new ArgumentException(nameof(gameId));
-            
+
         if (playerId.Equals(Guid.Empty))
             throw new ArgumentException(nameof(gameId));
-        
+
         // Checks whether guidId is linked to existing entity
         var gpGame = (from gp in this.dbContext.GamesPlayers
                       where gp.GameId.Equals(gameId) && gp.PlayerId.Equals(playerId)
@@ -47,7 +49,8 @@ public class PawnsRepository : IPawnsRepository
             return null;
 
         IList<Pawn> pawnsToReturn = new List<Pawn>();
-        foreach(var pawn in pawns) {
+        foreach (var pawn in pawns)
+        {
             pawn.GameId = gameId;
             pawn.PlayerId = playerId;
             pawnsToReturn.Add(this.dbContext.Pawns.Add(pawn).Entity);
@@ -55,7 +58,16 @@ public class PawnsRepository : IPawnsRepository
 
         return pawnsToReturn;
     }
-    
+
+    public IEnumerable<Pawn> GetPawnsByPosition(Guid gameId, int column, int row)
+    {
+        var query = from p in this.dbContext.Pawns
+                    where p.GameId.Equals(gameId) && p.Col.Equals(column) && p.Row.Equals(row)
+                    select p;
+
+        return query;
+    }
+
     public int Save()
     {
         return this.dbContext.SaveChanges();

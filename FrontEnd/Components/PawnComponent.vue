@@ -1,17 +1,13 @@
 <template>
-  <component
-    :is="dynamicPawnIcon"
-    class="pawnIcon"
-    :class="[pawnData.selected ? 'selected' : '']"
-    @click="pawnClicked"
-  />
+  <component :is="icon" class="pawnIcon" :class="[pawnData.selected ? 'selected' : '']" @click="pawnClicked" />
 </template>
 
 <script>
   import { BOARD_CELL_CLICKED } from "./../eventsTypes.js";
+  import _ from "underscore";
 
   export default {
-    name: "PawnComponent",
+    name: "PawnComponent", 
     props: {
       pawnData: {
         type: Object,
@@ -19,15 +15,16 @@
       }
     },
     data() {
-      return {};
+      return {
+        icon: null
+      };
     },
-    computed: {
-      dynamicPawnIcon() {
-        return () =>
-          import(
-            /* webpackMode: "eager" */
-            `./pawns/${this.pawnData.svgName}`
-          );
+    watch: {
+      pawnData: {
+        immediate: true,
+        handler(newValue) {
+          this.icon = this.getPawnIcon(newValue.svgName);
+        }
       }
     },
     methods: {
@@ -38,6 +35,17 @@
           col: this.pawnData.col,
           row: this.pawnData.row
         });
+      },
+      getPawnIcon(svgName) {
+        if (_.isNull(svgName) || _.isUndefined(svgName)) {
+          return null;
+        } else {
+          return () =>
+            import(
+              /* webpackMode: "eager" */
+              `./pawns/${svgName}`
+            );
+        }
       }
     }
   };
@@ -49,7 +57,7 @@
     display: block;
   }
 
-  .selected circle  {
+  .selected circle {
     fill: white;
   }
 </style>

@@ -25,8 +25,8 @@ class GameBoard extends Board {
     this.movesPerTurn = movesPerTurn;
     this.game = null;
 
-    this.canMove = () => this.movedPawns.length < this.movesPerTurn &&
-                         this.game && this.game.state === GameState.STARTED;
+    // eslint-disable-next-line max-len
+    this.canMove = () => this.movedPawns.length < this.movesPerTurn && this.game && this.game.state === GameState.STARTED;
   }
 
   /**
@@ -59,6 +59,7 @@ class GameBoard extends Board {
 
     this.unselectAny();
     if (this.canMove() && pawnToSelect) {
+      console.log(`pawnToSelect: ${JSON.stringify(pawnToSelect)}`);
       pawnToSelect.selected = true;
     }
   }
@@ -85,6 +86,8 @@ class GameBoard extends Board {
    */
   unselect(payload) {
     const pawnToUnselect = this.cells[payload.row][payload.col].pawn;
+
+    console.log(`pawnToUnselect: ${JSON.stringify(pawnToUnselect)}`);
 
     if (pawnToUnselect) {
       pawnToUnselect.selected = false;
@@ -141,12 +144,13 @@ class GameBoard extends Board {
 
         /*
          * Adjacent Cell cannot be alredy "inRange" meaning not being already visited,
-         * Adjacent Cell cannot have a Pawn assigned
+         * Adjacent Cell cannot have a Pawn assigned unless it's enemy Pawn
          * Adjacent Cell and Main Cell cannot be pair of Sea and Port
          */
         if (
           Rules.isCellInRange(adjacentCell) ||
-          Rules.hasCellAssignedPawn(adjacentCell) ||
+          // eslint-disable-next-line no-extra-parens
+          (Rules.isPawnInCell(adjacentCell) && !Rules.isEnemyPawnInCell(adjacentCell)) ||
           Rules.isPairOfSeaAndPort(adjacentCell, cell)
         ) {
           nextElementsToDepthIncrease -= 1;
@@ -184,7 +188,7 @@ class GameBoard extends Board {
   }
 
   /**
-   * Function move the pawn from the origin cell to destination cell
+   * Function to move the pawn from the origin cell to destination cell
    * @param {Cell} originCell must contain assigned pawn
    * @param {Cell} destinationCell it's an empty cell to which the pawn will be assigned
    * @returns {void}
@@ -196,6 +200,26 @@ class GameBoard extends Board {
     this.assignPawn(destinationCell, pawn);
 
     this.movedPawns.push(pawn);
+  }
+
+  /**
+   * Function to attack the destination pawn from the origin pawn
+   * @param {Cell} attackerCell must contain origin pawn
+   * @param {Cell} targetCell must contain destination pawn
+   * @returns {void}
+   */
+  attack(attackerCell, targetCell) {
+    const attackerPawn = this.cells[attackerCell.row][attackerCell.col].pawn,
+      targetPawn = this.cells[targetCell.row][targetCell.col].pawn;
+
+    if (attackerPawn && targetPawn) {
+      attackerCell.pawn = null;
+      this.assignPawn(targetCell, targetPawn, attackerPawn);
+
+      this.movedPawns.push(attackerPawn);
+    } else {
+      console.log("Missing pawn argument for the operation");
+    }
   }
 }
 
